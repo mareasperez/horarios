@@ -6,6 +6,7 @@ from rest_framework.request import Request
 app_name = "facultades"
 urlpatterns = [
     path('facultades/',FacultadListView.as_view()),
+    path('facultades/detail/<int:pk>',Facultadone.as_view()),
     path('facultades/<int:pk>', FacultadListView.as_view())
 ]
 

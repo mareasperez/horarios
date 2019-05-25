@@ -33,6 +33,6 @@ class FacultadListView(APIView):
         return Response({"message": "Facultad with id `{}` has been deleted.".format(pk)},status=204)
 class Facultadone(APIView):
     def get(self, request, pk):
-        facultades = Facultades.objects.get(facultad_nombre=pk)
+        facultades = Facultades.objects.get(facultad_id=pk)
         serializer = FacultadSerializer(facultades)
         return Response({"facultad": serializer.data})
