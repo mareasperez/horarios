@@ -41,6 +41,11 @@ INSTALLED_APPS = [
     'apps.docentes',
     'apps.aulas',
     'apps.recintos',
+    'apps.carreras',
+    'apps.clases',
+    'apps.ciclos',
+    'apps.grupos',
+    'apps.horario',
     'rest_framework',
     'reset_migrations',
 ]
