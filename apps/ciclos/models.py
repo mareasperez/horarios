@@ -1,7 +1,5 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from datetime import datetime
-#current_year = datetime.year
 # Create your models here.
 class Ciclo(models.Model):
     ciclo_id = models.IntegerField(primary_key=True)
