@@ -17,4 +17,4 @@ class Horario(models.Model):
 
 
     def __str__(self):
-        return '%s'%(self.horario_id)
+        return '%s %s %s'%(self.horario_aula,self.horario_dia,self.horario_hora)

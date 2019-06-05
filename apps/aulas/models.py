@@ -8,4 +8,4 @@ class Aula(models.Model):
     aula_capacidad = models.IntegerField(default=0)
     aula_recinto = models.ForeignKey(Recinto,on_delete=models.CASCADE)
     def __str__(self):
-        return self.aula_nombre
+        return '%s-%s'%(self.aula_recinto,self.aula_nombre)
