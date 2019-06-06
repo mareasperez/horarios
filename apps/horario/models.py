@@ -24,12 +24,13 @@ Hour_choices = [
     ('3','3:00 pm'),
     ('5','5:00 pm')
 ]
-
 # Create your models here.
+
+
 class Horario(models.Model):
     horario_id = models.IntegerField(primary_key=True)
-    horario_dia = models.CharField(max_length=50,choices=Day_choices,default='Lu',null=True)
-    horario_hora = models.CharField(max_length=10,default=1,choices=Hour_choices,null=True)
+    horario_dia = models.CharField(max_length=50,choices=Day_choices,default='Lunes',null=True)
+    horario_hora = models.CharField(max_length=10,default=7,choices=Hour_choices,null=True)
     horario_aula = models.ForeignKey(Aula,on_delete=models.CASCADE)
     horario_clase = models.ForeignKey(Clase,on_delete=models.CASCADE, null=True)
     horario_docente = models.ForeignKey(Docente,on_delete=models.CASCADE, null=True)
@@ -39,5 +40,6 @@ class Horario(models.Model):
 
     class Meta:
         unique_together = (("horario_dia", "horario_hora", "horario_aula", "horario_clase", "horario_docente", "horario_grupo","horario_anio"),)
+
     def __str__(self):
         return '%s %s %s'%(self.horario_aula,self.horario_dia,self.horario_hora)

@@ -20,6 +20,7 @@ from apps.facultades import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.facultades.urls')),
-    path('api/docente/',include('apps.docentes.docente_urls'))
-    
+    path('api/docente/',include('apps.docentes.docente_urls')),
+    path('api/recinto/',include('apps.recintos.urls'))
+
 ]
