@@ -24,6 +24,6 @@ class ClaseSerializer(serializers.Serializer):
         instance.clase_id = validated_data.get('clase_id', instance.clase_id)
         instance.clase_tipo = validated_data.get('clase_tipo', instance.clase_tipo)
         instance.clase_ciclo = validated_data.get('clase_ciclo', instance.clase_ciclo)
-        instance.clase_facultad = validated_data.get('clase_facultad',instance.clase_facultad)
+        instance.clase_carrera = validated_data.get('clase_carrera',instance.clase_carrera)
         instance.save()
         return instance
