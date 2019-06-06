@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('apps.facultades.urls')),
     path('api/docente/',include('apps.docentes.docente_urls')),
-    path('api/recinto/',include('apps.recintos.urls'))
+    path('api/recinto/',include('apps.recintos.urls')),
+    path('api/ciclo/',include('apps.ciclos.urls')),
 
 ]
