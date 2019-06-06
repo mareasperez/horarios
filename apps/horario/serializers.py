@@ -38,7 +38,7 @@ class HorarioSerializer(serializers.Serializer):
         instance.horario_clase =  validated_data.get('horario_clase',instance.horario_clase)
         instance.horario_docente =  validated_data.get('horario_docente',instance.horario_docente)
         instance.horario_grupo =  validated_data.get('horario_grupo',instance.horario_grupo)
-        instance.anio = validated_data('horario_anio',instance.horario_anio)
-        instance.vacio = validated_data('horario_vacio',instance.horario_vacio)
+        instance.horario_anio = validated_data.get('horario_anio',instance.horario_anio)
+        instance.horario_vacio = validated_data.get('horario_vacio',instance.horario_vacio)
         instance.save()
         return instance
