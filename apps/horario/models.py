@@ -29,17 +29,16 @@ Hour_choices = [
 
 class Horario(models.Model):
     horario_id = models.IntegerField(primary_key=True)
-    horario_dia = models.CharField(max_length=50,choices=Day_choices,default='Lunes',null=True)
-    horario_hora = models.CharField(max_length=10,default=7,choices=Hour_choices,null=True)
+    horario_dia = models.CharField(max_length=50,choices=Day_choices,default='Lunes')
+    horario_hora = models.CharField(max_length=10,default=7,choices=Hour_choices)
     horario_aula = models.ForeignKey(Aula,on_delete=models.CASCADE)
-    horario_clase = models.ForeignKey(Clase,on_delete=models.CASCADE, null=True)
-    horario_docente = models.ForeignKey(Docente,on_delete=models.CASCADE, null=True)
-    horario_grupo = models.ForeignKey(Grupo,on_delete=models.CASCADE, null=True)
+    horario_clase = models.ForeignKey(Clase,on_delete=models.CASCADE, null=True, blank=True)
+    horario_docente = models.ForeignKey(Docente,on_delete=models.CASCADE, null=True, blank=True)
+    horario_grupo = models.ForeignKey(Grupo,on_delete=models.CASCADE, null=True, blank=True)
     horario_anio = models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
     horario_vacio = models.BooleanField(default=True)
 
     class Meta:
-        unique_together = (("horario_dia", "horario_hora", "horario_aula", "horario_clase", "horario_docente", "horario_grupo","horario_anio"),)
-
+        unique_together = (("horario_dia", "horario_hora", "horario_aula"),("horario_dia", "horario_hora", "horario_docente"),("horario_dia", "horario_hora", "horario_grupo"),("horario_dia", "horario_hora", "horario_aula", "horario_clase", "horario_docente", "horario_grupo","horario_anio"))
     def __str__(self):
         return '%s %s %s'%(self.horario_aula,self.horario_dia,self.horario_hora)
