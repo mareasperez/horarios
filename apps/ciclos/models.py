@@ -6,4 +6,4 @@ class Ciclo(models.Model):
     ciclo_a_lectivo = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)],default=1)
     ciclo_semestre = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(2)],default=1)
     def __str__(self):
-        return 'semestre %s año %s' % (self.ciclo_semestre,self.ciclo_a_lectivo);
+        return 'año %s  semetre %s' % (self.ciclo_a_lectivo,self.ciclo_semestre);

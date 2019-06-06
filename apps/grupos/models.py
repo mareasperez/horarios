@@ -16,6 +16,6 @@ class Grupo(models.Model):
     grupo_ciclo = models.ForeignKey(Ciclo,on_delete=models.CASCADE)
     grupo_carrera = models.ForeignKey(Carrera,on_delete=models.CASCADE)
     class Meta:
-        unique_together = (("grupo_numero", "grupo_ciclo","grupo_carrera"),)
+        unique_together = (("grupo_numero", "grupo_ciclo", "grupo_carrera", "grupo_anio"),)
     def __str__(self):
         return '%s %s %s grupo %s '%(self.grupo_carrera, self.grupo_anio , self.grupo_ciclo ,self.grupo_numero)
