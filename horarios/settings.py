@@ -58,7 +58,8 @@ LOCAL_APPS = [
     'apps.componentes',
     'apps.docente_area',
     'apps.planificacion',
-    'apps.docente_horas'
+    'apps.docente_horas',
+    'apps.horario'
 
 
 ]
