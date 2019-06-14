@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Horario
 from apps.facultades.models import Facultad
 from apps.aulas.models import Aula
-from apps.clases.models import Clase
+#from apps.clases.models import Clase
 from apps.docentes.models import Docente
 from apps.grupos.models import Grupo
 class HorarioSerializer(serializers.Serializer):
@@ -21,7 +21,7 @@ class HorarioSerializer(serializers.Serializer):
     horario_dia = serializers.CharField(max_length=10)
     horario_hora = serializers.CharField(max_length=10)
     horario_aula = serializers.PrimaryKeyRelatedField(queryset=Aula.objects.all(),allow_null=True)
-    horario_clase = serializers.PrimaryKeyRelatedField(queryset=Clase.objects.all(),allow_null=True)
+#    horario_clase = serializers.PrimaryKeyRelatedField(queryset=Clase.objects.all(),allow_null=True)
     horario_docente = serializers.PrimaryKeyRelatedField(queryset=Docente.objects.all(),allow_null=True)
     horario_grupo = serializers.PrimaryKeyRelatedField(queryset=Grupo.objects.all(),allow_null=True)
     horario_anio = serializers.IntegerField()

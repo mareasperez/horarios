@@ -27,30 +27,49 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = [
+    'https://localhost:4200',
+]
 # Application definition
-
-INSTALLED_APPS = [
+THIRD_PARTY_APPS = [
+    'corsheaders',
+    'rest_framework',
+    'reset_migrations',
+]
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+LOCAL_APPS = [
     'apps.facultades',
     'apps.docentes',
     'apps.aulas',
     'apps.recintos',
     'apps.carreras',
-    'apps.clases',
-    'apps.ciclos',
     'apps.grupos',
-    'apps.horario',
-    'rest_framework',
-    'reset_migrations',
+    'apps.departamento',
+    'apps.plan_de_estudio',
+    'apps.area',
+    'apps.componentes',
+    'apps.docente_area',
+    'apps.planificacion',
+    'apps.docente_horas'
+
+
 ]
 
+INSTALLED_APPS =DJANGO_APPS+LOCAL_APPS+THIRD_PARTY_APPS
+
 MIDDLEWARE = [
+    #cors mid
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

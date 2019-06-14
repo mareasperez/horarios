@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Grupo
 from apps.carreras.models import Carrera
-from apps.ciclos.models import Ciclo
+#from apps.ciclos.models import Ciclo
 
 class GrupoSerializer(serializers.Serializer):
     #   modelo
@@ -16,7 +16,7 @@ class GrupoSerializer(serializers.Serializer):
     grupo_numero = serializers.IntegerField()
     grupo_anio = serializers.IntegerField()
     grupo_max_capacidad = serializers.IntegerField()
-    grupo_ciclo = serializers.PrimaryKeyRelatedField(queryset=Ciclo.objects.all())
+    #grupo_ciclo = serializers.PrimaryKeyRelatedField(queryset=Ciclo.objects.all())
     grupo_carrera = serializers.PrimaryKeyRelatedField(queryset=Carrera.objects.all())
 
     def create(self, validated_data):
