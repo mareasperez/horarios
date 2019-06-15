@@ -11,4 +11,4 @@ class Planificacion(models.Model):
     planificacion_anyo_lectivo = models.IntegerField(choices=YEAR_CHOICES,default=datetime.datetime.now().year)
     planificacion_semestre = models.CharField(choices=SEMESTRES,max_length=50)
     def __str__(self):
-        return self.componente_nombre
+        return "%s semestre %s"%(self.planificacion_anyo_lectivo,self.planificacion_semestre)
