@@ -3,3 +3,4 @@ recinto CRUD listo
 aula CRUD listo
 departamento CRUD listo
 carrera CRUD listo
+docente CRUD listo
