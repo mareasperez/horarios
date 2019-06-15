@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import ClaseConArgumento,ClaseSinArg
-app_name = "clases"
+from .views import ComponenteConArgumento,ComponenteSinArg
+app_name = "componentes"
 urlpatterns = [
-    path('',ClaseSinArg.as_view()),
-    path('<int:pk>', ClaseConArgumento.as_view())
+    path('',ComponenteSinArg.as_view()),
+    path('<int:pk>', ComponenteConArgumento.as_view())
 ]
 
 

@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/plan/',include('apps.plan_de_estudio.urls')),
     path('api/area/',include('apps.area.urls')),
     path('api/pde/',include('apps.plan_de_estudio.urls')),
+    path('api/componente/',include('apps.componentes.urls')),
 
 
     #path('api/clase/',include('apps.clases.urls')),
