@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/apps/departamento" />
       <excludeFolder url="file://$MODULE_DIR$/apps/docentes" />
       <excludeFolder url="file://$MODULE_DIR$/apps/facultades" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/plan_de_estudio" />
       <excludeFolder url="file://$MODULE_DIR$/apps/recintos" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.7 (Api)" jdkType="Python SDK" />

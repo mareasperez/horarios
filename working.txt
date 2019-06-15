@@ -4,3 +4,4 @@ aula CRUD listo
 departamento CRUD listo
 carrera CRUD listo
 docente CRUD listo
+pde CRUD listo
