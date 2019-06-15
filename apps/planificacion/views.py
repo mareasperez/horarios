@@ -24,7 +24,7 @@ class PlanificacionConArgumento(APIView):
             instance=saved_planificacion, data=planificacion, partial=True)
         if serializer.is_valid(raise_exception=True):
             planificacion_saved = serializer.save()
-        return Response({"success": "Planificacion '{}' updated successfully".format(planificacion_saved.planificacion_carrera)})
+        return Response({"success": "Planificacion: %s semestre %s creada satisfactoriamente"%(planificacion_saved.planificacion_anyo_lectivo,planificacion_saved.planificacion_semestre)})
 
     def delete(self, request, pk):
         planificacion = get_object_or_404(Planificacion.objects.all(), planificacion_id=pk)
@@ -44,4 +44,4 @@ class PlanificacionSinArg(APIView):
         serializer = PlanificacionSerializer(data=planificacion)
         if serializer.is_valid(raise_exception=True):
             planificacion_saved = serializer.save()
-        return Response({"success": "Planificacion: '{}' creada satisfactoriamente".format(planificacion_saved.planificacion_carrera)})
+        return Response({"success": "Planificacion: %s semestre %s creada satisfactoriamente" %(planificacion_saved.planificacion_anyo_lectivo, planificacion_saved.planificacion_semestre)})
