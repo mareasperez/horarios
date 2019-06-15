@@ -1,1 +1,2 @@
-facultad CRUD lista
+facultad CRUD listo
+recinto CRUD listo
