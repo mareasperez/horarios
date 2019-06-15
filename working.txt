@@ -1,3 +1,4 @@
 facultad CRUD listo
 recinto CRUD listo
 aula CRUD listo
+departamento CRUD listo
