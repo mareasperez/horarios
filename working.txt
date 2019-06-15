@@ -8,4 +8,4 @@ pde CRUD listo
 area CRUD listo
 docente_area CRUD listo
 componente CRUD listo
-planificacion CRUD listo
+planificacion CRUD listo xxx
