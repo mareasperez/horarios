@@ -1,0 +1,106 @@
+###################
+
+-> = llave primaria
+* = llave foranea
+
+###################
+
+facultad:{
+	->facultad_id: "id de la facultad"
+	facultad_nombre: "nombre de la facultad"							
+}																		
+
+departamento: {
+	->departamento_id: "id del departamento"
+	departamento_nombre: "nombre del departamento"
+	*departamento_facultad: " id de la facultad a la que pertenece el departamento"
+}
+
+carrera: {
+	->carrera_id: "id de la carrera"
+	carrera_nombre: "nombre de la carrera"
+	*carrera_departamento: "departamento_id(puede ser nulo)" 
+}
+
+docente: {
+	->docente_id: "id del profe"
+	docente_nombre: "nombre del docente"
+	docente_tipo_contrato: "tipo del contrato del docente(horario,planta)"
+	docente_inns: "numero inss del docente"
+	*docente_departamento_id: "departamento_id"
+}
+
+area: {
+	->area_id: "id"
+	area_nombre: "nombre del area"
+}
+
+docente_area: {
+	->da_id: "id"
+	*docente_departamento_id: "departamento_id"
+	*docente_area_id: "area_id"
+}
+
+plan_de_estudio: {
+	->pde_id: "id"
+	pde_nombre: "nombre"
+	pde_anyo: "anyo en el que se hixo el plan"
+	*pde_carrera_id: "carrera_id"
+}
+
+componente: {
+	-> componente_id: "id"
+	componente_nombre: "nombre de la clase"
+	componente_cht: "cantidad de horas teoricas de la clase"
+	componente_chp: "cantidad de horas teoricas de la clase"
+	componente_ciclo: "ciclo del componente[1,2,...10]"
+	*componente_pde_id: "pde_id id del plan de estudio"
+	*componente_area_id: "id de la area a la que pertenece el componente"
+}
+
+planificacion:{
+	->planificacion_id: "id"
+	planificacion_anyo_lectivo: "anyo al que pertenece la planificacion"
+	planificacion_semestre: "semestre al que pertenece la planificacion"
+}
+
+docente_horas: {
+	->dh_id: "id"
+	dh_horas_asi: "horas actualmente asignadas al docente"
+	dh_docente_id: "docente_id"
+	*dh_planificacion_id: "planificacion_id"
+}
+
+grupo: {
+	->grupo_id: "id"
+	grupo_numero: "numero de grupo"
+	grupo_cantidad_max: "cantidad maxima de estudiantes en el grupo"
+	grupo_tipo: "tipo de grupo (teorico, practico)"
+	grupo_horas_clase: "cantidas de horas de clase en el grupo"
+	*grupo_componente_id: "componente_id"
+	*grupo_docente_id: "docente_id"
+	*grupo_planificacion_id: "planificacion_id"
+}
+
+recinto: {
+	->recinto_id: "id"
+	recinto_nombre: "nombre del recinto"
+	recinto_ubicacion: "geotag del recinto"
+	*recinto_facultad_id: "facultad_id"
+}
+
+aula: {
+	->aula_id: "id"
+	aula_nombre: "nombre del aula"
+	aula_capcidad: "capacidad maxima de estudiantes en el aula"
+	aula_tipo: "tipo de aula (aula, laboratorio)"
+	*aula_recinto_id: "recinto_id"
+}
+
+horario: {
+	horario_id: "id"
+	horario_hora: "hora de la clase"
+	horario_dia: "dia de la clase"
+	horario_aula_id: "aula_id"
+	horario_grupo_id: "grupo_id rl grupo ya lleva docente y clase asignadas por lo tanto solo se necesita aqui la hora y el lugar"
+}
