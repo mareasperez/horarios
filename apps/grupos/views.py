@@ -24,7 +24,7 @@ class GrupoConArgumento(APIView):
             instance=saved_grupo, data=grupo, partial=True)
         if serializer.is_valid(raise_exception=True):
             grupo_saved = serializer.save()
-        return Response({"success": "Grupo '{}' updated successfully".format(grupo_saved.grupo_numero)})
+        return Response({"success": "Grupo %s de %s updated successfully"%(grupo_saved.grupo_numero,grupo_saved.grupo_componente)})
 
     def delete(self, request, pk):
         grupo = get_object_or_404(Grupo.objects.all(), grupo_id=pk)
@@ -37,11 +37,11 @@ class GrupoSinArg(APIView):
     def get(self, request):
         grupo = Grupo.objects.all()
         serializer = GrupoSerializer(grupo, many=True)
-        return Response({"grupo": serializer.data})
+        return Response({"grupos": serializer.data})
 
     def post(self, request):
         grupo = request.data.get('grupo')
         serializer = GrupoSerializer(data=grupo)
         if serializer.is_valid(raise_exception=True):
             grupo_saved = serializer.save()
-        return Response({"success": "Grupo: '{}' creada satisfactoriamente".format(grupo_saved.grupo_numero)})
+        return Response({"success": "Grupo %s de %s created successfully"%(grupo_saved.grupo_numero,grupo_saved.grupo_componente)})

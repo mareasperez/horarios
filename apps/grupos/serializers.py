@@ -1,34 +1,33 @@
 from rest_framework import serializers
+from apps.docentes.models import Docente
+from apps.componentes.models import Componente
+from  apps.planificacion.models import Planificacion
 from .models import Grupo
-from apps.carreras.models import Carrera
-#from apps.ciclos.models import Ciclo
+
 
 class GrupoSerializer(serializers.Serializer):
-    #   modelo
-    # grupo_id = models.IntegerField(primary_key=True)
-    # grupo_numero = models.IntegerField(default=1)
-    # grupo_anio =  models.IntegerField(('year'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
-    # grupo_max_capacidad = models.IntegerField(default=0)
-    # grupo_ciclo = models.ForeignKey(Ciclo,on_delete=models.CASCADE)
-    # grupo_carrera = models.ForeignKey(Carrera,on_delete=models.CASCADE)
-    
     grupo_id = serializers.IntegerField()
     grupo_numero = serializers.IntegerField()
-    grupo_anio = serializers.IntegerField()
     grupo_max_capacidad = serializers.IntegerField()
-    #grupo_ciclo = serializers.PrimaryKeyRelatedField(queryset=Ciclo.objects.all())
-    grupo_carrera = serializers.PrimaryKeyRelatedField(queryset=Carrera.objects.all())
+    grupo_tipo = serializers.CharField()
+    grupo_horas_clase = serializers.IntegerField()
+    grupo_modo = serializers.CharField()
+    grupo_componente = serializers.PrimaryKeyRelatedField(queryset=Componente.objects.all())
+    grupo_docente = serializers.PrimaryKeyRelatedField(queryset=Docente.objects.all())
+    grupo_planificacion = serializers.PrimaryKeyRelatedField(queryset=Planificacion.objects.all())
 
     def create(self, validated_data):
         return Grupo.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.grupo_id = validated_data.get('grupo_id', instance.grupo_id)
-        instance.grupo_numero= validated_data.get('grupo_nombre', instance.grupo_numero)
-        instance.grupo_anio = validated_data.get('grupo_anio', instance.grupo_anio)
+        instance.grupo_numero = validated_data.get('grupo_nombre', instance.grupo_numero)
         instance.grupo_max_capacidad = validated_data.get('grupo_max_capacidad',instance.grupo_max_capacidad)
-        instance.grupo_ciclo = validated_data.get('grupo_ciclo',instance.grupo_ciclo)
-        instance.grupo_carrera = validated_data.get('grupo_carrera',instance.grupo_carrera)
-
+        instance.grupo_tipo = validated_data.get('grupo_tipo', instance.grupo_tipo)
+        instance.grupo_horas_clase = validated_data.get('grupo_horas_clase', instance.grupo_horas_clase)
+        instance.grupo_modo = validated_data.get('grupo_modo', instance.grupo_modo)
+        instance.grupo_componente = validated_data.get('grupo_componente', instance.grupo_componente)
+        instance.grupo_docente = validated_data.get('grupo_docente', instance.grupo_docente)
+        instance.grupo_planificacion = validated_data.get('grupo_planificacion', instance.grupo_planificacion)
         instance.save()
         return instance
