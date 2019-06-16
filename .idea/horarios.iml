@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/apps/area" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/aulas" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/carreras" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/componentes" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/departamento" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/docente_area" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/docente_horas" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/docentes" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/facultades" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/grupos" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/plan_de_estudio" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/planificacion" />
-      <excludeFolder url="file://$MODULE_DIR$/apps/recintos" />
-    </content>
+    <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="Python 3.7 (Api)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
