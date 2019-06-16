@@ -32,6 +32,7 @@ urlpatterns = [
     path('api/componente/',include('apps.componentes.urls')),
     path('api/planificacion/',include('apps.planificacion.urls')),
     path('api/doho/',include('apps.docente_horas.urls')),
+    path('api/horario/',include('apps.horario.urls')),
 
 
 
