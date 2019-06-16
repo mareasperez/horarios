@@ -10,7 +10,7 @@ from .models import DocenteArea
 class DocenteAreaConArgumento(APIView):
     def get(self, request, pk):
         try:
-            docenteArea = DocenteArea.objects.get(docenteArea_id=pk)
+            docenteArea = DocenteArea.objects.get(da_area_id=pk)
             serializer = DocenteAreaSerializer(docenteArea)
             return Response({"docenteArea": serializer.data})
         except:
@@ -18,16 +18,16 @@ class DocenteAreaConArgumento(APIView):
 
     def put(self, request, pk):
         saved_docenteArea = get_object_or_404(
-            DocenteArea.objects.all(), docenteArea_id=pk)
+            DocenteArea.objects.all(), da_area_id=pk)
         docenteArea = request.data.get('docenteArea')
         serializer = DocenteAreaSerializer(
             instance=saved_docenteArea, data=docenteArea, partial=True)
         if serializer.is_valid(raise_exception=True):
             docenteArea_saved = serializer.save()
-        return Response({"success": "DocenteArea '{}' updated successfully".format(docenteArea_saved.docenteArea_nombre)})
+        return Response({"success": "DocenteArea '{}' updated successfully".format(docenteArea_saved.da_docente)})
 
     def delete(self, request, pk):
-        docenteArea = get_object_or_404(DocenteArea.objects.all(), docenteArea_id=pk)
+        docenteArea = get_object_or_404(DocenteArea.objects.all(), da_area_id=pk)
         docenteArea.delete()
         return Response({"message": "DocenteArea with id `{}` has been deleted.".format(pk)}, status=204)
         # return Response({"message": "DocenteArea with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
@@ -44,4 +44,4 @@ class DocenteAreaSinArg(APIView):
         serializer = DocenteAreaSerializer(data=docenteArea)
         if serializer.is_valid(raise_exception=True):
             docenteArea_saved = serializer.save()
-        return Response({"success": "DocenteArea: '{}' creada satisfactoriamente".format(docenteArea_saved.docenteArea_nombre)})
+        return Response({"success": "DocenteArea: '{}' creada satisfactoriamente".format(docenteArea_saved.da_docente)})

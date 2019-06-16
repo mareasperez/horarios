@@ -27,9 +27,12 @@ urlpatterns = [
     path('api/carrera/',include('apps.carreras.urls')),
     path('api/departamento/',include('apps.departamento.urls')),
     path('api/area/',include('apps.area.urls')),
+    path('api/doar/',include('apps.docente_area.urls')),
     path('api/pde/',include('apps.plan_de_estudio.urls')),
     path('api/componente/',include('apps.componentes.urls')),
     path('api/planificacion/',include('apps.planificacion.urls')),
+    path('api/doho/',include('apps.docente_horas.urls')),
+
 
 
     #path('api/clase/',include('apps.clases.urls')),

@@ -8,4 +8,4 @@ class DocenteArea(models.Model):
     da_docente = models.ForeignKey(Docente,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.da_id
+        return "%s %s"%(self.da_id,self.da_docente)

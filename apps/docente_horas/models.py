@@ -9,4 +9,4 @@ class DocenteHoras(models.Model):
     dh_planificacion = models.ForeignKey(Planificacion,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.dh_id
+        return "%s"%self.dh_id

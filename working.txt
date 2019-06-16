@@ -4,8 +4,8 @@ aula CRUD listo
 departamento CRUD listo
 carrera CRUD listo
 docente CRUD listo
-pde CRUD listo
+pde CRUD listo x
 area CRUD listo
-docente_area CRUD listo
+docente_area CRUD listo x
 componente CRUD listo
 planificacion CRUD listo xxx
