@@ -9,3 +9,4 @@ area CRUD listo
 docente_area CRUD listo x
 componente CRUD listo
 planificacion CRUD listo xxx
+docente_horas CRUD listo
