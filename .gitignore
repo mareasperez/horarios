@@ -1,7 +1,6 @@
 __pycache__
 migrations
 .vscode
-*.sqlite3
 .idea
 .vscode
 *.pyc
