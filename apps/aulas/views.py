@@ -5,7 +5,8 @@ from django.shortcuts import get_object_or_404
 # Propios imports
 from .serializers import AulaSerializer
 from .models import Aula
-
+#from apps.horario.clase import Chora
+from apps.horario.serializers import HorarioSerializer
 
 class AulaConArgumento(APIView):
     def get(self, request, pk):
@@ -34,14 +35,36 @@ class AulaConArgumento(APIView):
 
 
 class AulaSinArg(APIView):
+    dias = ['Lunes','Martes','Miercoles','jueves','Viernes']
+    horas = ['7','9','11','13','15','17']
     def get(self, request):
         aula = Aula.objects.all()
         serializer = AulaSerializer(aula, many=True)
         return Response({"aula": serializer.data})
 
     def post(self, request):
+        a = 0
         aula = request.data.get('aula')
         serializer = AulaSerializer(data=aula)
         if serializer.is_valid(raise_exception=True):
             aula_saved = serializer.save()
+            if aula_saved:
+                while a < 5:
+                    b=0
+                    while b < 6:
+                        Chora = {
+                                  "horario_dia": self.dias[a],
+                                  "horario_hora": self.horas[b],
+                                  "horario_aula": aula_saved.aula_id,
+                                  "horario_grupo": None,
+                                  "horario_vacio": True
+                            }
+                        horarioSerial = HorarioSerializer(data=Chora)
+                        if horarioSerial.is_valid(raise_exception=True):
+                            horarioSerial = horarioSerial.save()
+                        print("horario creado", horarioSerial)
+                        b+=1
+                    a+=1
+                    print(Chora)
+
         return Response({"success": "Aula: '{}' creada satisfactoriamente".format(aula_saved.aula_nombre)})
