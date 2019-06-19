@@ -7,6 +7,9 @@ class DocenteHoras(models.Model):
     dh_horas_asi = models.IntegerField()
     dh_docente = models.ForeignKey(Docente,on_delete=models.CASCADE)
     dh_planificacion = models.ForeignKey(Planificacion,on_delete=models.CASCADE)
-
+    class Meta:
+        verbose_name = "Docente Hora"
+        verbose_name_plural = "Horas de los Docentes"
+        ordering = ["-dh_id"]  # <=====
     def __str__(self):
-        return "%s"%self.dh_id
+        return "%s: %s: %s horas"%(self.dh_planificacion,self.dh_docente,self.dh_horas_asi)

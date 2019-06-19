@@ -5,7 +5,6 @@ from django.shortcuts import get_object_or_404
 # Propios imports
 from .serializers import AulaSerializer
 from .models import Aula
-#from apps.horario.clase import Chora
 from apps.horario.serializers import HorarioSerializer
 
 class AulaConArgumento(APIView):

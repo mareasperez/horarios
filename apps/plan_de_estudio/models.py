@@ -10,5 +10,9 @@ class PlanDeEstudio(models.Model):
     pde_nombre = models.CharField('nombre',max_length=50)
     pde_anyo = models.IntegerField('año', choices=YEAR_CHOICES,default=datetime.datetime.now().year)
     pde_carrera = models.ForeignKey(Carrera,on_delete=models.CASCADE,null=True)
+    class Meta:
+        verbose_name = "Plan de estudio"
+        verbose_name_plural = "Planes de estudio"
+        ordering = ["-pde_id"]  # <=====
     def __str__(self):
         return self.pde_nombre
