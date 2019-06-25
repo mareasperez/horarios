@@ -29,7 +29,7 @@ class FacultadListView(APIView):
     def delete(self, request, pk):
         facultad = get_object_or_404(Facultad.objects.all(), facultad_id=pk)
         facultad.delete()
-        return Response({"message": "Facultad with id `{}` has been deleted.".format(pk)}, status=204)
+        return Response({"message": "Facultad with id `{}` has been deleted.".format(pk)})
 
 
 class Facultadone(APIView):
