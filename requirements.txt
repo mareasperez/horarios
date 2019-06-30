@@ -2,3 +2,5 @@ django
 djangorestframework
 django-reset-migrations
 django-cors-headers
+channels
+channels_redis

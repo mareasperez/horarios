@@ -37,6 +37,7 @@ CORS_ORIGIN_WHITELIST = [
 
 # Application definition
 THIRD_PARTY_APPS = [
+    'channels',
     'corsheaders',
     'rest_framework',
     'reset_migrations',
@@ -63,9 +64,8 @@ LOCAL_APPS = [
     'apps.docente_area',
     'apps.planificacion',
     'apps.docente_horas',
-    'apps.horario'
-
-
+    'apps.horario',
+    'apps.websocket'
 ]
 
 INSTALLED_APPS =DJANGO_APPS+LOCAL_APPS+THIRD_PARTY_APPS
@@ -103,8 +103,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'horarios.wsgi.application'
-
-
+# Channels
+ASGI_APPLICATION = 'horarios.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
