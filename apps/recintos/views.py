@@ -41,6 +41,7 @@ class RecintoSinArg(APIView):
 
     def post(self, request):
         recinto = request.data.get('recinto')
+        print(recinto)
         serializer = RecintoSerializer(data=recinto)
         if serializer.is_valid(raise_exception=True):
             recinto_saved = serializer.save()
