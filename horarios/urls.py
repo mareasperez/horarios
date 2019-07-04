@@ -1,22 +1,6 @@
-"""horarios URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path,include
-from apps.facultades import views
-
+from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/facultad/', include('apps.facultades.urls')),
@@ -33,10 +17,8 @@ urlpatterns = [
     path('api/planificacion/',include('apps.planificacion.urls')),
     path('api/doho/',include('apps.docente_horas.urls')),
     path('api/horario/',include('apps.horario.urls')),
-
-
-
-    #path('api/clase/',include('apps.clases.urls')),
-    #path('api/horario/',include('apps.horario.urls')),
-    # path('api/ciclo/',include('apps.ciclos.urls')),
+    #path('api/chat/', include('apps.websocket.urls')),
+]
+urlpatterns += [
+    url(r'^websocket/', include('apps.websocket.urls')),
 ]
