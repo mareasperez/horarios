@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path,include
 from django.conf.urls import url
+from apps.websocket.views import HomeView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/facultad/', include('apps.facultades.urls')),
@@ -20,5 +21,5 @@ urlpatterns = [
     #path('api/chat/', include('apps.websocket.urls')),
 ]
 urlpatterns += [
-    url(r'^websocket/', include('apps.websocket.urls')),
+    path('',HomeView.as_view()),
 ]

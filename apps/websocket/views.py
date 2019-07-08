@@ -1,12 +1,5 @@
-# websocket/views.py
-from django.shortcuts import render
-from django.utils.safestring import mark_safe
-import json
+from django.views.generic import TemplateView
 
-def index(request):
-    return render(request, 'websocket/index.html', {})
 
-def room(request, room_name):
-    return render(request, 'websocket/room.html', {
-        'room_name_json': mark_safe(json.dumps(room_name))
-    })
+class HomeView(TemplateView):
+    template_name = "home.html"
