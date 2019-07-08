@@ -39,6 +39,7 @@ class RequestLogMiddleware(MiddlewareMixin):
             'run_time': time.time() - request.start_time,
         }
         if request.method in ['PUT', 'POST', 'PATCH']:
+            print("llego",log_data)
             log_data['request_body'] = json.loads(
                 str(request.req_body, 'utf-8'))
             if not response:
@@ -47,7 +48,7 @@ class RequestLogMiddleware(MiddlewareMixin):
                     log_data['response_body'] = response_body
 
         print('PETICION: ',log_data['request_method'],log_data['request_path'],log_data['request_body'])
-        return None
+        return log_data
 
     def process_response(self, request, response):
         """Log data using logger."""

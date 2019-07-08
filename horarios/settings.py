@@ -72,7 +72,7 @@ INSTALLED_APPS =DJANGO_APPS+LOCAL_APPS+THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     #my mid
-    'apps.mymid.middleware.RequestLogMiddleware',
+    #'apps.mymid.middleware.RequestLogMiddleware',
     #cors mid
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
