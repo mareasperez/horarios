@@ -15,6 +15,7 @@ def announce_new_horario(sender,instance,created,**kwargs):
         async_to_sync(channel_layer.group_send)(
             "cambios",{
                 "type":"cambios",
+                "model": "horario",
                 "event":"c",
                 "data":model_to_dict(instance)
                         }

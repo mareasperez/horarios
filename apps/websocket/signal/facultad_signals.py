@@ -24,7 +24,6 @@ def announce_new_facultad(sender,instance,created,**kwargs):
 def announce_update_facultad(sender,instance,created,**kwargs):
         if not created:
             print('se llamo al update')
-            dict_obj = model_to_dict(instance)
             channel_layer= get_channel_layer()
             async_to_sync(channel_layer.group_send)(
                 "cambios",{
@@ -37,7 +36,6 @@ def announce_update_facultad(sender,instance,created,**kwargs):
 @receiver(post_delete,sender=Facultad)
 def announce_del_facultad(sender,instance,**kwargs):
         print('se llamo al delete')
-        dict_obj = model_to_dict(instance)
         channel_layer= get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             "cambios",{
