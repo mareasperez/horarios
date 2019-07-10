@@ -3,7 +3,7 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
-
+from django.forms.models import model_to_dict
 @receiver(post_save,sender=Recinto)
 def announce_new_recinto(sender,instance,created,**kwargs):
     if created:
@@ -11,9 +11,9 @@ def announce_new_recinto(sender,instance,created,**kwargs):
         channel_layer= get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             "cambios",{
-                "type":"recinto.cambios",
-                "event":"New Recinto",
-                "recinto":instance.recinto_nombre
+                "type":"recinto",
+                "event":"c",
+                "data":model_to_dict(instance)
                         }
         )
 @receiver(post_save,sender=Recinto)
@@ -23,9 +23,9 @@ def announce_update_recinto(sender,instance,created,**kwargs):
             channel_layer= get_channel_layer()
             async_to_sync(channel_layer.group_send)(
                 "cambios",{
-                    "type":"recinto.cambios",
-                    "event":"Update Recinto",
-                    "recinto":instance.recinto_nombre
+                    "type":"recinto",
+                    "event":"u",
+                    "data":model_to_dict(instance)
                             }
             )
 @receiver(post_delete,sender=Recinto)
@@ -34,9 +34,9 @@ def announce_del_recinto(sender,instance,**kwargs):
         channel_layer= get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             "cambios",{
-                "type":"recinto.cambios",
-                "event":"Delete Recinto",
-                "recinto":instance.recinto_nombre
+                "type":"recinto",
+                "event":"d",
+                "data":model_to_dict(instance)
                         }
         )
 

@@ -11,13 +11,12 @@ from django.forms.models import model_to_dict
 def announce_new_facultad(sender,instance,created,**kwargs):
     if created:
         print('se llamo al create')
-        dict_obj = model_to_dict(instance)
         channel_layer= get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             "cambios",{
                 "type":"facultad",
                 "event":"c",
-                "facultad": dict_obj
+                "data":model_to_dict(instance)
                         }
         )
 @receiver(post_save,sender=Facultad)
@@ -30,7 +29,7 @@ def announce_update_facultad(sender,instance,created,**kwargs):
                 "cambios",{
                     "type":"facultad",
                     "event":"u",
-                    "facultad":dict_obj
+                    "data":model_to_dict(instance)
                             }
             )
 @receiver(post_delete,sender=Facultad)
@@ -42,7 +41,7 @@ def announce_del_facultad(sender,instance,**kwargs):
             "cambios",{
                 "type":"facultad",
                 "event":"d",
-                "facultad":dict_obj
+                "data":model_to_dict(instance)
                         }
         )
 
