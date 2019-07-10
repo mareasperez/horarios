@@ -14,10 +14,6 @@ class FacultadConsumer(AsyncJsonWebsocketConsumer):
         print(f"Removed {self.channel_name} channel to cambios")
 
     ## envio de los mensajes
-    async def facultad(self, event):
+    async def cambios(self, event):
         await self.send_json(event)
-        print(f"Got message {event} at {self.channel_name}")
-
-    async def recinto(self,event):
-        await  self.send_json(event)
         print(f"Got message {event} at {self.channel_name}")

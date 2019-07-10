@@ -5,5 +5,6 @@ class WebsocketConfig(AppConfig):
     name = 'apps.websocket'
 
     def ready(self):
-        from .signal import facultad_signals
-        from .signal import  recinto_signals
+         from .signal import facultad_signals
+         from .signal import  recinto_signals
+        #from . import signals

@@ -14,7 +14,8 @@ def announce_new_facultad(sender,instance,created,**kwargs):
         channel_layer= get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             "cambios",{
-                "type":"facultad",
+                "type":"cambios",
+                "model":"facultad",
                 "event":"c",
                 "data":model_to_dict(instance)
                         }
@@ -27,7 +28,8 @@ def announce_update_facultad(sender,instance,created,**kwargs):
             channel_layer= get_channel_layer()
             async_to_sync(channel_layer.group_send)(
                 "cambios",{
-                    "type":"facultad",
+                    "type":"cambios",
+                    "model":"facultad",
                     "event":"u",
                     "data":model_to_dict(instance)
                             }
@@ -39,7 +41,8 @@ def announce_del_facultad(sender,instance,**kwargs):
         channel_layer= get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             "cambios",{
-                "type":"facultad",
+                "type":"cambios",
+                "model": "facultad",
                 "event":"d",
                 "data":model_to_dict(instance)
                         }
