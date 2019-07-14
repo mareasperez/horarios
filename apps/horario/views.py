@@ -45,3 +45,23 @@ class HorarioSinArg(APIView):
         if serializer.is_valid(raise_exception=True):
             horario_saved = serializer.save()
         return Response({"success": "Horario aula %s hora %s created successfully"%(horario_saved.horario_aula,horario_saved.horario_hora)})
+
+
+class HorarioByGroup(APIView):
+
+    def get(self,request, id):
+        try:
+               horario =  Horario.objects.filter(horario_grupo = id)
+               serializer = HorarioSerializer(horario,many=True)
+               return Response({"horario": serializer.data})
+        except:
+            return Response({"Detail": "not found"})
+class HorarioByDocente(APIView):
+
+    def get(self,request, id):
+        try:
+               horario =  Horario.objects.filter(horario_docente = id)
+               serializer = HorarioSerializer(horario,many=True)
+               return Response({"horario": serializer.data})
+        except:
+            return Response({"Detail": "not found"})
