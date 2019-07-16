@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 # Propios imports
+from apps.grupos.models import Grupo
 from .serializers import HorarioSerializer
 from .models import Horario
 
@@ -47,40 +47,28 @@ class HorarioByID(APIView):
         # return Response({"message": "Horario with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
+class HorarioMixed(APIView):
 
-class HorarioByGroup(APIView):
-
-    def get(self,request, id):
-        try:
-               horario =  Horario.objects.filter(horario_grupo = id)
-               if not horario:
-                   return Response({"Detail": "not found"})
-               serializer = HorarioSerializer(horario,many=True)
-               return Response({"horario": serializer.data})
-        except:
+    def get(self,request, clave,value):
+        if clave == 'horario_aula':
+            horario =  Horario.objects.filter(horario_aula =value)
+        elif clave == 'horario_docente':
+            horario =  Horario.objects.filter(horario_grupo__grupo_docente =value)
+        elif clave == 'horario_vacio':
+            horario =  Horario.objects.filter(horario_vacio =value)
+        elif clave == 'horario_grupo':
+            horario =  Horario.objects.filter(horario_grupo =value)
+        elif clave == 'horario_aula':
+            horario =  Horario.objects.filter(horario_hora =value)
+        elif clave == 'horario_dia':
+            horario =  Horario.objects.filter(horario_dia =value)
+        elif clave == 'horario_hora':
+            horario =  Horario.objects.filter(horario_hora =value)
+        else:
             return Response({"Detail": "not found"})
-
-
-class HorarioByDocente(APIView):
-    def get(self,request, id):
-        try:
-               horario =  Horario.objects.filter(horario_docente = id)
-               if not horario:
-                   return Response({"Detail": "not found"})
-               serializer = HorarioSerializer(horario,many=True)
-               return Response({"horario": serializer.data})
-        except:
+        if not horario:
             return Response({"Detail": "not found"})
+        serializer = HorarioSerializer(horario,many=True,allow_null=True)
+        return Response({"horario": serializer.data})
 
 
-class HorarioByAula(APIView):
-
-    def get(self,request, id):
-        try:
-            horario =  Horario.objects.filter(horario_aula =id)
-            if not horario:
-                return Response({"Detail": "not found"})
-            serializer = HorarioSerializer(horario,many=True,allow_null=True)
-            return Response({"horario": serializer.data})
-        except:
-            return Response({"Detail": "not found"})
