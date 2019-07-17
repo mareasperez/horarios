@@ -1,5 +1,7 @@
 
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 class FacultadConsumer(AsyncJsonWebsocketConsumer):
