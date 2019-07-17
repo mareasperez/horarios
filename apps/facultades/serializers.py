@@ -1,5 +1,8 @@
 from rest_framework import serializers
+
 from apps.facultades.models import Facultad
+
+
 # class FacultadSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = Facultad

@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import GrupoConArgumento,GrupoSinArg
+
+from .views import GrupoConArgumento, GrupoSinArg
+
 app_name = "grupos"
 urlpatterns = [
     path('',GrupoSinArg.as_view()),

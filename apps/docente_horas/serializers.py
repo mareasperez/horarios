@@ -1,7 +1,10 @@
 from rest_framework import serializers
-from .models import DocenteHoras
+
 from apps.docentes.models import Docente
 from apps.planificacion.models import Planificacion
+from .models import DocenteHoras
+
+
 class DocenteHorasSerializer(serializers.Serializer):
     dh_id = serializers.IntegerField()
     dh_horas_asi = serializers.IntegerField()

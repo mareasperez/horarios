@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import ComponenteConArgumento,ComponenteSinArg
+
+from .views import ComponenteConArgumento, ComponenteSinArg
+
 app_name = "componentes"
 urlpatterns = [
     path('',ComponenteSinArg.as_view()),

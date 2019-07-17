@@ -4,13 +4,13 @@ Uses a logger configured by the name of django.request
 to log all requests and responses according to configuration
 specified for django.request.
 """
+import json
 # import json
 import logging
-from django.utils.deprecation import MiddlewareMixin
-
 import socket
 import time
-import json
+
+from django.utils.deprecation import MiddlewareMixin
 
 request_logger = logging.getLogger('django.request')
 

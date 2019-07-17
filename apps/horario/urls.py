@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import HorarioByID,HorarioAll,HorarioMixed
+
+from .views import HorarioByID, HorarioAll, HorarioMixed
+
 app_name = "horario"
 urlpatterns = [
     path('',HorarioAll.as_view()),

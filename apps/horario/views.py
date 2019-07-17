@@ -1,10 +1,10 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.shortcuts import get_object_or_404
-# Propios imports
-from apps.grupos.models import Grupo
-from .serializers import HorarioSerializer
+
 from .models import Horario
+# Propios imports
+from .serializers import HorarioSerializer
 
 
 class HorarioAll(APIView):

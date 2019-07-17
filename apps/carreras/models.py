@@ -1,5 +1,8 @@
 from django.db import models
+
 from apps.departamento.models import Departamento
+
+
 # Create your models here.
 class Carrera(models.Model):
     carrera_nombre = models.CharField(max_length=50)

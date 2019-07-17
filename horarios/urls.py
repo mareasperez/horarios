@@ -1,7 +1,9 @@
 from django.contrib import admin
-from django.urls import path,include
-from django.conf.urls import url
+from django.urls import path, include
+
+from apps.autenticacion.views import LoginView
 from apps.websocket.views import HomeView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/facultad/', include('apps.facultades.urls')),
@@ -22,4 +24,5 @@ urlpatterns = [
 ]
 urlpatterns += [
     path('',HomeView.as_view()),
+    path('api/auth/',LoginView.as_view())
 ]

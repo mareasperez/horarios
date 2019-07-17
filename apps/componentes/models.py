@@ -1,7 +1,9 @@
 from django.db import models
-from apps.plan_de_estudio.models import PlanDeEstudio
+
 from apps.area.models import Area
-from  apps.carreras.models import Carrera
+from apps.plan_de_estudio.models import PlanDeEstudio
+
+
 # Create your models here.
 class Componente(models.Model):
     componente_nombre = models.CharField(max_length=50)

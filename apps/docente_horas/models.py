@@ -1,6 +1,9 @@
 from django.db import models
+
 from apps.docentes.models import Docente
 from apps.planificacion.models import Planificacion
+
+
 # Create your models here.
 class DocenteHoras(models.Model):
     dh_id = models.IntegerField(primary_key=True)

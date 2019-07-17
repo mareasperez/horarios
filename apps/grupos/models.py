@@ -1,9 +1,11 @@
 from django.db import models
-from apps.docentes.models import Docente
+
 from apps.componentes.models import Componente
-from  apps.planificacion.models import Planificacion
+from apps.docentes.models import Docente
+from apps.planificacion.models import Planificacion
+
+
 # Create your models here.
-import datetime
 class Grupo(models.Model):
     grupo_id = models.IntegerField(primary_key=True)
     grupo_numero = models.IntegerField(default=1)

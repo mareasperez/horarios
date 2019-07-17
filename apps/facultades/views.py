@@ -1,13 +1,17 @@
-from rest_framework import serializers
-from apps.facultades.models import Facultad
-from .serializers import FacultadSerializer
-from rest_framework import generics
 from django.shortcuts import get_object_or_404
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.facultades.models import Facultad
+from .serializers import FacultadSerializer
+
 
 class FacultadListView(APIView):
+
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             facultades = Facultad.objects.get(facultad_id=pk)
@@ -33,6 +37,8 @@ class FacultadListView(APIView):
 
 
 class Facultadone(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         try:
             facultades = Facultad.objects.all()

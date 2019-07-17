@@ -1,5 +1,8 @@
 from django.db import models
+
 from apps.facultades.models import Facultad
+
+
 # Create your models here.
 
 

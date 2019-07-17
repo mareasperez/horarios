@@ -1,6 +1,8 @@
 from rest_framework import serializers
-from .models import Aula
+
 from apps.recintos.models import Recinto
+from .models import Aula
+
 
 class AulaSerializer(serializers.Serializer):
     aula_nombre = serializers.CharField(max_length=50)

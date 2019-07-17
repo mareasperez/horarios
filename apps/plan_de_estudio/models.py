@@ -1,7 +1,10 @@
-from django.db import models
-from apps.carreras.models import Carrera
 # Create your models here.
 import datetime
+
+from django.db import models
+
+from apps.carreras.models import Carrera
+
 YEAR_CHOICES = []
 for r in range(2000, (datetime.datetime.now().year+2)):
     YEAR_CHOICES.append((r,r))

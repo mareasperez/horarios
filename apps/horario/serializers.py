@@ -1,7 +1,9 @@
 from rest_framework import serializers
-from .models import Horario
+
 from apps.aulas.models import Aula
 from apps.grupos.models import Grupo
+from .models import Horario
+
 
 class HorarioSerializer(serializers.Serializer):
     horario_id = serializers.SkipField()

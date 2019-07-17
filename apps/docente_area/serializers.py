@@ -1,7 +1,10 @@
 from rest_framework import serializers
-from .models import DocenteArea
-from apps.docentes.models import Docente
+
 from apps.area.models import Area
+from apps.docentes.models import Docente
+from .models import DocenteArea
+
+
 class DocenteAreaSerializer(serializers.Serializer):
     da_id = serializers.IntegerField()
     da_area = serializers.PrimaryKeyRelatedField(queryset=Area.objects.all())

@@ -1,6 +1,8 @@
 from rest_framework import serializers
-from .models import Recinto
+
 from apps.facultades.models import Facultad
+from .models import Recinto
+
 
 class RecintoSerializer(serializers.Serializer):
     recinto_nombre = serializers.CharField(max_length=50)

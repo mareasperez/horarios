@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from rest_framework.response import Response
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.shortcuts import get_object_or_404
+
+from apps.horario.serializers import HorarioSerializer
+from .models import Aula
 # Propios imports
 from .serializers import AulaSerializer
-from .models import Aula
-from apps.horario.serializers import HorarioSerializer
+
 
 class AulaConArgumento(APIView):
     def get(self, request, pk):

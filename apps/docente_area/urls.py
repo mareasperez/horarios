@@ -1,6 +1,9 @@
-from django.contrib import admin
 from django.urls import path
 from .views import DocenteAreaConArgumento,DocenteAreaSinArg
+from django.urls import path
+
+from .views import DocenteAreaConArgumento, DocenteAreaSinArg
+
 app_name = "docenteArea"
 urlpatterns = [
     path('',DocenteAreaSinArg.as_view()),

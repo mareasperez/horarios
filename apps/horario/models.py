@@ -1,9 +1,10 @@
+import datetime
+
 from django.db import models
+
 from apps.aulas.models import Aula
 from apps.grupos.models import Grupo
 
-
-import datetime
 YEAR_CHOICES = []
 for r in range(2000, (datetime.datetime.now().year+2)):
     YEAR_CHOICES.append((r,r))

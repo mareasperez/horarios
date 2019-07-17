@@ -1,9 +1,11 @@
-from apps.componentes.models import Componente
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
 from django.forms.models import model_to_dict
+
+from apps.componentes.models import Componente
+
 
 # {type:"componente", event:"crud"(solo una letra), data:[ componenteModel, componenteModel... ]}
 

@@ -1,6 +1,9 @@
 from django.db import models
+
 from apps.area.models import Area
 from apps.docentes.models import Docente
+
+
 # Create your models here.
 class DocenteArea(models.Model):
     da_id = models.IntegerField(primary_key=True)

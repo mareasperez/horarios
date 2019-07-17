@@ -1,10 +1,9 @@
-from rest_framework import serializers
-from .models import Area
-from .serializers import AreaSerializer
-from rest_framework import generics
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from .models import Area
+from .serializers import AreaSerializer
 
 
 class AreaListView(APIView):

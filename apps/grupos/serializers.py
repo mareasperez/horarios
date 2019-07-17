@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from apps.docentes.models import Docente
+
 from apps.componentes.models import Componente
-from  apps.planificacion.models import Planificacion
+from apps.docentes.models import Docente
+from apps.planificacion.models import Planificacion
 from .models import Grupo
 
 

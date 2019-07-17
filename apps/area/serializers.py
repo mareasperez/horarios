@@ -1,5 +1,7 @@
 from rest_framework import serializers
+
 from .models import Area
+
 
 class AreaSerializer(serializers.Serializer):
     area_nombre = serializers.CharField(max_length=50)

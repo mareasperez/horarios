@@ -1,6 +1,8 @@
 from rest_framework import serializers
-from .models import PlanDeEstudio
+
 from apps.carreras.models import Carrera
+from .models import PlanDeEstudio
+
 
 class PlanDeEstudioSerializer(serializers.Serializer):
     pde_nombre = serializers.CharField(max_length=50)

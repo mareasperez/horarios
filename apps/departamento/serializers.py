@@ -1,6 +1,8 @@
 from rest_framework import serializers
-from .models import Departamento
+
 from apps.facultades.models import Facultad
+from .models import Departamento
+
 
 class DepartamentoSerializer(serializers.Serializer):
     departamento_nombre = serializers.CharField(max_length=50)

@@ -1,7 +1,10 @@
 from rest_framework import serializers
-from .models import Componente
+
 from apps.area.models import Area
 from apps.plan_de_estudio.models import PlanDeEstudio
+from .models import Componente
+
+
 class ComponenteSerializer(serializers.Serializer):
     componente_id = serializers.IntegerField()
     componente_nombre = serializers.CharField(max_length=50)

@@ -1,6 +1,8 @@
 from rest_framework import serializers
-from .models import Carrera
+
 from apps.departamento.models import Departamento
+from .models import Carrera
+
 
 class CarreraSerializer(serializers.Serializer):
     # carrera_nombre = models.CharField(max_length=50)
