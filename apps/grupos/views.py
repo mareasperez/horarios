@@ -10,6 +10,8 @@ from .serializers import GrupoSerializer
 
 
 class GrupoConArgumento(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             grupo = Grupo.objects.get(grupo_id=pk)
@@ -36,6 +38,8 @@ class GrupoConArgumento(APIView):
 
 
 class GrupoSinArg(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         grupo = Grupo.objects.all()
         serializer = GrupoSerializer(grupo, many=True)

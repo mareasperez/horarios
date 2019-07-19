@@ -4,16 +4,17 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
-class FacultadConsumer(AsyncJsonWebsocketConsumer):
-
+class Consumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
-        await self.accept()
-        await self.channel_layer.group_add("cambios", self.channel_name)
-        print(f"Added {self.channel_name} channel to cambios")
+        if self.scope['user'].id:
+            await self.accept()
+            await self.channel_layer.group_add("cambios", self.channel_name)
+            print(f"Added {self.channel_name} channel to cambios")
 
     async def disconnect(self, close_code):
-        await self.channel_layer.group_discard("cambios", self.channel_name)
-        print(f"Removed {self.channel_name} channel to cambios")
+        if self.scope['user'].id:
+            await self.channel_layer.group_discard("cambios", self.channel_name)
+            print(f"Removed {self.channel_name} channel to cambios")
 
     ## envio de los mensajes
     async def cambios(self, event):

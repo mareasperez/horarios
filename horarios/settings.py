@@ -66,7 +66,8 @@ LOCAL_APPS = [
     'apps.planificacion',
     'apps.docente_horas',
     'apps.horario',
-    'apps.websocket'
+    'apps.websocket',
+    'apps.mymid',
 ]
 
 INSTALLED_APPS =DJANGO_APPS+LOCAL_APPS+THIRD_PARTY_APPS
@@ -74,6 +75,7 @@ INSTALLED_APPS =DJANGO_APPS+LOCAL_APPS+THIRD_PARTY_APPS
 MIDDLEWARE = [
     #my mid
     #'apps.mymid.middleware.RequestLogMiddleware',
+    #'apps.mymid.authmid.TokenAuthMiddleware',
     #cors mid
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',

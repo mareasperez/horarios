@@ -10,6 +10,8 @@ from .serializers import ComponenteSerializer
 
 
 class ComponenteConArgumento(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             componente = Componente.objects.get(componente_id=pk)
@@ -36,6 +38,8 @@ class ComponenteConArgumento(APIView):
 
 
 class ComponenteSinArg(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         componente = Componente.objects.all()
         serializer = ComponenteSerializer(componente, many=True)

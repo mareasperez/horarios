@@ -10,6 +10,8 @@ from .serializers import RecintoSerializer
 
 
 class RecintoConArgumento(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             recinto = Recinto.objects.get(recinto_id=pk)
@@ -36,6 +38,8 @@ class RecintoConArgumento(APIView):
 
 
 class RecintoSinArg(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         recinto = Recinto.objects.all()
         serializer = RecintoSerializer(recinto, many=True)

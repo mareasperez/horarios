@@ -10,6 +10,8 @@ from .serializers import PlanificacionSerializer
 
 
 class PlanificacionConArgumento(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             planificacion = Planificacion.objects.get(planificacion_id=pk)
@@ -36,6 +38,8 @@ class PlanificacionConArgumento(APIView):
 
 
 class PlanificacionSinArg(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         planificacion = Planificacion.objects.all()
         serializer = PlanificacionSerializer(planificacion, many=True)
