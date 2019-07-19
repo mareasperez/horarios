@@ -4,7 +4,7 @@ from .models import Planificacion
 
 
 class PlanificacionSerializer(serializers.Serializer):
-    planificacion_id = serializers.IntegerField()
+    planificacion_id = serializers.IntegerField(allow_null=True)
     planificacion_anyo_lectivo = serializers.IntegerField()
     planificacion_semestre = serializers.IntegerField()
 

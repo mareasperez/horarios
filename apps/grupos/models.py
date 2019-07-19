@@ -7,7 +7,7 @@ from apps.planificacion.models import Planificacion
 
 # Create your models here.
 class Grupo(models.Model):
-    grupo_id = models.IntegerField(primary_key=True)
+    grupo_id = models.AutoField(primary_key=True)
     grupo_numero = models.IntegerField(default=1)
     grupo_max_capacidad = models.IntegerField(default=0)
     grupo_tipo = models.CharField(default='teorico',max_length=50)

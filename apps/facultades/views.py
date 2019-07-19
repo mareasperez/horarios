@@ -50,7 +50,6 @@ class Facultadone(APIView):
 
     def post(self, request):
         facultad = request.data.get('facultad')
-        print(facultad)
         serializer = FacultadSerializer(data=facultad)
         if serializer.is_valid(raise_exception=True):
             facultad_saved = serializer.save()

@@ -8,7 +8,7 @@ from apps.facultades.models import Facultad
 
 class Departamento(models.Model):
     departamento_nombre = models.CharField(max_length=50)
-    departamento_id = models.IntegerField(primary_key=True)
+    departamento_id = models.AutoField(primary_key=True)
     departamento_facultad = models.ForeignKey(Facultad,on_delete=models.CASCADE)
     def __str__(self):
         return self.departamento_nombre

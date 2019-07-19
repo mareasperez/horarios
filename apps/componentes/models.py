@@ -7,7 +7,7 @@ from apps.plan_de_estudio.models import PlanDeEstudio
 # Create your models here.
 class Componente(models.Model):
     componente_nombre = models.CharField(max_length=50)
-    componente_id = models.IntegerField(primary_key=True)
+    componente_id = models.AutoField(primary_key=True)
     componente_chp = models.IntegerField(default=0)
     componente_cht = models.IntegerField(default=0)
     componente_ciclo = models.IntegerField(default=0)

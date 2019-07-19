@@ -5,7 +5,7 @@ from .models import Area
 
 class AreaSerializer(serializers.Serializer):
     area_nombre = serializers.CharField(max_length=50)
-    area_id = serializers.IntegerField()
+    area_id = serializers.IntegerField(allow_null=True)
 
     def create(self, validated_data):
         return Area.objects.create(**validated_data)

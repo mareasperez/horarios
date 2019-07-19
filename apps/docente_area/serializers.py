@@ -6,7 +6,7 @@ from .models import DocenteArea
 
 
 class DocenteAreaSerializer(serializers.Serializer):
-    da_id = serializers.IntegerField()
+    da_id = serializers.IntegerField(allow_null=True)
     da_area = serializers.PrimaryKeyRelatedField(queryset=Area.objects.all())
     da_docente = serializers.PrimaryKeyRelatedField(queryset=Docente.objects.all())
 

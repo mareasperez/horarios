@@ -7,7 +7,7 @@ from .models import Grupo
 
 
 class GrupoSerializer(serializers.Serializer):
-    grupo_id = serializers.IntegerField()
+    grupo_id = serializers.IntegerField(allow_null=True)
     grupo_numero = serializers.IntegerField()
     grupo_max_capacidad = serializers.IntegerField()
     grupo_tipo = serializers.CharField()

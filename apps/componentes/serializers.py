@@ -6,7 +6,7 @@ from .models import Componente
 
 
 class ComponenteSerializer(serializers.Serializer):
-    componente_id = serializers.IntegerField()
+    componente_id = serializers.IntegerField(allow_null=True)
     componente_nombre = serializers.CharField(max_length=50)
     componente_chp = serializers.IntegerField()
     componente_cht = serializers.IntegerField()

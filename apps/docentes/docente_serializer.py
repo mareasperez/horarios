@@ -6,7 +6,7 @@ from .models import Docente
 
 class DocenteSerializer(serializers.Serializer):
     docente_nombre = serializers.CharField(max_length=50)
-    docente_id = serializers.IntegerField()
+    docente_id = serializers.IntegerField(allow_null=True)
 #   docente_departamento = serializers.CharField(max_length=50) retorna el string del nombre
     docente_departamento = serializers.PrimaryKeyRelatedField(queryset=Departamento.objects.all()) #retorna el id de la departamento
     docente_tipo_contrato = serializers.CharField(max_length=50)

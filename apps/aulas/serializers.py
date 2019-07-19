@@ -6,7 +6,7 @@ from .models import Aula
 
 class AulaSerializer(serializers.Serializer):
     aula_nombre = serializers.CharField(max_length=50)
-    aula_id = serializers.IntegerField()
+    aula_id = serializers.IntegerField(allow_null=True)
     aula_tipo = serializers.IntegerField()
     aula_capacidad = serializers.IntegerField()
     aula_recinto = serializers.PrimaryKeyRelatedField(queryset=Recinto.objects.all())

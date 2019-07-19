@@ -6,10 +6,10 @@ from .models import Carrera
 
 class CarreraSerializer(serializers.Serializer):
     # carrera_nombre = models.CharField(max_length=50)
-    # carrera_id = models.IntegerField(primary_key=True)
+    # carrera_id = models.AutoField(primary_key=True)
     # carrera_facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE)
     carrera_nombre = serializers.CharField(max_length=50)
-    carrera_id = serializers.IntegerField()
+    carrera_id = serializers.IntegerField(allow_null=True)
     carrera_departamento = serializers.PrimaryKeyRelatedField(queryset=Departamento.objects.all())
 
     def create(self, validated_data):

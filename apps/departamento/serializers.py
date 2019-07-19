@@ -6,7 +6,7 @@ from .models import Departamento
 
 class DepartamentoSerializer(serializers.Serializer):
     departamento_nombre = serializers.CharField(max_length=50)
-    departamento_id = serializers.IntegerField()
+    departamento_id = serializers.IntegerField(allow_null=True)
     departamento_facultad = serializers.PrimaryKeyRelatedField(queryset=Facultad.objects.all())
 
     def create(self, validated_data):

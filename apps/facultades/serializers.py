@@ -11,7 +11,7 @@ from apps.facultades.models import Facultad
 
 class FacultadSerializer(serializers.Serializer):
     facultad_nombre = serializers.CharField(max_length=50)
-    facultad_id = serializers.IntegerField()
+    facultad_id = serializers.IntegerField(allow_null=True)
 
     def create(self, validated_data):
         return Facultad.objects.create(**validated_data)

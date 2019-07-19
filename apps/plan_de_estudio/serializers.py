@@ -6,7 +6,7 @@ from .models import PlanDeEstudio
 
 class PlanDeEstudioSerializer(serializers.Serializer):
     pde_nombre = serializers.CharField(max_length=50)
-    pde_id = serializers.IntegerField()
+    pde_id = serializers.IntegerField(allow_null=True)
     pde_anyo = serializers.IntegerField()
     pde_carrera = serializers.PrimaryKeyRelatedField(queryset=Carrera.objects.all())
 

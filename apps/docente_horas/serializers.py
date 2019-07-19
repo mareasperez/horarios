@@ -6,7 +6,7 @@ from .models import DocenteHoras
 
 
 class DocenteHorasSerializer(serializers.Serializer):
-    dh_id = serializers.IntegerField()
+    dh_id = serializers.IntegerField(allow_null=True)
     dh_horas_asi = serializers.IntegerField()
     dh_docente = serializers.PrimaryKeyRelatedField(queryset=Docente.objects.all())
     dh_planificacion = serializers.PrimaryKeyRelatedField(queryset=Planificacion.objects.all())
