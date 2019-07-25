@@ -15,7 +15,9 @@ bien, Aunque necesitas instalar todos los requisitos:
 En mi Caso yo utilizare [*MiniConda*](https://hcosta.github.io/instalardjango.com/) como gestor de entornos virtuales pero tambien se puede usar VirtualEnv eso es gusto de cada quien.  
 ## 2- Servidor PostgreSql
 En este requisito es necesario tener un usuario y una base de datos sobre la cual se pueda trabajar con django si no tienes una puedes seguir el siguiente ejemplo para tener una base de datos local:
+<br>
 [Ubuntu](https://medium.com/crehana/creaci%C3%B3n-de-usuario-en-postgresql-10-4-y-ubuntu-18-04-9e80fe077f7e) 
+<br>
 [Windows](https://parzibyte.me/blog/2019/04/05/instalar-postgresql-11-windows/)
 También se puede tener una base de datos remota ya que por de debajo solo se realizan peticiones a un motor de base de datos así que no importa si esta en nuestra maquina local o una nube un ejemplo para tener una DB remota podria ser usar [ElephantSql]({[https://www.elephantsql.com/](https://www.elephantsql.com/)})  que solamente tendriamos que crearnos una cuenta y ya podriamos crearnos una base de datos remota y de manera gratuita, obviamente con sus limitaciones.
 ## 3- Requirements.txt
