@@ -21,18 +21,33 @@ En este requisito es necesario tener un usuario y una base de datos sobre la cua
 [Windows](https://parzibyte.me/blog/2019/04/05/instalar-postgresql-11-windows/)
 <br>
 
-También se puede tener una base de datos remota ya que por de debajo solo se realizan peticiones a un motor de base de datos así que no importa si esta en nuestra maquina local o una nube un ejemplo para tener una DB remota podria ser usar [ElephantSql]({[https://www.elephantsql.com/](https://www.elephantsql.com/)})  que solamente tendriamos que crearnos una cuenta y ya podriamos crearnos una base de datos remota y de manera gratuita, obviamente con sus limitaciones.
+También se puede tener una base de datos remota ya que por de debajo solo se realizan peticiones a un motor de base de datos así que no importa si esta en nuestra maquina local o una nube un ejemplo para tener una DB remota podria ser usar [ElephantSql](https://www.elephantsql.com/)  que solamente tendriamos que crearnos una cuenta y ya podriamos crearnos una base de datos remota y de manera gratuita, obviamente con sus limitaciones.
 ## 3- Requirements.txt
-Una vez teniendo [PostrgeSql](https://gitlab.com/mareasperez7/horarios/blob/master/README.md#3-requirementstxt) y [ Python](https://gitlab.com/mareasperez7/horarios/blob/master/README.md#1-python-miniconda) instalados procederemos a instalar los modulos que python necesita para ejecutar el app.
+Una vez teniendo [PostrgeSql](https://gitlab.com/mareasperez7/horarios/blob/master/README.md#3-requirementstxt) y [ Python](https://gitlab.com/mareasperez7/horarios/blob/master/README.md#1-python-miniconda) instalados procederemos a instalar los módulos que python necesita para ejecutar el app para ello lo haremos dentro de un entorno virtual.
+### Entorno Virtual
+
+  
+Es mejor usar la herramienta `miniconda` de python para compilar locamente:
+
+```sh
+$ conda create -n NombreEntorno python==XXX
+```
+Donde `XXX`es la versión de python que se utilizara. El comando quedaría así:
+```sh
+$ conda create -n Test python==3.7.3
+```
+luego toca activar nuestro entorno virtual con el siguiente comando:
+```sh
+$ conda activate Test
+```
+una vez teniendo el entorno activado se procede a instalar los requisitos.
 ##### Dentro de la carpeta del proyecto ejecutamos:
 ```sh
 $ pip install -r Requirements.txt
 ```
+#### Building
+Una vez instalados todos los módulos. Procedemos a migrar los modelos a la base de datos para asi ya poder arrancar los
 
-
-
-
-## Building
 
 It is best to use the python `virtualenv` tool to build locally:
 
