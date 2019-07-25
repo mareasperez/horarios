@@ -1,22 +1,22 @@
 # Django Rest Api For University Schedules
 
 Esta es una app de ejemplo en la que se usa
-[Django](https://www.djangoproject.com/(https://www.djangoproject.com/)) para hacerla mas fácil de construir.
-[Django-Rest-Framework](https://www.django-rest-framework.org/(https://www.django-rest-framework.org/)) para tener todas las funcionalidades de REST en nuestra app.
-[Django-Channels](https://channels.readthedocs.io/en/latest/(https://channels.readthedocs.io/en/latest/)) para tener funcionalidades de los WebSockets e implementar comunicación en tiempo real entre los múltiples usuarios del app.
+[Django](https://www.djangoproject.com/) para hacerla mas fácil de construir.
+[Django-Rest-Framework](https://www.django-rest-framework.org/) para tener todas las funcionalidades de REST en nuestra app.
+[Django-Channels](https://channels.readthedocs.io/en/latest/) para tener funcionalidades de los WebSockets e implementar comunicación en tiempo real entre los múltiples usuarios del app.
 
 **Este App fue escrita con Django 2.2.1.
-[example](https://gitlab.com/mareasperez7/horarios(https://gitlab.com/mareasperez7/horarios)).**
+[example](https://gitlab.com/mareasperez7/horarios).**
 
 
 Ejecutar esta aplicación en su máquina local en desarrollo funcionará
 bien, Aunque necesitas instalar todos los requisitos:
 ## 1- Python (MiniConda)
-En mi Caso yo utilizare [*MiniConda*]([https://hcosta.github.io/instalardjango.com/](https://hcosta.github.io/instalardjango.com/)) como gestor de entornos virtuales pero tambien se puede usar VirtualEnv eso es gusto de cada quien.  
+En mi Caso yo utilizare [*MiniConda*](https://hcosta.github.io/instalardjango.com/) como gestor de entornos virtuales pero tambien se puede usar VirtualEnv eso es gusto de cada quien.  
 ## 2- Servidor PostgreSql
 En este requisito es necesario tener un usuario y una base de datos sobre la cual se pueda trabajar con django si no tienes una puedes seguir el siguiente ejemplo para tener una base de datos local:
-[Ubuntu](https://medium.com/crehana/creaci%C3%B3n-de-usuario-en-postgresql-10-4-y-ubuntu-18-04-9e80fe077f7e](https://medium.com/crehana/creaci%C3%B3n-de-usuario-en-postgresql-10-4-y-ubuntu-18-04-9e80fe077f7e)) 
-[Windows](https://parzibyte.me/blog/2019/04/05/instalar-postgresql-11-windows/(https://parzibyte.me/blog/2019/04/05/instalar-postgresql-11-windows/))
+[Ubuntu](https://medium.com/crehana/creaci%C3%B3n-de-usuario-en-postgresql-10-4-y-ubuntu-18-04-9e80fe077f7e) 
+[Windows](https://parzibyte.me/blog/2019/04/05/instalar-postgresql-11-windows/)
 También se puede tener una base de datos remota ya que por de debajo solo se realizan peticiones a un motor de base de datos así que no importa si esta en nuestra maquina local o una nube un ejemplo para tener una DB remota podria ser usar [ElephantSql]({[https://www.elephantsql.com/](https://www.elephantsql.com/)})  que solamente tendriamos que crearnos una cuenta y ya podriamos crearnos una base de datos remota y de manera gratuita, obviamente con sus limitaciones.
 ## 3- Requirements.txt
 Una vez teniendo PostrgeSql y Python instalados procederemos a instalar los modulos que python necesita para ejecutar el app.
