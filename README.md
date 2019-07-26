@@ -81,18 +81,18 @@ DATABASES = {
 }
 ```
 Procedemos a migrar los modelos a la base de datos para asi ya poder ejecutar el servidor.
-```
+```sh
 (Test)$ python manage.py migrate
 ```
 #### Creacion de SuperUsuario
 La creacion del super usuario es necesaria para realizar la autenticacion ante el Servidor y asi este nos responda.
-```
+```sh
 (Test)$ python manage.py createsuperuser
 ```
 
 #### Puesta en marcha
 Para arrancar el servidor de desarrollo de Django basta con ejecutar:
-```
+```sh
 (Test)$ python manage.py runserver
 ```
 
