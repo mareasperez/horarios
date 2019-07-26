@@ -2,7 +2,9 @@
 
 Esta es una app de ejemplo en la que se usa
 [Django](https://www.djangoproject.com/) para hacerla mas fácil de construir.
+
 [Django-Rest-Framework](https://www.django-rest-framework.org/) para tener todas las funcionalidades de REST en nuestra app.
+
 [Django-Channels](https://channels.readthedocs.io/en/latest/) para tener funcionalidades de los WebSockets e implementar comunicación en tiempo real entre los múltiples usuarios del app.
 
 **Este App fue escrita con Django 2.2.1.
@@ -21,7 +23,11 @@ En este requisito es necesario tener un usuario y una base de datos sobre la cua
 [Windows](https://parzibyte.me/blog/2019/04/05/instalar-postgresql-11-windows/)
 <br>
 
-También se puede tener una base de datos remota ya que por de debajo solo se realizan peticiones a un motor de base de datos así que no importa si esta en nuestra maquina local o una nube un ejemplo para tener una DB remota podria ser usar [ElephantSql](https://www.elephantsql.com/)  que solamente tendriamos que crearnos una cuenta y ya podriamos crearnos una base de datos remota y de manera gratuita, obviamente con sus limitaciones.
+También se puede tener una base de datos remota ya que por de debajo solo se realizan peticiones a un motor de base de datos así que no importa si esta en nuestra maquina local o una nube un ejemplo para tener una DB remota podria ser usar:
+
+[ElephantSql](https://www.elephantsql.com/) 
+
+Que solamente tendriamos que crearnos una cuenta y ya podriamos crearnos una base de datos remota y de manera gratuita, obviamente con sus limitaciones.
 ## 3- Requirements.txt
 Una vez teniendo [PostrgeSql](https://gitlab.com/mareasperez7/horarios/blob/master/README.md#3-requirementstxt) y [ Python](https://gitlab.com/mareasperez7/horarios/blob/master/README.md#1-python-miniconda) instalados procederemos a instalar los módulos que python necesita para ejecutar el app para ello lo haremos dentro de un entorno virtual.
 ### Entorno Virtual
