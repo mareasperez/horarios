@@ -92,5 +92,3 @@ Para arrancar el servidor de desarrollo de Django basta con ejecutar:
 
 
 ## Licensing
-
-This library is BSD-licensed.
