@@ -43,147 +43,53 @@ $ conda activate Test
 una vez teniendo el entorno activado se procede a instalar los requisitos.
 ##### Dentro de la carpeta del proyecto ejecutamos:
 ```sh
-$ pip install -r Requirements.txt
+(Test)$ pip install -r Requirements.txt
 ```
 #### Building
-Una vez instalados todos los módulos. Procedemos a migrar los modelos a la base de datos para asi ya poder arrancar los
 
-
-It is best to use the python `virtualenv` tool to build locally:
-
-```sh
-$ virtualenv-2.7 venv
-$ source venv/bin/activate
-$ pip install -r requirements.txt
-$ DEVELOPMENT=1 python manage.py runserver
+Una vez instalados todos los módulos. 
+Antes de migrar los datos primero sera necesario configurar el archivo de configuracion `settings.py`
 ```
-
-Then visit `http://localhost:8000` to view the app. Alternatively you
-can use foreman and gunicorn to run the server locally (after copying
-`dev.env` to `.env`):
-
-```sh
-$ foreman start
-```
-
-## Deploy to Heroku
-
-Run the following commands to deploy the app to Heroku:
-
-```sh
-$ git clone https://github.com/memcachier/examples-django.git
-$ cd examples-django
-$ heroku create
-$ heroku addons:add memcachier:dev
-$ git push heroku master:master
-$ heroku open
-```
-
-## requirements.txt
-
-MemCachier has been tested with the pylibmc memcache client, but the
-default client doesn't support SASL authentication. Run the following
-commands to install the necessary pips:
-
-```sh
-$ sudo brew install libmemcached
-$ pip install django-pylibmc pylibmc
-```
-
-Don't forget to update your requirements.txt file with these new pips.
-requirements.txt should have the following two lines:
-
-```
-django-pylibmc==0.6.1
-pylibmc==1.5.1
-```
-
-## Configuring MemCachier (settings.py)
-
-To configure Django to use pylibmc with SASL authentication. You'll also need
-to setup your environment, because pylibmc expects different environment
-variables than MemCachier provides. Somewhere in your `settings.py` file you
-should have the following lines:
-
-```python
-os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';')
-os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
-os.environ['MEMCACHE_PASSWORD'] = os.environ.get('MEMCACHIER_PASSWORD', '')
-
-CACHES = {
+DATABASES = {
     'default': {
-        # Use pylibmc
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-
-        # Use binary memcache protocol (needed for authentication)
-        'BINARY': True,
-
-        # TIMEOUT is not the connection timeout! It's the default expiration
-        # timeout that should be applied to keys! Setting it to `None`
-        # disables expiration.
-        'TIMEOUT': None,
-        'OPTIONS': {
-            # Enable faster IO
-            'tcp_nodelay': True,
-
-            # Keep connection alive
-            'tcp_keepalive': True,
-
-            # Timeout settings
-            'connect_timeout': 2000, # ms
-            'send_timeout': 750 * 1000, # us
-            'receive_timeout': 750 * 1000, # us
-            '_poll_timeout': 2000, # ms
-
-            # Better failover
-            'ketama': True,
-            'remove_failed': 1,
-            'retry_timeout': 2,
-            'dead_timeout': 30,
-        }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Nombre de la Database',
+        'USER': 'Usuario de la Database',
+        'PASSWORD': 'Contrase;a de la DB',
+        'HOST': 'Ubicacion del Servidor',
+        'PORT': 'Puerto del servidor',
+    }
+}
+``` 
+Un ejemplo podria ser:
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'horariosdb',
+        'USER': 'usuario',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 ```
-
-## Persistent Connections
-
-By default, Django doesn't use persistent connections with memcached. This is a
-huge performance problem, especially when using SASL authentication as the
-connection setup is even more expensive than normal.
-
-You can fix this by putting the following code in your `wsgi.py` file:
-
-```python
-# Fix django closing connection to MemCachier after every request (#11331)
-from django.core.cache.backends.memcached import BaseMemcachedCache
-BaseMemcachedCache.close = lambda self, **kwargs: None
+Procedemos a migrar los modelos a la base de datos para asi ya poder ejecutar el servidor.
+```
+(Test)$ python manage.py migrate
+```
+#### Creacion de SuperUsuario
+La creacion del super usuario es necesaria para realizar la autenticacion ante el Servidor y asi este nos responda.
+```
+(Test)$ python manage.py createsuperuser
 ```
 
-There is a bug file against Django for this issue
-([#11331](https://code.djangoproject.com/ticket/11331)).
+#### Puesta en marcha
+Para arrancar el servidor de desarrollo de Django basta con ejecutar:
+```
+(Test)$ python manage.py runserver
+```
 
-## Application Code
-
-In your application, use django.core.cache methods to access
-MemCachier. A description of the low-level caching API can be found
-[here](https://docs.djangoproject.com/en/1.8/topics/cache/#the-low-level-cache-api).
-All the built-in Django caching tools will work, too.
-
-Take a look at
-[memcachier_algebra/views.py](https://github.com/memcachier/examples-django/blob/master/memcachier_algebra/views.py)
-in this repository for an example.
-
-## Get involved!
-
-We are happy to receive bug reports, fixes, documentation enhancements,
-and other improvements.
-
-Please report bugs via the
-[github issue tracker](http://github.com/memcachier/examples-django/issues).
-
-Master [git repository](http://github.com/memcachier/examples-django):
-
-* `git clone git://github.com/memcachier/examples-django.git`
 
 ## Licensing
 
