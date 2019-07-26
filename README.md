@@ -1,4 +1,4 @@
-# Django Rest Api For University Schedules
+# Api Rest en Django Para la creacion y gestion de Horarios.
 
 Esta es una app de ejemplo en la que se usa
 [Django](https://www.djangoproject.com/) para hacerla mas fácil de construir.
