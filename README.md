@@ -55,7 +55,7 @@ una vez teniendo el entorno activado se procede a instalar los requisitos.
 
 Una vez instalados todos los módulos. 
 Antes de migrar los datos primero sera necesario configurar el archivo de configuracion `settings.py`
-```
+```python
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -68,7 +68,7 @@ DATABASES = {
 }
 ``` 
 Un ejemplo podria ser:
-```
+```python
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
