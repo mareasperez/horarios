@@ -10,8 +10,8 @@ from .serializers import CarreraSerializer
 
 
 class CarreraConArgumento(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             carrera = Carrera.objects.get(carrera_id=pk)
@@ -38,8 +38,8 @@ class CarreraConArgumento(APIView):
 
 
 class CarreraSinArg(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request):
         carrera = Carrera.objects.all()
         serializer = CarreraSerializer(carrera, many=True)

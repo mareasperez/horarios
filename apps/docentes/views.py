@@ -10,8 +10,8 @@ from .models import Docente
 
 
 class DocenteConArgumento(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             docente = Docente.objects.get(docente_id=pk)
@@ -38,8 +38,8 @@ class DocenteConArgumento(APIView):
 
 
 class DocenteSinArg(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request):
         docente = Docente.objects.all()
         serializer = DocenteSerializer(docente, many=True)

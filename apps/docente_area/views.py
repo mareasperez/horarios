@@ -10,8 +10,8 @@ from .serializers import DocenteAreaSerializer
 
 
 class DocenteAreaConArgumento(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             docenteArea = DocenteArea.objects.get(da_area_id=pk)
@@ -38,8 +38,8 @@ class DocenteAreaConArgumento(APIView):
 
 
 class DocenteAreaSinArg(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request):
         docenteArea = DocenteArea.objects.all()
         serializer = DocenteAreaSerializer(docenteArea, many=True)

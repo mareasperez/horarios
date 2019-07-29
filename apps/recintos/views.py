@@ -10,8 +10,8 @@ from .serializers import RecintoSerializer
 
 
 class RecintoConArgumento(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             recinto = Recinto.objects.get(recinto_id=pk)
@@ -38,8 +38,8 @@ class RecintoConArgumento(APIView):
 
 
 class RecintoSinArg(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request):
         recinto = Recinto.objects.all()
         serializer = RecintoSerializer(recinto, many=True)
@@ -52,3 +52,21 @@ class RecintoSinArg(APIView):
         if serializer.is_valid(raise_exception=True):
             recinto_saved = serializer.save()
         return Response({"success": "Recinto: '{}' creada satisfactoriamente".format(recinto_saved.recinto_nombre)})
+
+class RecintoMixed(APIView):
+
+    def get(self,request, clave,value):
+        if clave == 'recinto_nombre':
+            recinto =  Recinto.objects.filter(recinto_nombre =value)
+        elif clave == 'recinto_facultad':
+            recinto =  Recinto.objects.filter(recinto_facultad =value)
+        elif clave == 'recinto_ubicacion':
+            recinto =  Recinto.objects.filter(recinto_ubicacion =value)
+        else:
+            return Response({"Detail": "not found"})
+        if not recinto:
+            return Response({"Detail": "not found"})
+        serializer = RecintoSerializer(recinto,many=True,allow_null=True)
+        return Response({"recinto": serializer.data})
+
+

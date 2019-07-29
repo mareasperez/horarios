@@ -10,8 +10,8 @@ from .serializers import PlanDeEstudioSerializer
 
 
 class PlanDeEstudioConArgumento(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             planDeEstudio = PlanDeEstudio.objects.get(pde_id=pk)
@@ -38,8 +38,8 @@ class PlanDeEstudioConArgumento(APIView):
 
 
 class PlanDeEstudioSinArg(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request):
         planDeEstudio = PlanDeEstudio.objects.all()
         serializer = PlanDeEstudioSerializer(planDeEstudio, many=True)

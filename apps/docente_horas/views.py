@@ -10,8 +10,8 @@ from .serializers import DocenteHorasSerializer
 
 
 class DocenteHorasConArgumento(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             docenteHoras = DocenteHoras.objects.get(dh_id=pk)
@@ -38,8 +38,8 @@ class DocenteHorasConArgumento(APIView):
 
 
 class DocenteHorasSinArg(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request):
         docenteHoras = DocenteHoras.objects.all()
         serializer = DocenteHorasSerializer(docenteHoras, many=True)

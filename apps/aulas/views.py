@@ -13,8 +13,8 @@ from .serializers import AulaSerializer
 
 
 class AulaConArgumento(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             aula = Aula.objects.get(aula_id=pk)
@@ -41,8 +41,8 @@ class AulaConArgumento(APIView):
 
 
 class AulaSinArg(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     dias = ['Lunes','Martes','Miercoles','jueves','Viernes']
     horas = ['7','9','11','13','15','17']
     def get(self, request):

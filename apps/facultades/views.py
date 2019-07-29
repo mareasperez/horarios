@@ -11,8 +11,8 @@ from .serializers import FacultadSerializer
 
 class FacultadListView(APIView):
 
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             facultades = Facultad.objects.get(facultad_id=pk)
@@ -38,8 +38,8 @@ class FacultadListView(APIView):
 
 
 class Facultadone(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     def get(self, request):
         try:
             facultades = Facultad.objects.all()
