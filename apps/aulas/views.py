@@ -76,3 +76,22 @@ class AulaSinArg(APIView):
                     print(Chora)
 
         return Response({"success": "Aula: '{}' creada satisfactoriamente".format(aula_saved.aula_nombre)})
+
+
+class AulaMixed(APIView):
+
+    def get(self,request, clave,value):
+        if clave == 'aula_nombre':
+            aula =  Aula.objects.filter(aula_nombre =value)
+        elif clave == 'aula_recinto':
+            aula =  Aula.objects.filter(aula_recinto =value)
+        elif clave == 'aula_tipo':
+            aula =  Aula.objects.filter(aula_tipo =value)
+        elif clave == 'aula_capacidad':
+            aula =  Aula.objects.filter(aula_capacidad =value)
+        else:
+            return Response({"Detail": "not found"})
+        if not aula:
+            return Response({"Detail": "not found"})
+        serializer = AulaSerializer(aula,many=True,allow_null=True)
+        return Response({"aula": serializer.data})
