@@ -1,16 +1,17 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.authentication import TokenAuthentication
+from apps.mymid.TokenAuthSchema import BearerAuthentication
 from rest_framework.permissions import IsAuthenticated
 
+from apps.mymid.TokenAuthSchema import BearerAuthentication
 from .models import Area
 from .serializers import AreaSerializer
 
 
 class AreaListView(APIView):
-    #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticated,)
+    authentication_classes = (BearerAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             areaes = Area.objects.get(area_id=pk)
@@ -36,8 +37,8 @@ class AreaListView(APIView):
 
 
 class Areaone(APIView):
-    #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticated,)
+    authentication_classes = (BearerAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         try:
             areaes = Area.objects.all()

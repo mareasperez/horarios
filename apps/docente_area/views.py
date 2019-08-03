@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.authentication import TokenAuthentication
+from apps.mymid.TokenAuthSchema import BearerAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from .models import DocenteArea
@@ -10,8 +10,8 @@ from .serializers import DocenteAreaSerializer
 
 
 class DocenteAreaConArgumento(APIView):
-    #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticated,)
+    authentication_classes = (BearerAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             docenteArea = DocenteArea.objects.get(da_area_id=pk)
@@ -38,8 +38,8 @@ class DocenteAreaConArgumento(APIView):
 
 
 class DocenteAreaSinArg(APIView):
-    #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticated,)
+    authentication_classes = (BearerAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         docenteArea = DocenteArea.objects.all()
         serializer = DocenteAreaSerializer(docenteArea, many=True)

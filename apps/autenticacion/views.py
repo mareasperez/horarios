@@ -12,10 +12,10 @@ class LoginView(APIView):
 
     def post(self, request, *args, **kwargs):
         data = request.data
-        print (data)
+        print (data, data.get('username'), data.get('password'))
         user = authenticate(username=data.get('username'), password=data.get('password'))
         print (user)
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key}, status=200)
+            return Response({'access_token': token.key}, status=200)
         return Response({'error':'usuario no encontrado'})

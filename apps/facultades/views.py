@@ -1,4 +1,6 @@
-from rest_framework.authentication import TokenAuthentication
+from urllib.parse import parse_qs
+
+from apps.mymid.TokenAuthSchema import BearerAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import get_object_or_404
@@ -7,12 +9,12 @@ from rest_framework.views import APIView
 
 from apps.facultades.models import Facultad
 from .serializers import FacultadSerializer
-
+from apps.mymid.TokenAuthSchema import BearerAuthentication
 
 class FacultadListView(APIView):
 
-    #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticated,)
+    authentication_classes = (BearerAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             facultades = Facultad.objects.get(facultad_id=pk)
@@ -38,9 +40,10 @@ class FacultadListView(APIView):
 
 
 class Facultadone(APIView):
-    #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticated,)
+    authentication_classes = (BearerAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
+        print(request.headers)
         try:
             facultades = Facultad.objects.all()
             serializer = FacultadSerializer(facultades, many=True)

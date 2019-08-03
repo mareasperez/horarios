@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.authentication import TokenAuthentication
+from apps.mymid.TokenAuthSchema import BearerAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Recinto
@@ -10,8 +10,8 @@ from .serializers import RecintoSerializer
 
 
 class RecintoConArgumento(APIView):
-    #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticated,)
+    authentication_classes = (BearerAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             recinto = Recinto.objects.get(recinto_id=pk)
@@ -38,8 +38,8 @@ class RecintoConArgumento(APIView):
 
 
 class RecintoSinArg(APIView):
-    #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticated,)
+    authentication_classes = (BearerAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         recinto = Recinto.objects.all()
         serializer = RecintoSerializer(recinto, many=True)
