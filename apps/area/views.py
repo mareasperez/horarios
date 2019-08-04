@@ -3,13 +3,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
-from apps.mymid.TokenAuthSchema import BearerAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Area
 from .serializers import AreaSerializer
 
 
 class AreaListView(APIView):
-    authentication_classes = (BearerAuthentication,)
+    authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
@@ -36,7 +36,7 @@ class AreaListView(APIView):
 
 
 class Areaone(APIView):
-    authentication_classes = (BearerAuthentication,)
+    authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request):
         try:

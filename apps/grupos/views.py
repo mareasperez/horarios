@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from apps.mymid.TokenAuthSchema import BearerAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Grupo
@@ -10,7 +10,7 @@ from .serializers import GrupoSerializer
 
 
 class GrupoConArgumento(APIView):
-    authentication_classes = (BearerAuthentication,)
+    authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
@@ -38,7 +38,7 @@ class GrupoConArgumento(APIView):
 
 
 class GrupoSinArg(APIView):
-    authentication_classes = (BearerAuthentication,)
+    authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request):
         grupo = Grupo.objects.all()

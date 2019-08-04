@@ -7,11 +7,10 @@ from rest_framework.views import APIView
 
 from apps.facultades.models import Facultad
 from .serializers import FacultadSerializer
-from apps.mymid.TokenAuthSchema import BearerAuthentication
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
 class FacultadListView(APIView):
 
-    authentication_classes = (BearerAuthentication,)
+    authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
@@ -38,7 +37,7 @@ class FacultadListView(APIView):
 
 
 class Facultadone(APIView):
-    authentication_classes = (BearerAuthentication,)
+    authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request):
         print(request.headers)

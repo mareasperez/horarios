@@ -1,6 +1,6 @@
 
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
-from apps.mymid.TokenAuthSchema import BearerAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 

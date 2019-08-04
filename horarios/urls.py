@@ -4,6 +4,11 @@ from django.urls import path, include
 from apps.autenticacion.views import LoginView
 from apps.websocket.views import HomeView
 
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/facultad/', include('apps.facultades.urls')),
@@ -20,9 +25,13 @@ urlpatterns = [
     path('api/planificacion/',include('apps.planificacion.urls')),
     path('api/doho/',include('apps.docente_horas.urls')),
     path('api/horario/',include('apps.horario.urls')),
-    #path('api/chat/', include('apps.websocket.urls')),
 ]
 urlpatterns += [
     path('',HomeView.as_view()),
-    path('api/auth/',LoginView.as_view())
+    # path('api/auth/',LoginView.as_view())
+]
+urlpatterns += [
+    path('api/auth/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/auth/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]
