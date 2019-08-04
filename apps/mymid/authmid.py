@@ -2,7 +2,7 @@ from urllib.parse import parse_qs
 
 from channels.auth import AuthMiddlewareStack
 from django.utils import timezone
-
+#from rest_framework_simplejwt.tokens import Token
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import AnonymousUser
 from django.db import close_old_connections
