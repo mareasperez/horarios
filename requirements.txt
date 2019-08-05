@@ -5,3 +5,4 @@ django-cors-headers
 channels
 channels_redis
 psycopg2
+djangorestframework-simplejwt

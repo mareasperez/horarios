@@ -40,7 +40,7 @@ class Facultadone(APIView):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request):
-        print(request.headers)
+        # print(request.headers)
         try:
             facultades = Facultad.objects.all()
             serializer = FacultadSerializer(facultades, many=True)
