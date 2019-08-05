@@ -8,11 +8,6 @@ from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-    TokenVerifyView)
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/facultad/', include('apps.facultades.urls')),
