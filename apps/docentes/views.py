@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 # Propios imports
@@ -10,7 +10,7 @@ from .models import Docente
 
 
 class DocenteConArgumento(APIView):
-    authentication_classes = (JWTAuthentication,)
+    authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
@@ -38,7 +38,7 @@ class DocenteConArgumento(APIView):
 
 
 class DocenteSinArg(APIView):
-    authentication_classes = (JWTAuthentication,)
+    authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request):
         docente = Docente.objects.all()

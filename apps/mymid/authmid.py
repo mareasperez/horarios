@@ -6,6 +6,7 @@ from django.utils import timezone
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import AnonymousUser
 from django.db import close_old_connections
+from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
 
 
 class WSTokenAuthMiddleware:
@@ -25,8 +26,10 @@ class WSTokenAuthMiddleware:
                 print('entro al inf/try1')
                 token_key = query_string[b'token'][0].decode()
                 print('values',token_key)
-                token = Token.objects.get(key=token_key)
-                scope['user'] = token.user
+                data = {'token': token_key}
+                valid_data = VerifyJSONWebTokenSerializer().validate(data)
+                user = valid_data['user']
+                scope['user'] = user
                 close_old_connections()
             except:
                 scope['user'] = AnonymousUser()

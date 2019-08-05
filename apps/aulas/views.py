@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
@@ -13,7 +13,7 @@ from .serializers import AulaSerializer
 
 
 class AulaConArgumento(APIView):
-    authentication_classes = (JWTAuthentication,)
+    authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
@@ -41,7 +41,7 @@ class AulaConArgumento(APIView):
 
 
 class AulaSinArg(APIView):
-    authentication_classes = (JWTAuthentication,)
+    authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     dias = ['Lunes','Martes','Miercoles','jueves','Viernes']
     horas = ['7','9','11','13','15','17']
