@@ -61,6 +61,16 @@ una vez teniendo el entorno activado se procede a instalar los requisitos.
 (Test)$ pip install -r Requirements.txt
 ```
 
+#### Redis-server
+Tambien sera necesario instalar el servidor de redis para ello:
+##### Ubuntu
+```
+sudo apt-get install redis-server
+```
+##### Windows
+Descargar la ultima version del siguente enlace:
+[Redis Releases ](https://github.com/microsoftarchive/redis/releases) e instalarlo.
+
 #### Building
 
 Una vez instalados todos los módulos. 
