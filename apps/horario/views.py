@@ -54,7 +54,8 @@ class HorarioByID(APIView):
 
 
 class HorarioMixed(APIView):
-
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self,request, clave,value):
         if clave == 'horario_aula':
             horario =  Horario.objects.filter(horario_aula =value)
