@@ -17,7 +17,7 @@ class HorarioSerializer(serializers.Serializer):
         return Horario.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.horario_id = validated_data.get('horario_id', instance.horario_id)
+        #instance._id* = validated_data.get('horario_id', instance.horario_id)
         instance.horario_dia = validated_data.get('horario_dia', instance.horario_dia)
         instance.horario_hora = validated_data.get('horario_hora', instance.horario_hora)
         instance.horario_aula = validated_data.get('horario_aula', instance.horario_aula)

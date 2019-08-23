@@ -14,7 +14,7 @@ class DocenteHorasSerializer(serializers.Serializer):
         return DocenteHoras.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.dh_id = validated_data.get('dh_id', instance.dh_id)
+        #instance._id* = validated_data.get('dh_id', instance.dh_id)
         instance.dh_horas_asi= validated_data.get('dh_horas_asi', instance.dh_horas_asi)
         instance.dh_planificacion = validated_data.get('dh_planificacion', instance.dh_planificacion)
         instance.dh_docente = validated_data.get('dh_docente', instance.dh_docente)

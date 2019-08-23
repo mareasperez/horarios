@@ -14,7 +14,7 @@ class DepartamentoSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.departamento_nombre= validated_data.get('departamento_nombre', instance.departamento_nombre)
-        instance.departamento_id = validated_data.get('departamento_id', instance.departamento_id)
+        #instance._id* = validated_data.get('departamento_id', instance.departamento_id)
         instance.departamento_facultad = validated_data.get('departamento_facultad',instance.departamento_facultad)
         instance.save()
         return instance

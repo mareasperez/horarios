@@ -15,7 +15,7 @@ class DocenteAreaSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.da_area= validated_data.get('da_area', instance.da_area)
-        instance.da_id = validated_data.get('da_id', instance.da_id)
+        #instance._id* = validated_data.get('da_id', instance.da_id)
         instance.da_docente = validated_data.get('da_docente', instance.da_docente)
         instance.save()
         return instance

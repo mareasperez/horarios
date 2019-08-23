@@ -21,7 +21,7 @@ class GrupoSerializer(serializers.Serializer):
         return Grupo.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.grupo_id = validated_data.get('grupo_id', instance.grupo_id)
+        #instance._id* = validated_data.get('grupo_id', instance.grupo_id)
         instance.grupo_numero = validated_data.get('grupo_nombre', instance.grupo_numero)
         instance.grupo_max_capacidad = validated_data.get('grupo_max_capacidad',instance.grupo_max_capacidad)
         instance.grupo_tipo = validated_data.get('grupo_tipo', instance.grupo_tipo)

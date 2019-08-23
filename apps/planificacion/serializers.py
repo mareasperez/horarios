@@ -12,7 +12,7 @@ class PlanificacionSerializer(serializers.Serializer):
         return Planificacion.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.planificacion_id = validated_data.get('planificacion_id', instance.planificacion_id)
+        #instance._id* = validated_data.get('planificacion_id', instance.planificacion_id)
         instance.planificacion_anyo_lectivo = validated_data.get('planificacion_anyo_lectivo', instance.planificacion_anyo_lectivo)
         instance.planificacion_semestre = validated_data.get('planificacion_semestre', instance.planificacion_semestre)
         instance.save()

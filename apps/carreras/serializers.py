@@ -17,7 +17,7 @@ class CarreraSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.carrera_nombre= validated_data.get('carrera_nombre', instance.carrera_nombre)
-        instance.carrera_id = validated_data.get('carrera_id', instance.carrera_id)
+        #instance._id* = validated_data.get('carrera_id', instance.carrera_id)
         instance.carrera_departamento = validated_data.get('carrera_departamento',instance.carrera_departamento)
         instance.save()
         return instance

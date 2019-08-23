@@ -12,6 +12,6 @@ class AreaSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.area_nombre= validated_data.get('area_nombre', instance.area_nombre)
-        instance.area_id = validated_data.get('area_id', instance.area_id)
+        #instance._id* = validated_data.get('area_id', instance.area_id)
         instance.save()
         return instance

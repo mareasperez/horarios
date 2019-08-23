@@ -18,12 +18,12 @@ class FacultadSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.facultad_nombre= validated_data.get('facultad_nombre', instance.facultad_nombre)
-        instance.facultad_id = validated_data.get('facultad_id', instance.facultad_id)
+        #instance._id* = validated_data.get('facultad_id', instance.facultad_id)
         instance.save()
         return instance
 
     def serial(instance,validated_data):
         instance.facultad_nombre= validated_data.get('facultad_nombre', instance.facultad_nombre)
-        instance.facultad_id = validated_data.get('facultad_id', instance.facultad_id)
+        #instance._id* = validated_data.get('facultad_id', instance.facultad_id)
         instance.save()
         return instance

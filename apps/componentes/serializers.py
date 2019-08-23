@@ -19,7 +19,7 @@ class ComponenteSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.componente_nombre= validated_data.get('componente_nombre', instance.componente_nombre)
-        instance.componente_id = validated_data.get('componente_id', instance.componente_id)
+        #instance._id* = validated_data.get('componente_id', instance.componente_id)
         instance.componente_chp = validated_data.get('componente_chp', instance.componente_chp)
         instance.componente_cht = validated_data.get('componente_cht', instance.componente_cht)
         instance.componente_ciclo = validated_data.get('componente_ciclo', instance.componente_ciclo)
