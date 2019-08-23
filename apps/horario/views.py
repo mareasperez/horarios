@@ -10,6 +10,8 @@ from .serializers import HorarioSerializer
 
 
 class HorarioAll(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request):
         horario = Horario.objects.all()
         serializer = HorarioSerializer(horario, many=True)
@@ -24,6 +26,8 @@ class HorarioAll(APIView):
 
 
 class HorarioByID(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self, request, pk):
         try:
             horario = Horario.objects.get(horario_id=pk)
@@ -50,7 +54,8 @@ class HorarioByID(APIView):
 
 
 class HorarioMixed(APIView):
-
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self,request, clave,value):
         if clave == 'horario_aula':
             horario =  Horario.objects.filter(horario_aula =value)
