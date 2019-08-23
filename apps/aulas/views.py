@@ -27,6 +27,7 @@ class AulaConArgumento(APIView):
         saved_aula = get_object_or_404(
             Aula.objects.all(), aula_id=pk)
         aula = request.data.get('aula')
+        print('llego el aula: ',aula)
         serializer = AulaSerializer(
             instance=saved_aula, data=aula, partial=True)
         if serializer.is_valid(raise_exception=True):

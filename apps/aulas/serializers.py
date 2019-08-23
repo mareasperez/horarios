@@ -17,8 +17,8 @@ class AulaSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         instance.aula_nombre= validated_data.get('aula_nombre', instance.aula_nombre)
         instance.aula_id = validated_data.get('aula_id', instance.aula_id)
-        instance.aula_id = validated_data.get('aula_tipo', instance.aula_tipo)
-        instance.aula_id = validated_data.get('aula_capacidad', instance.aula_capacidad)
+        instance.aula_tipo = validated_data.get('aula_tipo', instance.aula_tipo)
+        instance.aula_capacidad = validated_data.get('aula_capacidad', instance.aula_capacidad)
         instance.aula_recinto = validated_data.get('aula_recinto',instance.aula_recinto)
         instance.save()
         return instance

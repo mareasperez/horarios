@@ -48,6 +48,7 @@ class Areaone(APIView):
 
     def post(self, request):
         area = request.data.get('area')
+        print(area)
         serializer = AreaSerializer(data=area)
         if serializer.is_valid(raise_exception=True):
             area_saved = serializer.save()
