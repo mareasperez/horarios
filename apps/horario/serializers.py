@@ -6,7 +6,7 @@ from .models import Horario
 
 
 class HorarioSerializer(serializers.Serializer):
-    horario_id = serializers.SkipField()
+    horario_id = serializers.IntegerField(allow_null=True)
     horario_dia = serializers.CharField()
     horario_hora = serializers.CharField()
     horario_aula = serializers.PrimaryKeyRelatedField(queryset=Aula.objects.all())

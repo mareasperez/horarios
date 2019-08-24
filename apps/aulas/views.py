@@ -80,7 +80,8 @@ class AulaSinArg(APIView):
 
 
 class AulaMixed(APIView):
-
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self,request, clave,value):
         if clave == 'aula_nombre':
             aula =  Aula.objects.filter(aula_nombre =value)
