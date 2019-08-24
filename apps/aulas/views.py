@@ -62,6 +62,7 @@ class AulaSinArg(APIView):
                     b=0
                     while b < 6:
                         Chora = {
+                                  "horario_id": None,
                                   "horario_dia": self.dias[a],
                                   "horario_hora": self.horas[b],
                                   "horario_aula": aula_saved.aula_id,
