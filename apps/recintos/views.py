@@ -54,7 +54,8 @@ class RecintoSinArg(APIView):
         return Response({"success": "Recinto: '{}' creada satisfactoriamente".format(recinto_saved.recinto_nombre)})
 
 class RecintoMixed(APIView):
-
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def get(self,request, clave,value):
         if clave == 'recinto_nombre':
             recinto =  Recinto.objects.filter(recinto_nombre =value)
