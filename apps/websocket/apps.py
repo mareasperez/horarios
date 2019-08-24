@@ -20,3 +20,4 @@ class WebsocketConfig(AppConfig):
         from .signal import planDeEstudio_signals
         from .signal import planificacion_signals
         from .signal import recinto_signals
+        from .signal import departamento_signals
