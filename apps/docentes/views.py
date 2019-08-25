@@ -5,7 +5,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 # Propios imports
-from .docente_serializer import DocenteSerializer
+from .serializer import DocenteSerializer
 from .models import Docente
 
 

@@ -11,7 +11,7 @@ from rest_framework_jwt.views import verify_jwt_token
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/facultad/', include('apps.facultades.urls')),
-    path('api/docente/',include('apps.docentes.docente_urls')),
+    path('api/docente/',include('apps.docentes.urls')),
     path('api/recinto/',include('apps.recintos.urls')),
     path('api/aula/',include('apps.aulas.urls')),
     path('api/grupo/',include('apps.grupos.urls')),
