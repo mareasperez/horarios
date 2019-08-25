@@ -17,7 +17,7 @@ class DocenteSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.docente_nombre= validated_data.get('docente_nombre', instance.docente_nombre)
-        instance.docente_id = validated_data.get('docente_id', instance.docente_id)
+        #instance.docente_id = validated_data.get('docente_id', instance.docente_id)
         instance.docente_tipo_contrato = validated_data.get('docente_tipo_contrato', instance.docente_tipo_contrato)
         instance.docente_inss = validated_data.get('docente_inss', instance.docente_inss)
         instance.docente_departamento = validated_data.get('docente_departamento',instance.docente_departamento)
