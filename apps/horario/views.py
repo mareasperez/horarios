@@ -58,19 +58,19 @@ class HorarioMixed(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self,request, clave,value):
         if clave == 'horario_aula':
-            horario =  Horario.objects.filter(horario_aula =value)
+            horario =  Horario.objects.filter(horario_aula =value).order_by('horario_hora','horario_id')
         elif clave == 'horario_docente':
-            horario =  Horario.objects.filter(horario_grupo__grupo_docente =value)
+            horario =  Horario.objects.filter(horario_grupo__grupo_docente =value).order_by('horario_hora')
         elif clave == 'horario_vacio':
-            horario =  Horario.objects.filter(horario_vacio =value)
+            horario =  Horario.objects.filter(horario_vacio =value).order_by('horario_hora')
         elif clave == 'horario_grupo':
-            horario =  Horario.objects.filter(horario_grupo =value)
+            horario =  Horario.objects.filter(horario_grupo =value).order_by('horario_hora')
         elif clave == 'horario_aula':
-            horario =  Horario.objects.filter(horario_hora =value)
+            horario =  Horario.objects.filter(horario_hora =value).order_by('horario_hora')
         elif clave == 'horario_dia':
-            horario =  Horario.objects.filter(horario_dia =value)
+            horario =  Horario.objects.filter(horario_dia =value).order_by('horario_hora')
         elif clave == 'horario_hora':
-            horario =  Horario.objects.filter(horario_hora =value)
+            horario =  Horario.objects.filter(horario_hora =value).order_by('horario_hora')
         else:
             return Response({"Detail": "not found"})
         if not horario:

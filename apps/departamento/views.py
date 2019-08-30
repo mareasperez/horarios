@@ -51,3 +51,19 @@ class DepartamentoSinArg(APIView):
         if serializer.is_valid(raise_exception=True):
             departamento_saved = serializer.save()
         return Response({"success": "Departamento: '{}' creada satisfactoriamente".format(departamento_saved.departamento_nombre)})
+
+class DepartamentoMixed(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, clave, value):
+        if clave == 'departamento_facultad':
+            departamento = Departamento.objects.filter(departamento_facultad=value)
+        elif clave == 'departamento_nombre':
+            departamento = Departamento.objects.filter(departamentonombre=value)
+        else:
+            return Response({"Detail": "not found"})
+        if not departamento:
+            return Response({"Detail": "not found"})
+        serializer = DepartamentoSerializer(departamento, many=True, allow_null=True)
+        return Response({"departamento": serializer.data})

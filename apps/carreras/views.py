@@ -51,3 +51,18 @@ class CarreraSinArg(APIView):
         if serializer.is_valid(raise_exception=True):
             carrera_saved = serializer.save()
         return Response({"success": "Carrera: '{}' creada satisfactoriamente".format(carrera_saved.carrera_nombre)})
+
+class CarreraMixed(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    def get(self,request, clave,value):
+        if clave == 'carrera_nombre':
+            carrera =  Carrera.objects.filter(carrera_aula =value)
+        elif clave == 'carrera_departamento':
+            carrera =  Carrera.objects.filter(carrera_departamento =value)
+        else:
+            return Response({"Detail": "not found"})
+        if not carrera:
+            return Response({"Detail": "not found"})
+        serializer = CarreraSerializer(carrera,many=True,allow_null=True)
+        return Response({"carrera": serializer.data})

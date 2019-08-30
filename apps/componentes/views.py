@@ -51,3 +51,27 @@ class ComponenteSinArg(APIView):
         if serializer.is_valid(raise_exception=True):
             componente_saved = serializer.save()
         return Response({"success": "Componente: '{}' creada satisfactoriamente".format(componente_saved.componente_nombre)})
+
+
+class ComponenteMixed(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    def get(self,request, clave,value):
+        if clave == 'componente_nombre':
+            componente =  Componente.objects.filter(componente_nombre =value)
+        elif clave == 'componente_chp':
+            componente =  Componente.objects.filter(componente_chp =value)
+        elif clave == 'componente_cht':
+            componente =  Componente.objects.filter(componente_cht =value)
+        elif clave == 'componente_ciclo':
+            componente =  Componente.objects.filter(componente_ciclo =value)
+        elif clave == 'componente_area':
+            componente =  Componente.objects.filter(componente_area =value)
+        elif clave == 'componente_pde':
+            componente =  Componente.objects.filter(componente_pde =value)
+        else:
+            return Response({"Detail": "not found"})
+        if not componente:
+            return Response({"Detail": "not found"})
+        serializer = ComponenteSerializer(componente,many=True,allow_null=True)
+        return Response({"componente": serializer.data})

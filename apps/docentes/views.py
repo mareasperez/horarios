@@ -51,3 +51,23 @@ class DocenteSinArg(APIView):
         if serializer.is_valid(raise_exception=True):
             docente_saved = serializer.save()
         return Response({"success": "Docente: '{}' creada satisfactoriamente".format(docente_saved.docente_nombre)})
+class DocentesMixed(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, clave, value):
+        if clave == 'docente_nombre':
+            docente = Docente.objects.filter(docente_nombre=value)
+        elif clave == 'docente_tipo_contrato':
+            docente = Docente.objects.filter(docente_tipo_contrato=value)
+        elif clave == 'docente_inss':
+            docente = Docente.objects.filter(docente_inss=value)
+        elif clave == 'docente_departamento':
+            docente = Docente.objects.filter(docente_departamento=value)
+        else:
+            return Response({"Detail": "not found"})
+        if not docente:
+            return Response({"Detail": "not found"})
+        serializer = DocenteSerializer(docente, many=True, allow_null=True)
+        return Response({"docente": serializer.data})
+
