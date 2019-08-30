@@ -193,7 +193,7 @@ REST_FRAMEWORK = {
 }
 JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
-    'JWT_EXPIRATION_DELTA': timedelta(minutes=600)
+    'JWT_EXPIRATION_DELTA': timedelta(days=7)
 }
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

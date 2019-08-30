@@ -28,7 +28,7 @@ class PlanDeEstudioConArgumento(APIView):
             instance=saved_planDeEstudio, data=planDeEstudio, partial=True)
         if serializer.is_valid(raise_exception=True):
             planDeEstudio_saved = serializer.save()
-        return Response({"success": "PlanDeEstudio '{}' updated successfully".format(planDeEstudio_saved.pde_docente)})
+        return Response({"success": "PlanDeEstudio '{}' updated successfully".format(planDeEstudio_saved.pde_id)})
 
     def delete(self, request, pk):
         planDeEstudio = get_object_or_404(PlanDeEstudio.objects.all(), pde_id=pk)
@@ -50,4 +50,4 @@ class PlanDeEstudioSinArg(APIView):
         serializer = PlanDeEstudioSerializer(data=planDeEstudio)
         if serializer.is_valid(raise_exception=True):
             planDeEstudio_saved = serializer.save()
-        return Response({"success": "PlanDeEstudio: '{}' creada satisfactoriamente".format(planDeEstudio_saved.pde_docente)})
+        return Response({"success": "PlanDeEstudio: '{}' creada satisfactoriamente".format(planDeEstudio_saved.pde_id)})

@@ -16,7 +16,7 @@ class PlanDeEstudioSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         instance.pde_nombre= validated_data.get('pde_nombre', instance.pde_nombre)
         #instance._id* = validated_data.get('pde_id', instance.pde_id)
-        instance.pde_anyo = validated_data.get('pde_inyo', instance.pde_anyo)
+        instance.pde_anyo = validated_data.get('pde_anyo', instance.pde_anyo)
         instance.pde_carrera = validated_data.get('pde_carrera',instance.pde_carrera)
         instance.save()
         return instance
