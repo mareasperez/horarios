@@ -28,6 +28,7 @@ docente: {
 	docente_tipo_contrato: "tipo del contrato del docente(horario,planta)"
 	docente_inns: "numero inss del docente"
 	*docente_departamento_id: "departamento_id"
+	docente_hname: "es el nombre que se le da al docente para mostrar en el reporte generico"
 }
 
 area: {

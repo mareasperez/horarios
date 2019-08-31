@@ -10,5 +10,6 @@ class Docente(models.Model):
     docente_tipo_contrato = models.CharField(max_length=50,default='')
     docente_inss = models.CharField(max_length=50,default='')
     docente_departamento = models.ForeignKey(Departamento,on_delete=models.CASCADE)
+    docente_hname = models.CharField(max_length=50,default='')
     def __str__(self):
         return self.docente_nombre
