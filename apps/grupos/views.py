@@ -51,3 +51,31 @@ class GrupoSinArg(APIView):
         if serializer.is_valid(raise_exception=True):
             grupo_saved = serializer.save()
         return Response({"success": "Grupo %s de %s created successfully"%(grupo_saved.grupo_numero,grupo_saved.grupo_componente)})
+
+
+class GrupoMixed(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    def get(self,request, clave,value):
+        if clave == 'grupo_numero':
+            grupo =  Grupo.objects.filter(grupo_numero =value)
+        elif clave == 'grupo_max_capacidad':
+            grupo =  Grupo.objects.filter(grupo_max_capacidad =value)
+        elif clave == 'grupo_tipo':
+            grupo =  Grupo.objects.filter(grupo_tipo =value)
+        elif clave == 'grupo_horas_clase':
+            grupo =  Grupo.objects.filter(grupo_horas_clase =value)
+        elif clave == 'grupo_modo':
+            grupo =  Grupo.objects.filter(grupo_modo =value)
+        elif clave == 'grupo_componente':
+            grupo =  Grupo.objects.filter(grupo_componente =value)
+        elif clave == 'grupo_docente':
+            grupo =  Grupo.objects.filter(grupo_docente =value)
+        elif clave == 'grupo_planificacion':
+            grupo =  Grupo.objects.filter(grupo_planificacion =value)
+        else:
+            return Response({"Detail": "not found"})
+        if not grupo:
+            return Response({"Detail": "not found"})
+        serializer = GrupoSerializer(grupo,many=True,allow_null=True)
+        return Response({"grupo": serializer.data})
