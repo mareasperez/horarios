@@ -73,6 +73,8 @@ class GrupoMixed(APIView):
             grupo =  Grupo.objects.filter(grupo_docente =value)
         elif clave == 'grupo_planificacion':
             grupo =  Grupo.objects.filter(grupo_planificacion =value)
+        elif clave == 'grupo_carrera':
+            grupo =  Grupo.objects.filter(grupo_componente__componente_pde__pde_carrera =value)
         else:
             return Response({"Detail": "not found"})
         if not grupo:
