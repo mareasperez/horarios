@@ -5,6 +5,8 @@ from apps.recintos.models import Recinto
 
 # Create your models here.
 class Aula(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     aula_nombre = models.CharField(max_length=50)
     aula_id = models.AutoField(primary_key=True)
     aula_tipo = models.IntegerField(default=0)

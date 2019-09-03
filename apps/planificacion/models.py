@@ -9,6 +9,8 @@ SEMESTRES = [
     ('1', 'Primero'),
     ('2', 'Segundo'),]
 class Planificacion(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     planificacion_id = models.AutoField(primary_key=True)
     planificacion_anyo_lectivo = models.IntegerField(choices=YEAR_CHOICES,default=datetime.datetime.now().year)
     planificacion_semestre = models.CharField(choices=SEMESTRES,max_length=50)

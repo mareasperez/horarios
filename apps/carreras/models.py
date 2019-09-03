@@ -5,6 +5,8 @@ from apps.departamento.models import Departamento
 
 # Create your models here.
 class Carrera(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     carrera_nombre = models.CharField(max_length=50)
     carrera_id = models.AutoField(primary_key=True)
     carrera_departamento = models.ForeignKey(Departamento,on_delete=models.CASCADE,null=True, blank=True)

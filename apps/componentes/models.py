@@ -6,6 +6,8 @@ from apps.plan_de_estudio.models import PlanDeEstudio
 
 # Create your models here.
 class Componente(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     componente_nombre = models.CharField(max_length=50)
     componente_id = models.AutoField(primary_key=True)
     componente_chp = models.IntegerField(default=0)

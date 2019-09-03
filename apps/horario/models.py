@@ -26,6 +26,8 @@ Hour_choices = [
 # Create your models here.
 
 class Horario(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     horario_id = models.AutoField(primary_key=True)
     horario_dia = models.CharField(max_length=50,choices=Day_choices)
     horario_hora = models.IntegerField(default=7,choices=Hour_choices)
