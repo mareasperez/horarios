@@ -9,7 +9,7 @@ class AreaSerializer(serializers.ModelSerializer):
 
 
 
-# class AreaSerializer(serializers.Serializer):
+# class AreaSerializer(serializers.ModelSerializer):
 #     area_nombre = serializers.CharField(max_length=50)
 #     area_id = serializers.IntegerField(allow_null=True)
 #

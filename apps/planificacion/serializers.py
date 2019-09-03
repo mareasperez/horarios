@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import Planificacion
 
 
-class PlanificacionSerializer(serializers.Serializer):
+class PlanificacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Planificacion
         fields = ('planificacion_id', 'planificacion_anyo_lectivo', 'planificacion_semestre','created_at','updated_at')

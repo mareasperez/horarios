@@ -5,7 +5,7 @@ from apps.planificacion.models import Planificacion
 from .models import DocenteHoras
 
 
-class DocenteHorasSerializer(serializers.Serializer):
+class DocenteHorasSerializer(serializers.ModelSerializer):
     class Meta:
         model = DocenteHoras
         fields = ('dh_id', 'dh_horas_total','dh_horas_hor','dh_horas_planta','dh_docente','dh_planificacion','created_at','updated_at')

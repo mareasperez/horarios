@@ -9,7 +9,7 @@ class RecintoSerializer(serializers.ModelSerializer):
         fields = ('recinto_nombre','recinto_ubicacion','recinto_facultad', 'recinto_id','created_at','updated_at')
 
 
-# class RecintoSerializer(serializers.Serializer):
+# class RecintoSerializer(serializers.ModelSerializer):
 #     recinto_nombre = serializers.CharField(max_length=50)
 #     recinto_id = serializers.IntegerField(allow_null=True)
 #     recinto_ubicacion = serializers.CharField()

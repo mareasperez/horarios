@@ -4,7 +4,7 @@ from apps.recintos.models import Recinto
 from .models import Aula
 
 
-class AulaSerializer(serializers.Serializer):
+class AulaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Aula
         fields = ('aula_id','aula_nombre','aula_tipo','aula_capacidad','aula_recinto','created_at','updated_at')

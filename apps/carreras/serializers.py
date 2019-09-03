@@ -4,7 +4,7 @@ from apps.departamento.models import Departamento
 from .models import Carrera
 
 
-class CarreraSerializer(serializers.Serializer):
+class CarreraSerializer(serializers.ModelSerializer):
         class Meta:
             model = Carrera
             fields = ('carrera_nombre', 'carrera_id', 'carrera_departamento', 'created_at', 'updated_at')

@@ -9,7 +9,7 @@ class FacultadSerializer(serializers.ModelSerializer):
         fields = ('facultad_nombre', 'facultad_id','created_at','updated_at')
 
 
-# class FacultadSerializer(serializers.Serializer):
+# class FacultadSerializer(serializers.ModelSerializer):
 #     facultad_nombre = serializers.CharField(max_length=50)
 #     facultad_id = serializers.IntegerField(allow_null=True)
 #     created_at = serializers.DateTimeField()

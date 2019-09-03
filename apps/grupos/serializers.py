@@ -6,7 +6,7 @@ from apps.planificacion.models import Planificacion
 from .models import Grupo
 
 
-class GrupoSerializer(serializers.Serializer):
+class GrupoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Grupo
         fields = ('grupo_id', 'grupo_numero','grupo_max_capacidad','grupo_tipo', 'grupo_horas_clase', 'grupo_modo', 'grupo_componente', 'grupo_docente', 'grupo_planificacion','grupo_planta', 'created_at', 'updated_ats')

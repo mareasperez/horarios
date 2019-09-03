@@ -4,7 +4,7 @@ from apps.carreras.models import Carrera
 from .models import PlanDeEstudio
 
 
-class PlanDeEstudioSerializer(serializers.Serializer):
+class PlanDeEstudioSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlanDeEstudio
         fields = ('pde_nombre','pde_id','pde_anyo','pde_carrera','created_at','updated_at')
