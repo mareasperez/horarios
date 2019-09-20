@@ -45,9 +45,37 @@ class DocenteAreaSinArg(APIView):
         serializer = DocenteAreaSerializer(docenteArea, many=True)
         return Response({"docenteArea": serializer.data})
 
-    def post(self, request):
-        docenteArea = request.data.get('docenteArea')
-        serializer = DocenteAreaSerializer(data=docenteArea)
-        if serializer.is_valid(raise_exception=True):
-            docenteArea_saved = serializer.save()
+    def post(self, request,):
+        data = request.data.get('docenteArea')
+        data = data[0]
+        for area in data['da_area']:
+            docenteArea = {
+                "da_area": area,
+                "da_docente": data['da_docente']
+            }
+            # print(docenteArea)
+            serializer = DocenteAreaSerializer(data=docenteArea)
+            if serializer.is_valid(raise_exception=True):
+                docenteArea_saved = serializer.save()
         return Response({"success": "DocenteArea: '{}' creada satisfactoriamente".format(docenteArea_saved.da_docente)})
+class DocenteAreaMixed(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    def put(self, request, clave ,value):
+        if clave == 'docente_id':
+            DocenteArea.objects.filter(da_docente=value).delete()
+            data = request.data.get('docenteArea')
+            data = data[0]
+            for area in data['da_area']:
+                docenteArea = {
+                    "da_area": area,
+                    "da_docente": value
+                }
+                serializer = DocenteAreaSerializer(data=docenteArea)
+                if serializer.is_valid(raise_exception=True):
+                    docenteArea_saved = serializer.save()
+        else:
+            return Response({"Detail": "not found"})
+        if not docenteArea_saved:
+            return Response({"Detail": "not found"})
+        return Response({"success": "DocenteArea '{}' updated successfully".format(docenteArea_saved.da_docente)})

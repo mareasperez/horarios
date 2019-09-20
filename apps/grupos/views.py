@@ -47,6 +47,7 @@ class GrupoSinArg(APIView):
 
     def post(self, request):
         grupo = request.data.get('grupo')
+        print('grupo: ',grupo)
         serializer = GrupoSerializer(data=grupo)
         if serializer.is_valid(raise_exception=True):
             grupo_saved = serializer.save()
