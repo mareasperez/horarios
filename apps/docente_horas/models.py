@@ -19,4 +19,4 @@ class DocenteHoras(models.Model):
         verbose_name_plural = "Horas de los Docentes"
         ordering = ["-dh_id"]  # <=====
     def __str__(self):
-        return "%s: %s: %s horas"%(self.dh_planificacion,self.dh_docente,self.dh_horas_asi)
+        return "%s: %s: %s horas"%(self.dh_planificacion,self.dh_docente,self.dh_horas_total)

@@ -58,6 +58,8 @@ class DocenteAreaSinArg(APIView):
             if serializer.is_valid(raise_exception=True):
                 docenteArea_saved = serializer.save()
         return Response({"success": "DocenteArea: '{}' creada satisfactoriamente".format(docenteArea_saved.da_docente)})
+
+
 class DocenteAreaMixed(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
