@@ -20,4 +20,4 @@ class PlanDeEstudio(models.Model):
         verbose_name_plural = "Planes de estudio"
         ordering = ["-pde_id"]  # <=====
     def __str__(self):
-        return self.pde_nombre
+        return f'{self.pde_nombre} {self.pde_carrera}'

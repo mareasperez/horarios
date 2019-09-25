@@ -50,7 +50,7 @@ class DocenteSinArg(APIView):
         serializer = DocenteSerializer(data=docente)
         if serializer.is_valid(raise_exception=True):
             docente_saved = serializer.save()
-        return Response({"success": "Docente: '{}' creada satisfactoriamente".format(docente_saved.docente_nombre)})
+        return Response({"id": f"{docente_saved.docente_id}"})
 class DocentesMixed(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
