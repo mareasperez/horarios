@@ -44,7 +44,7 @@ class AulaConArgumento(APIView):
 class AulaSinArg(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-    dias = ['Lunes','Martes','Miercoles','jueves','Viernes']
+    dias = ['Lunes','Martes','Miercoles','Jueves','Viernes']
     horas = [7,9,11,13,15,17]
     def get(self, request):
         aula = Aula.objects.all()

@@ -12,6 +12,7 @@ from .serializers import HorarioSerializer
 class HorarioAll(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         horario = Horario.objects.all()
         serializer = HorarioSerializer(horario, many=True)
@@ -22,12 +23,14 @@ class HorarioAll(APIView):
         serializer = HorarioSerializer(data=horario)
         if serializer.is_valid(raise_exception=True):
             horario_saved = serializer.save()
-        return Response({"success": "Horario aula %s hora %s created successfully"%(horario_saved.horario_aula,horario_saved.horario_hora)})
+        return Response({"success": "Horario aula %s hora %s created successfully" % (
+        horario_saved.horario_aula, horario_saved.horario_hora)})
 
 
 class HorarioByID(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             horario = Horario.objects.get(horario_id=pk)
@@ -44,7 +47,8 @@ class HorarioByID(APIView):
             instance=saved_horario, data=horario, partial=True)
         if serializer.is_valid(raise_exception=True):
             horario_saved = serializer.save()
-        return Response({"success": "Horario aula %s hora %s updated successfully"%(horario_saved.horario_aula,horario_saved.horario_hora)})
+        return Response({"success": "Horario aula %s hora %s updated successfully" % (
+        horario_saved.horario_aula, horario_saved.horario_hora)})
 
     def delete(self, request, pk):
         horario = get_object_or_404(Horario.objects.all(), horario_id=pk)
@@ -56,26 +60,25 @@ class HorarioByID(APIView):
 class HorarioMixed(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-    def get(self,request, clave,value):
+
+    def get(self, request, clave, value):
         if clave == 'horario_aula':
-            horario =  Horario.objects.filter(horario_aula =value).order_by('horario_hora','horario_id')
+            horario = Horario.objects.filter(horario_aula=value).order_by('horario_hora', 'horario_id')
         elif clave == 'horario_docente':
-            horario =  Horario.objects.filter(horario_grupo__grupo_docente =value).order_by('horario_hora')
+            horario = Horario.objects.filter(horario_grupo__grupo_docente=value).order_by('horario_hora')
         elif clave == 'horario_vacio':
-            horario =  Horario.objects.filter(horario_vacio =value).order_by('horario_hora')
+            horario = Horario.objects.filter(horario_vacio=value).order_by('horario_hora')
         elif clave == 'horario_grupo':
-            horario =  Horario.objects.filter(horario_grupo =value).order_by('horario_hora')
+            horario = Horario.objects.filter(horario_grupo=value).order_by('horario_hora')
         elif clave == 'horario_aula':
-            horario =  Horario.objects.filter(horario_hora =value).order_by('horario_hora')
+            horario = Horario.objects.filter(horario_hora=value).order_by('horario_hora')
         elif clave == 'horario_dia':
-            horario =  Horario.objects.filter(horario_dia =value).order_by('horario_hora')
+            horario = Horario.objects.filter(horario_dia=value).order_by('horario_hora')
         elif clave == 'horario_hora':
-            horario =  Horario.objects.filter(horario_hora =value).order_by('horario_hora')
+            horario = Horario.objects.filter(horario_hora=value).order_by('horario_hora')
         else:
             return Response({"Detail": "not found"})
         if not horario:
             return Response({"Detail": "not found"})
-        serializer = HorarioSerializer(horario,many=True,allow_null=True)
+        serializer = HorarioSerializer(horario, many=True, allow_null=True)
         return Response({"horario": serializer.data})
-
-
