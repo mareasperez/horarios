@@ -13,6 +13,7 @@ class Componente(models.Model):
     componente_chp = models.IntegerField(default=0)
     componente_cht = models.IntegerField(default=0)
     componente_ciclo = models.IntegerField(default=0)
+    componente_credito = models.IntegerField(default=0)
     componente_area = models.ForeignKey(Area,on_delete=models.CASCADE)
     componente_pde = models.ForeignKey(PlanDeEstudio,on_delete=models.CASCADE,null=True)
     def __str__(self):

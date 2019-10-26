@@ -8,7 +8,7 @@ from .models import Componente
 class ComponenteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Componente
-        fields = ('componente_id', 'componente_nombre', 'componente_chp', 'componente_cht', 'componente_ciclo', 'componente_pde','componente_area','created_at', 'updated_at')
+        fields = ('componente_id', 'componente_nombre', 'componente_chp', 'componente_cht', 'componente_ciclo','componente_credito', 'componente_pde','componente_area','created_at', 'updated_at')
 
 
     # componente_id = serializers.IntegerField(allow_null=True)
