@@ -18,6 +18,7 @@ def announce_new_carrera(sender,instance,created,**kwargs):
             "cambios",{
                 "type":"cambios",
                 "event":"c",
+                "model": "carrera",
                 "data":model_to_dict(instance)
                         }
         )

@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 from apps.docentes.models import Docente
 from apps.planificacion.models import Planificacion
@@ -9,9 +10,9 @@ class DocenteHoras(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     dh_id = models.AutoField(primary_key=True)
-    dh_horas_hor = models.IntegerField()
-    dh_horas_planta = models.IntegerField()
-    dh_horas_total = models.IntegerField()
+    dh_horas_hor = models.IntegerField(validators=[MaxValueValidator(48),MinValueValidator(0)])
+    dh_horas_planta = models.IntegerField(validators=[MinValueValidator(0)])
+    dh_horas_total = models.IntegerField(validators=[MinValueValidator(0)])
     dh_docente = models.ForeignKey(Docente,on_delete=models.CASCADE)
     dh_planificacion = models.ForeignKey(Planificacion,on_delete=models.CASCADE)
     class Meta:
