@@ -25,18 +25,18 @@ SECRET_KEY = 'ftr-y0576^@me8k6hki_-ri6q8*p5$za0jku7txry0g)2pun2$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.10.9","localhost","127.0.0.1"]
 
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:4200",
-    "http://127.0.0.1:4200",
-    "https://localhost:4200",
-    "https://127.0.0.1:4200",
-    "https://localhost:8080",
-    "http://127.0.0.1:8080",
-    "http://localhost:8080"
-]
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = [
+#     "http://localhost:4200",
+#     "http://127.0.0.1:4200",
+#     "https://localhost:4200",
+#     "https://127.0.0.1:4200",
+#     "https://localhost:8080",
+#     "http://127.0.0.1:8080",
+#     "http://localhost:8080"
+# ]
 
 # Application definition
 THIRD_PARTY_APPS = [

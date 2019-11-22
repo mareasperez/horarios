@@ -20,7 +20,7 @@ class Componente(models.Model):
     componente_ciclo = models.IntegerField(default=1, choices=ciclo_choices)
     componente_credito = models.IntegerField(default=0,choices=credito_choices)
     componente_area = models.ForeignKey(Area, on_delete=models.CASCADE)
-    componente_pde = models.ForeignKey(PlanDeEstudio, on_delete=models.CASCADE, null=True)
+    componente_pde = models.ForeignKey(PlanDeEstudio, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.componente_nombre

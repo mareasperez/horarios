@@ -11,6 +11,7 @@ from .serializers import AreaSerializer
 class AreaListView(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             areaes = Area.objects.get(area_id=pk)
@@ -38,6 +39,7 @@ class AreaListView(APIView):
 class Areaone(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         try:
             areaes = Area.objects.all()

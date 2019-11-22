@@ -22,9 +22,9 @@ class Grupo(models.Model):
     grupo_tipo = models.CharField(choices=Grupo_Tipo_Choices, default='GT', max_length=50)
     grupo_horas_clase = models.IntegerField(default=0)
     grupo_modo = models.CharField(choices=Grupo_Modo_Choice, default='S', max_length=50)
-    grupo_componente = models.ForeignKey(Componente, on_delete=models.CASCADE, null=True)
+    grupo_componente = models.ForeignKey(Componente, on_delete=models.CASCADE)
     grupo_docente = models.ForeignKey(Docente, on_delete=models.CASCADE, null=True)
-    grupo_planificacion = models.ForeignKey(Planificacion, on_delete=models.CASCADE, null=True)
+    grupo_planificacion = models.ForeignKey(Planificacion, on_delete=models.CASCADE)
     grupo_planta = models.BooleanField(default=False)
 
     class Meta:

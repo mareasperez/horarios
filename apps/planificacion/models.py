@@ -3,7 +3,7 @@ import datetime
 from django.db import models
 
 YEAR_CHOICES = []
-for r in range(2000, (datetime.datetime.now().year + 2)):
+for r in range(2000, (datetime.datetime.now().year + 5)):
     YEAR_CHOICES.append((r, r))
 SEMESTRES = [
     (1, 'Primero'),
