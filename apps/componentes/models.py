@@ -22,5 +22,8 @@ class Componente(models.Model):
     componente_area = models.ForeignKey(Area, on_delete=models.CASCADE)
     componente_pde = models.ForeignKey(PlanDeEstudio, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['componente_ciclo','componente_nombre']
+
     def __str__(self):
         return self.componente_nombre
