@@ -22,7 +22,7 @@ class DocenteAreaConArgumento(APIView):
 
     def put(self, request, pk):
         saved_docenteArea = get_object_or_404(
-            DocenteArea.objects.all(), da_area_id=pk)
+            DocenteArea.objects.all(), da_id=pk)
         docenteArea = request.data.get('docenteArea')
         serializer = DocenteAreaSerializer(
             instance=saved_docenteArea, data=docenteArea, partial=True)
@@ -31,7 +31,7 @@ class DocenteAreaConArgumento(APIView):
         return Response({"success": "DocenteArea '{}' updated successfully".format(docenteArea_saved.da_docente)})
 
     def delete(self, request, pk):
-        docenteArea = get_object_or_404(DocenteArea.objects.all(), da_area_id=pk)
+        docenteArea = get_object_or_404(DocenteArea.objects.all(), da_id=pk)
         docenteArea.delete()
         return Response({"message": "DocenteArea with id `{}` has been deleted.".format(pk)}, status=204)
         # return Response({"message": "DocenteArea with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
@@ -68,6 +68,7 @@ class DocenteAreaMixed(APIView):
             DocenteArea.objects.filter(da_docente=value).delete()
             data = request.data.get('docenteArea')
             data = data[0]
+            print (data)
             for area in data['da_area']:
                 docenteArea = {
                     "da_area": area,
