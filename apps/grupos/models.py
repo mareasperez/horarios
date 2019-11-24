@@ -26,6 +26,7 @@ class Grupo(models.Model):
     grupo_docente = models.ForeignKey(Docente, on_delete=models.CASCADE, null=True)
     grupo_planificacion = models.ForeignKey(Planificacion, on_delete=models.CASCADE)
     grupo_planta = models.BooleanField(default=False)
+    grupo_asignado = models.BooleanField(default=False)
 
     class Meta:
         unique_together = (("grupo_numero", "grupo_planificacion","grupo_docente", "grupo_tipo"),)
