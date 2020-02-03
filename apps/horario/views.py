@@ -76,6 +76,8 @@ class HorarioMixed(APIView):
             horario = Horario.objects.filter(horario_dia=value).order_by('horario_hora')
         elif clave == 'horario_hora':
             horario = Horario.objects.filter(horario_hora=value).order_by('horario_hora')
+        elif clave == 'horario_planid':
+            horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=value).order_by('horario_hora')
         else:
             return Response({"Detail": "not found"})
         if not horario:
