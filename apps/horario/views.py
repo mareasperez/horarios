@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework.permissions import IsAuthenticated
 
 from .models import Horario
 # Propios imports
@@ -24,7 +24,7 @@ class HorarioAll(APIView):
         if serializer.is_valid(raise_exception=True):
             horario_saved = serializer.save()
         return Response({"success": "Horario aula %s hora %s created successfully" % (
-        horario_saved.horario_aula, horario_saved.horario_hora)})
+            horario_saved.horario_aula, horario_saved.horario_hora)})
 
 
 class HorarioByID(APIView):
@@ -48,7 +48,7 @@ class HorarioByID(APIView):
         if serializer.is_valid(raise_exception=True):
             horario_saved = serializer.save()
         return Response({"success": "Horario aula %s hora %s updated successfully" % (
-        horario_saved.horario_aula, horario_saved.horario_hora)})
+            horario_saved.horario_aula, horario_saved.horario_hora)})
 
     def delete(self, request, pk):
         horario = get_object_or_404(Horario.objects.all(), horario_id=pk)
@@ -78,6 +78,22 @@ class HorarioMixed(APIView):
             horario = Horario.objects.filter(horario_hora=value).order_by('horario_hora')
         elif clave == 'horario_planid':
             horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=value).order_by('horario_hora')
+        else:
+            return Response({"Detail": "not found"})
+        if not horario:
+            return Response({"Detail": "not found"})
+        serializer = HorarioSerializer(horario, many=True, allow_null=True)
+        return Response({"horario": serializer.data})
+
+
+class HorarioByPlanAndAula(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, aula, plan):
+        if plan and aula:
+            horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=plan, horario_aula=aula).order_by(
+                'horario_hora')
         else:
             return Response({"Detail": "not found"})
         if not horario:
