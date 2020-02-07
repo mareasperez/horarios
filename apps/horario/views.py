@@ -90,10 +90,17 @@ class HorarioByPlanAndAula(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, aula, plan):
-        if plan and aula:
-            horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=plan, horario_aula=aula).order_by(
-                'horario_hora')
+    def get(self, request, clave, value, plan):
+        if plan and clave and value:
+            if clave == 'aula':
+                horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=plan,
+                                                 horario_aula=value).order_by('horario_hora')
+            elif clave == 'docente':
+                horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=plan,
+                                                 horario_grupo__grupo_docente=value).order_by('horario_hora')
+            elif clave == 'anyo':
+                horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=plan,
+                                                 horario_grupo__grupo_componente__componente_ciclo=value).order_by('horario_hora')
         else:
             return Response({"Detail": "not found"})
         if not horario:
