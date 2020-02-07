@@ -1,5 +1,4 @@
 from django.urls import path
-from .views import DepartamentoConArgumento,DepartamentoSinArg, DepartamentoMixed
 from django.urls import path
 
 from .views import DepartamentoConArgumento, DepartamentoSinArg,DepartamentoMixed

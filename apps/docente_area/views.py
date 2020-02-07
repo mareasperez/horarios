@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework.permissions import IsAuthenticated
 
 from .models import DocenteArea
 # Propios imports
@@ -15,7 +15,7 @@ class DocenteAreaConArgumento(APIView):
 
     def get(self, request, pk):
         try:
-            docenteArea = DocenteArea.objects.get(da_area_id=pk)
+            docenteArea = DocenteArea.objects.get(da_id=pk)
             serializer = DocenteAreaSerializer(docenteArea)
             return Response(dict(docenteArea=serializer.data))
         except:
@@ -29,13 +29,12 @@ class DocenteAreaConArgumento(APIView):
             instance=saved_docenteArea, data=docenteArea, partial=True)
         if serializer.is_valid(raise_exception=True):
             docenteArea_saved = serializer.save()
-        return Response(dict(success="DocenteArea '{}' updated successfully".format(docenteArea_saved.da_docente)))
+        return Response(dict(success=f"DocenteArea '{docenteArea_saved.da_docente}' updated successfully"))
 
     def delete(self, request, pk):
         docenteArea = get_object_or_404(DocenteArea.objects.all(), da_id=pk)
         docenteArea.delete()
-        return Response(dict(message="DocenteArea with id `{}` has been deleted.".format(pk)), status=204)
-        # return Response({"message": "DocenteArea with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
+        return Response(dict(message=f"DocenteArea with id `{pk}` has been deleted."), status=204)
 
 
 class DocenteAreaSinArg(APIView):
@@ -57,7 +56,7 @@ class DocenteAreaSinArg(APIView):
             if serializer.is_valid(raise_exception=True):
                 docenteArea_saved = serializer.save()
         return Response(
-            dict(success="DocenteArea: '{}' creada satisfactoriamente".format(docenteArea_saved.da_docente)))
+            dict(success=f"DocenteArea: '{docenteArea_saved.da_docente}' creada satisfactoriamente"))
 
 
 class DocenteAreaMixed(APIView):
@@ -71,7 +70,7 @@ class DocenteAreaMixed(APIView):
                 serializer = DocenteAreaSerializer(docenteAreas, many=True)
                 return Response(dict(docenteArea=serializer.data))
             else:
-                return Response({"Detail": "not found"})
+                return Response(dict(Detail="not found"))
         else:
             return Response(dict(detail="not found"))
 
@@ -80,14 +79,18 @@ class DocenteAreaMixed(APIView):
             DocenteArea.objects.filter(da_docente=value).delete()
             data = request.data.get("docenteArea")
             data = data[0]
-            print(data)
-            for area in data["da_area"]:
-                docenteArea = dict(da_area=area, da_docente=value)
-                serializer = DocenteAreaSerializer(data=docenteArea)
-                if serializer.is_valid(raise_exception=True):
-                    docenteArea_saved = serializer.save()
+            if 0 == len(data["da_area"]):
+                print("docente quedo sin areas")
+                msg = dict(success=f" las Areas del docente '{value}' updated successfully")
+            else:
+                print(data)
+                for area in data["da_area"]:
+                    docenteArea = dict(da_area=area, da_docente=value)
+                    serializer = DocenteAreaSerializer(data=docenteArea)
+                    if serializer.is_valid(raise_exception=True):
+                        docenteArea_saved = serializer.save()
+                        msg = dict(
+                            success=f" las Areas del docente '{docenteArea_saved.da_docente}' updated successfully")
         else:
-            return Response({"Detail": "not found"})
-        if not docenteArea_saved:
-            return Response({"Detail": "not found"})
-        return Response({'success': "DocenteArea '{}' updated successfully".format(docenteArea_saved.da_docente)})
+            msg = dict(Detail="clave invalida")
+        return Response(msg)

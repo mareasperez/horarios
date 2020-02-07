@@ -1,8 +1,6 @@
 from django.urls import path
-from .views import DocenteAreaConArgumento,DocenteAreaSinArg,DocenteAreaMixed
-from django.urls import path
 
-from .views import DocenteAreaConArgumento, DocenteAreaSinArg
+from .views import DocenteAreaConArgumento, DocenteAreaSinArg,DocenteAreaMixed
 
 app_name = "docenteArea"
 urlpatterns = [
