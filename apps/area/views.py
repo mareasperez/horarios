@@ -28,12 +28,12 @@ class AreaListView(APIView):
             instance=saved_area, data=area, partial=True)
         if serializer.is_valid(raise_exception=True):
             area_saved = serializer.save()
-        return Response(dict(success="Area '{}' updated successfully".format(area_saved.area_nombre)))
+        return Response(dict(success=f"Area '{area_saved.area_nombre}' updated successfully"))
 
     def delete(self, request, pk):
         area = get_object_or_404(Area.objects.all(), area_id=pk)
         area.delete()
-        return Response(dict(message="Area with id `{}` has been deleted.".format(pk)), status=204)
+        return Response(dict(message=f"Area with id `{pk}` has been deleted."), status=204)
 
 
 class Areaone(APIView):
@@ -54,4 +54,4 @@ class Areaone(APIView):
         serializer = AreaSerializer(data=area)
         if serializer.is_valid(raise_exception=True):
             area_saved = serializer.save()
-        return Response({"success": "Area: '{}' creada satisfactoriamente".format(area_saved.area_nombre)})
+        return Response(dict(success=f"Area: '{area_saved.area_nombre}' creada satisfactoriamente".format()))

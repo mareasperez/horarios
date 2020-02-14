@@ -2,12 +2,11 @@ from rest_framework import serializers
 
 from .models import Area
 
+
 class AreaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Area
-        fields = ('area_nombre','area_id','created_at','updated_at')
-
-
+        fields = ('area_nombre', 'area_id', 'created_at', 'updated_at')
 
 # class AreaSerializer(serializers.ModelSerializer):
 #     area_nombre = serializers.CharField(max_length=50)
