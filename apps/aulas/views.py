@@ -1,8 +1,8 @@
+from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from django.shortcuts import get_object_or_404
 
 from apps.horario.serializers import HorarioSerializer
 from .models import Aula
@@ -18,9 +18,9 @@ class AulaConArgumento(APIView):
         try:
             aula = Aula.objects.get(aula_id=pk)
             serializer = AulaSerializer(aula)
-            return Response({"aula": serializer.data})
+            return Response(dict(aula=serializer.data))
         except:
-            return Response({"Detail": "not found"})
+            return Response(dict(Detail="not found"))
 
     def put(self, request, pk):
         saved_aula = get_object_or_404(
@@ -31,12 +31,12 @@ class AulaConArgumento(APIView):
             instance=saved_aula, data=aula, partial=True)
         if serializer.is_valid(raise_exception=True):
             aula_saved = serializer.save()
-        return Response({'success': f'Aula [{aula_saved.aula_nombre}] updated successfully'})
+        return Response(dict(success=f'Aula [{aula_saved.aula_nombre}] updated successfully'))
 
     def delete(self, request, pk):
         aula = get_object_or_404(Aula.objects.all(), aula_id=pk)
         aula.delete()
-        return Response({'message': f'Aula with id `[{id}]` has been deleted.'}, status=204)
+        return Response(dict(message=f'Aula with id `[{pk}]` has been deleted.'), status=204)
         # return Response({"message": "Aula with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
@@ -49,7 +49,7 @@ class AulaSinArg(APIView):
     def get(self, request):
         aula = Aula.objects.all()
         serializer = AulaSerializer(aula, many=True)
-        return Response({'aula': serializer.data})
+        return Response(dict(aula=serializer.data))
 
     def post(self, request):
         a = 0
@@ -71,7 +71,7 @@ class AulaSinArg(APIView):
                     a += 1
                     print(Chora)
 
-        return Response({'success': f'Aula: {aula_saved.aula_nombre} creada satisfactoriamente'})
+        return Response(dict(success=f'Aula: {aula_saved.aula_nombre} creada satisfactoriamente'))
 
 
 class AulaMixed(APIView):
@@ -88,8 +88,8 @@ class AulaMixed(APIView):
         elif clave == 'aula_capacidad':
             aula = Aula.objects.filter(aula_capacidad=value)
         else:
-            return Response({"Detail": "not found"})
+            return Response(dict(Detail="not found"))
         if not aula:
-            return Response({"Detail": "not found"})
+            return Response(dict(Detail="not found"))
         serializer = AulaSerializer(aula, many=True, allow_null=True)
-        return Response({"aula": serializer.data})
+        return Response(dict(aula=serializer.data))
