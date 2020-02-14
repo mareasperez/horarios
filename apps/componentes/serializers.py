@@ -1,15 +1,13 @@
 from rest_framework import serializers
 
-from apps.area.models import Area
-from apps.plan_de_estudio.models import PlanDeEstudio
 from .models import Componente
 
 
 class ComponenteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Componente
-        fields = ('componente_id', 'componente_nombre', 'componente_chp', 'componente_cht', 'componente_ciclo','componente_credito', 'componente_pde','componente_area','created_at', 'updated_at')
-
+        fields = ('componente_id', 'componente_nombre', 'componente_chp', 'componente_cht', 'componente_ciclo',
+                  'componente_credito', 'componente_pde', 'componente_area', 'created_at', 'updated_at')
 
     # componente_id = serializers.IntegerField(allow_null=True)
     # componente_nombre = serializers.CharField(max_length=50)
