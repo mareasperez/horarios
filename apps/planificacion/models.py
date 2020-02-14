@@ -20,8 +20,8 @@ class Planificacion(models.Model):
     class Meta:
         verbose_name = "Planificacion"
         verbose_name_plural = "Planificaciones"
-        ordering = ["-planificacion_anyo_lectivo","-planificacion_semestre"]  # <=====
-        unique_together = (("planificacion_anyo_lectivo","planificacion_semestre"))
+        ordering = ["-planificacion_anyo_lectivo", "-planificacion_semestre"]  # <=====
+        unique_together = (("planificacion_anyo_lectivo", "planificacion_semestre"))
 
     def __str__(self):
         return "%s semestre %s" % (self.planificacion_anyo_lectivo, self.planificacion_semestre)
