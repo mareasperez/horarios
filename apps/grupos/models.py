@@ -12,6 +12,8 @@ Grupo_Modo_Choice = (
     ('S', 'Servicio'),
     ('F', 'Facultad')
 )
+
+
 # Create your models here.
 class Grupo(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -29,7 +31,7 @@ class Grupo(models.Model):
     grupo_asignado = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = (("grupo_numero", "grupo_planificacion","grupo_docente", "grupo_tipo"),)
+        unique_together = (("grupo_numero", "grupo_planificacion", "grupo_docente", "grupo_tipo"),)
 
     def __str__(self):
         return (f'{self.grupo_componente} {self.grupo_planificacion}')
