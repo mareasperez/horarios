@@ -1,13 +1,12 @@
 from rest_framework import serializers
 
-from apps.carreras.models import Carrera
 from .models import PlanDeEstudio
 
 
 class PlanDeEstudioSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlanDeEstudio
-        fields = ('pde_nombre','pde_id','pde_anyo','pde_carrera','created_at','updated_at')
+        fields = ('pde_nombre', 'pde_id', 'pde_anyo', 'pde_carrera', 'created_at', 'updated_at')
     # pde_nombre = serializers.CharField(max_length=50)
     # pde_id = serializers.IntegerField(allow_null=True)
     # pde_anyo = serializers.IntegerField()
