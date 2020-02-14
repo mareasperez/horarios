@@ -9,45 +9,32 @@ from apps.planificacion.models import Planificacion
 
 # {type:"planificacion", event:"crud"(solo una letra), data:[ planificacionModel, planificacionModel... ]}
 
-@receiver(post_save,sender=Planificacion)
-def announce_new_planificacion(sender,instance,created,**kwargs):
+@receiver(post_save, sender=Planificacion)
+def announce_new_planificacion(sender, instance, created, **kwargs):
     if created:
         print('se llamo al create')
-        channel_layer= get_channel_layer()
+        channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            "cambios",{
-                "type":"cambios",
-                "model": "planificacion",
-                "event":"c",
-                "data":model_to_dict(instance)
-                        }
+            "cambios", dict(type="cambios", model="planificacion", event="c", data=model_to_dict(instance))
         )
-@receiver(post_save,sender=Planificacion)
-def announce_update_planificacion(sender,instance,created,**kwargs):
-        if not created:
-            print('se llamo al update')
-            dict_obj = model_to_dict(instance)
-            channel_layer= get_channel_layer()
-            async_to_sync(channel_layer.group_send)(
-                "cambios",{
-                    "type":"cambios",
-                    "model": "planificacion",
-                    "event":"u",
-                    "data":model_to_dict(instance)
-                            }
-            )
-@receiver(post_delete,sender=Planificacion)
-def announce_del_planificacion(sender,instance,**kwargs):
-        print('se llamo al delete')
+
+
+@receiver(post_save, sender=Planificacion)
+def announce_update_planificacion(sender, instance, created, **kwargs):
+    if not created:
+        print('se llamo al update')
         dict_obj = model_to_dict(instance)
-        channel_layer= get_channel_layer()
+        channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            "cambios",{
-                "type":"cambios",
-                "model": "planificacion",
-                "event":"d",
-                "data":model_to_dict(instance)
-                        }
+            "cambios", dict(type="cambios", model="planificacion", event="u", data=model_to_dict(instance))
         )
 
 
+@receiver(post_delete, sender=Planificacion)
+def announce_del_planificacion(sender, instance, **kwargs):
+    print('se llamo al delete')
+    dict_obj = model_to_dict(instance)
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        "cambios", dict(type="cambios", model="planificacion", event="d", data=model_to_dict(instance))
+    )
