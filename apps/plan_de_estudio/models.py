@@ -11,6 +11,7 @@ for r in range(2000, (datetime.datetime.now().year + 5)):
 
 
 class PlanDeEstudio(models.Model):
+    objects: models.Manager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     pde_id = models.AutoField('id', primary_key=True)

@@ -16,6 +16,7 @@ Grupo_Modo_Choice = (
 
 # Create your models here.
 class Grupo(models.Model):
+    objects: models.Manager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     grupo_id = models.AutoField(primary_key=True)

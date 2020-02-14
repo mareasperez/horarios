@@ -7,6 +7,7 @@ from apps.facultades.models import Facultad
 
 
 class Departamento(models.Model):
+    objects: models.Manager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     departamento_nombre = models.CharField(max_length=50)

@@ -5,6 +5,7 @@ from apps.facultades.models import Facultad
 
 # Create your models here.
 class Recinto(models.Model):
+    objects: models.Manager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     recinto_nombre = models.CharField(max_length=50)

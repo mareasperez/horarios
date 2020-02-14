@@ -7,6 +7,7 @@ tipo_contrato = (('P', 'Planta'), ('H', 'Horario'))
 
 # Create your models here.
 class Docente(models.Model):
+    objects: models.Manager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     docente_nombre = models.CharField(max_length=50)

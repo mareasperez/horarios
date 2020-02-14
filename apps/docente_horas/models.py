@@ -7,6 +7,7 @@ from apps.planificacion.models import Planificacion
 
 # Create your models here.
 class DocenteHoras(models.Model):
+    objects: models.Manager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     dh_id = models.AutoField(primary_key=True)

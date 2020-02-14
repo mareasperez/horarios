@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Facultad(models.Model):
+    objects: models.Manager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     facultad_nombre = models.CharField(max_length=50)

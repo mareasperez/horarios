@@ -6,6 +6,7 @@ from apps.docentes.models import Docente
 
 # Create your models here.
 class DocenteArea(models.Model):
+    objects: models.Manager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     da_id = models.AutoField(primary_key=True)

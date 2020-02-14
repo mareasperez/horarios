@@ -7,6 +7,7 @@ carrera_tipo_choice = (("P", 'Presencial'), ("V", 'Virtual'))
 
 # Create your models here.
 class Carrera(models.Model):
+    objects: models.Manager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     carrera_nombre = models.CharField(max_length=50)
