@@ -23,8 +23,8 @@ class HorarioAll(APIView):
         serializer = HorarioSerializer(data=horario)
         if serializer.is_valid(raise_exception=True):
             horario_saved = serializer.save()
-        return Response({"success": "Horario aula %s hora %s created successfully" % (
-            horario_saved.horario_aula, horario_saved.horario_hora)})
+        return Response(dict(
+            success=f"Horario aula {horario_saved.horario_aula} hora {horario_saved.horario_hora} created successfully"))
 
 
 class HorarioByID(APIView):
@@ -35,9 +35,9 @@ class HorarioByID(APIView):
         try:
             horario = Horario.objects.get(horario_id=pk)
             serializer = HorarioSerializer(horario)
-            return Response({"horario": serializer.data})
+            return Response(dict(horario=serializer.data))
         except:
-            return Response({"Detail": "not found"})
+            return Response(dict(Detail="not found"))
 
     def put(self, request, pk):
         saved_horario = get_object_or_404(
@@ -47,13 +47,13 @@ class HorarioByID(APIView):
             instance=saved_horario, data=horario, partial=True)
         if serializer.is_valid(raise_exception=True):
             horario_saved = serializer.save()
-        return Response({"success": "Horario aula %s hora %s updated successfully" % (
-            horario_saved.horario_aula, horario_saved.horario_hora)})
+        return Response(dict(
+            success=f"Horario aula {horario_saved.horario_aula} hora {horario_saved.horario_hora} updated successfully"))
 
     def delete(self, request, pk):
         horario = get_object_or_404(Horario.objects.all(), horario_id=pk)
         horario.delete()
-        return Response({"message": "Horario with id `{}` has been deleted.".format(pk)}, status=204)
+        return Response(dict(message=f"Horario with id `{pk}` has been deleted."), status=204)
         # return Response({"message": "Horario with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
@@ -79,11 +79,11 @@ class HorarioMixed(APIView):
         elif clave == 'horario_planid':
             horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=value).order_by('horario_hora')
         else:
-            return Response({"Detail": "not found"})
+            return Response(dict(Detail="not found"))
         if not horario:
-            return Response({"Detail": "not found"})
+            return Response(dict(Detail="not found"))
         serializer = HorarioSerializer(horario, many=True, allow_null=True)
-        return Response({"horario": serializer.data})
+        return Response(dict(horario=serializer.data))
 
 
 class HorarioByPlanAndAula(APIView):
@@ -100,10 +100,11 @@ class HorarioByPlanAndAula(APIView):
                                                  horario_grupo__grupo_docente=value).order_by('horario_hora')
             elif clave == 'anyo':
                 horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=plan,
-                                                 horario_grupo__grupo_componente__componente_ciclo=value).order_by('horario_hora')
+                                                 horario_grupo__grupo_componente__componente_ciclo=value).order_by(
+                    'horario_hora')
         else:
-            return Response({"Detail": "not found"})
+            return Response(dict(Detail="not found"))
         if not horario:
-            return Response({"Detail": "not found"})
+            return Response(dict(Detail="not found"))
         serializer = HorarioSerializer(horario, many=True, allow_null=True)
-        return Response({"horario": serializer.data})
+        return Response(dict(horario=serializer.data))

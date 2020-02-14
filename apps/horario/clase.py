@@ -1,6 +1,4 @@
-
 class Chora():
-
     horario_id: 10
     horario_dia: "Lunes"
     horario_hora: 7
