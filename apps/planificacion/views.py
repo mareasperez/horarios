@@ -30,7 +30,7 @@ class PlanificacionConArgumento(APIView):
         if serializer.is_valid(raise_exception=True):
             planificacion_saved = serializer.save()
         return Response(dict(
-            success="Planificacion: {planificacion_saved.planificacion_anyo_lectivo} semestre {planificacion_saved.planificacion_semestre} creada satisfactoriamente"))
+            success=f"Planificacion: {planificacion_saved.planificacion_anyo_lectivo} semestre {planificacion_saved.planificacion_semestre} creada satisfactoriamente"))
 
     def delete(self, request, pk):
         planificacion = get_object_or_404(Planificacion.objects.all(), planificacion_id=pk)
@@ -54,4 +54,4 @@ class PlanificacionSinArg(APIView):
         if serializer.is_valid(raise_exception=True):
             planificacion_saved = serializer.save()
         return Response(dict(
-            success="Planificacion: {planificacion_saved.planificacion_anyo_lectivo} semestre {planificacion_saved.planificacion_semestre} creada satisfactoriamente"))
+            success=f"Planificacion: {planificacion_saved.planificacion_anyo_lectivo} semestre {planificacion_saved.planificacion_semestre} creada satisfactoriamente"))
