@@ -1,11 +1,10 @@
 from urllib.parse import parse_qs
 
 from channels.auth import AuthMiddlewareStack
-from django.utils import timezone
-#from rest_framework_simplejwt.tokens import Token
-from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import AnonymousUser
 from django.db import close_old_connections
+# from rest_framework_simplejwt.tokens import Token
+from rest_framework.authtoken.models import Token
 from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
 
 
@@ -18,14 +17,14 @@ class WSTokenAuthMiddleware:
         self.inner = inner
 
     def __call__(self, scope):
-        query_string = parse_qs(scope['query_string']) #Used for querystring token url auth
-        headers = dict(scope['headers']) #Used for headers token url auth
-        print('las cossas que llegan son: ',query_string)
+        query_string = parse_qs(scope['query_string'])  # Used for querystring token url auth
+        headers = dict(scope['headers'])  # Used for headers token url auth
+        # print('las cossas que llegan son: ', query_string)
         if b'token' in query_string:
             try:
                 print('entro al inf/try1')
                 token_key = query_string[b'token'][0].decode()
-                print('values',token_key)
+                print('values', token_key)
                 data = {'token': token_key}
                 valid_data = VerifyJSONWebTokenSerializer().validate(data)
                 user = valid_data['user']
@@ -37,7 +36,7 @@ class WSTokenAuthMiddleware:
             try:
                 print('entro al inf/try2')
                 token_name, token_key = headers[b'authorization'].decode().split()
-                print(token_name,token_key)
+                print(token_name, token_key)
                 if token_name == 'Token':
                     token = Token.objects.get(key=token_key)
                     scope['user'] = token.user
@@ -45,8 +44,9 @@ class WSTokenAuthMiddleware:
             except:
                 scope['user'] = AnonymousUser()
         else:
-            pass #Session auth or anonymus
+            pass  # Session auth or anonymus
 
         return self.inner(scope)
+
 
 UniversalAuthMiddlewareStack = lambda inner: WSTokenAuthMiddleware(AuthMiddlewareStack(inner))

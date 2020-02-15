@@ -6,8 +6,7 @@ from apps.facultades.models import Facultad
 class FacultadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Facultad
-        fields = ('facultad_nombre', 'facultad_id','created_at','updated_at')
-
+        fields = ('facultad_nombre', 'facultad_id', 'created_at', 'updated_at')
 
 # class FacultadSerializer(serializers.ModelSerializer):
 #     facultad_nombre = serializers.CharField(max_length=50)

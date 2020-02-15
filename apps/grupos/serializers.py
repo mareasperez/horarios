@@ -1,15 +1,14 @@
 from rest_framework import serializers
 
-from apps.componentes.models import Componente
-from apps.docentes.models import Docente
-from apps.planificacion.models import Planificacion
 from .models import Grupo
 
 
 class GrupoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Grupo
-        fields = ('grupo_id', 'grupo_numero','grupo_max_capacidad','grupo_tipo', 'grupo_horas_clase', 'grupo_modo', 'grupo_componente', 'grupo_docente', 'grupo_planificacion','grupo_planta','grupo_asignado','created_at', 'updated_at')
+        fields = ('grupo_id', 'grupo_numero', 'grupo_max_capacidad', 'grupo_tipo', 'grupo_horas_clase', 'grupo_modo',
+                  'grupo_componente', 'grupo_docente', 'grupo_planificacion', 'grupo_planta', 'grupo_asignado',
+                  'created_at', 'updated_at')
     # grupo_id = serializers.IntegerField(allow_null=True)
     # grupo_numero = serializers.IntegerField()
     # grupo_max_capacidad = serializers.IntegerField()

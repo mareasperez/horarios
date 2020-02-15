@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from apps.facultades.models import Facultad
 from .models import Departamento
 
 

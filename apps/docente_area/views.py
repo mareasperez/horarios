@@ -72,7 +72,7 @@ class DocenteAreaMixed(APIView):
             else:
                 return Response(dict(Detail="not found"))
         else:
-            return Response(dict(detail="not found"))
+            return Response(dict(Detail="not found"))
 
     def put(self, request, clave, value):
         if clave == "docente_id":

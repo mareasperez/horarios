@@ -1,13 +1,12 @@
 from rest_framework import serializers
 
-from apps.departamento.models import Departamento
 from .models import Docente
 
 
 class DocenteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Docente
-        fields = ('docente_nombre', 'docente_id','docente_departamento','docente_tipo_contrato', 'docente_inss')
+        fields = ('docente_nombre', 'docente_id', 'docente_departamento', 'docente_tipo_contrato', 'docente_inss')
 #     docente_nombre = serializers.CharField(max_length=50)
 #     docente_id = serializers.IntegerField(allow_null=True)
 # #   docente_departamento = serializers.CharField(max_length=50) retorna el string del nombre

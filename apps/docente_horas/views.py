@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework.permissions import IsAuthenticated
 
 from .models import DocenteHoras
 # Propios imports
@@ -12,13 +12,14 @@ from .serializers import DocenteHorasSerializer
 class DocenteHorasConArgumento(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         try:
             docenteHoras = DocenteHoras.objects.get(dh_id=pk)
             serializer = DocenteHorasSerializer(docenteHoras)
-            return Response({"docenteHoras": serializer.data})
+            return Response(dict(docenteHoras=serializer.data))
         except:
-            return Response({"Detail": "not found"})
+            return Response(dict(Detail="not found"))
 
     def put(self, request, pk):
         saved_docenteHoras = get_object_or_404(
@@ -28,26 +29,27 @@ class DocenteHorasConArgumento(APIView):
             instance=saved_docenteHoras, data=docenteHoras, partial=True)
         if serializer.is_valid(raise_exception=True):
             docenteHoras_saved = serializer.save()
-        return Response({"success": "DocenteHoras %s  updated successfully"%(docenteHoras_saved.dh_docente)})
+        return Response(dict(success=f"DocenteHoras {docenteHoras_saved.dh_docente}  updated successfully"))
 
     def delete(self, request, pk):
         docenteHoras = get_object_or_404(DocenteHoras.objects.all(), dh_id=pk)
         docenteHoras.delete()
-        return Response({"message": "DocenteHoras with id `{}` has been deleted.".format(pk)}, status=204)
+        return Response(dict(message=f"DocenteHoras with id `{pk}` has been deleted."), status=204)
         # return Response({"message": "DocenteHoras with id `{}` has been deleted."%(pk)}, status=204, status=204) solo muestra status 204
 
 
 class DocenteHorasSinArg(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         docenteHoras = DocenteHoras.objects.all()
         serializer = DocenteHorasSerializer(docenteHoras, many=True)
-        return Response({"docenteHoras": serializer.data})
+        return Response(dict(docenteHoras=serializer.data))
 
     def post(self, request):
         docenteHoras = request.data.get('docenteHoras')
         serializer = DocenteHorasSerializer(data=docenteHoras)
         if serializer.is_valid(raise_exception=True):
             docenteHoras_saved = serializer.save()
-        return Response({"success": "DocenteHoras: %s creada satisfactoriamente"%(docenteHoras_saved.dh_docente)})
+        return Response(dict(success=f"DocenteHoras: {docenteHoras_saved.dh_docente} creada satisfactoriamente"))

@@ -1,13 +1,12 @@
 from rest_framework import serializers
 
-from apps.recintos.models import Recinto
 from .models import Aula
 
 
 class AulaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Aula
-        fields = ('aula_id','aula_nombre','aula_tipo','aula_capacidad','aula_recinto','created_at','updated_at')
+        fields = ('aula_id', 'aula_nombre', 'aula_tipo', 'aula_capacidad', 'aula_recinto', 'created_at', 'updated_at')
     # aula_nombre = serializers.CharField(max_length=50)
     # aula_id = serializers.IntegerField(allow_null=True)
     # aula_tipo = serializers.IntegerField()
