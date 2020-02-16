@@ -63,7 +63,7 @@ class DocentesMixed(APIView):
 
     def get(self, request, clave, value):
         if re.search('[a-zA-Z]', value):
-            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_", 1)[0]}'))
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         if clave == 'docente_nombre':
             docente = Docente.objects.filter(docente_nombre=value)
         elif clave == 'docente_tipo_contrato':

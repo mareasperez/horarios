@@ -65,7 +65,7 @@ class HorarioMixed(APIView):
 
     def get(self, request, clave, value):
         if re.search('[a-zA-Z]',value):
-            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_", 1)[0]}'))
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         # allowed_query = ['horario_hora','horario_aula']
         # if clave in allowed_query:
         #     kwargs = {
@@ -104,9 +104,9 @@ class HorarioByPlanAndAula(APIView):
 
     def get(self, request, clave, value, plan):
         if re.search('[a-zA-Z]', str(value)):
-            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_", 1)[0]}'))
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         elif re.search('[a-zA-Z]', str(plan)):
-            return Response(dict(detail=f'Error en valor: {plan} al buscar {clave.split("_", 1)[0]}'))
+            return Response(dict(detail=f'Error en valor: {plan} al buscar {clave.split("_")[0]}'))
         if plan and clave and value:
             if clave == 'aula':
                 horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=plan,

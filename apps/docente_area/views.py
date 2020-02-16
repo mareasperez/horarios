@@ -67,7 +67,7 @@ class DocenteAreaMixed(APIView):
 
     def get(self, request, clave, value):
         if re.search('[a-zA-Z]', value):
-            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_", 1)[0]}'))
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         if clave == "docente_id":
             docenteAreas = DocenteArea.objects.filter(da_docente=value)
             if docenteAreas:
@@ -80,7 +80,7 @@ class DocenteAreaMixed(APIView):
 
     def put(self, request, clave, value):
         if re.search('[a-zA-Z]', value):
-            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_", 1)[0]}'))
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         if clave == "docente_id":
             DocenteArea.objects.filter(da_docente=value).delete()
             data = request.data.get("docenteArea")

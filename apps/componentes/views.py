@@ -64,7 +64,7 @@ class ComponenteMixed(APIView):
 
     def get(self, request, clave, value):
         if re.search('[a-zA-Z]', value):
-            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_", 1)[0]}'))
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         if clave == 'componente_nombre':
             componente = Componente.objects.filter(componente_nombre=value)
         elif clave == 'componente_chp':
