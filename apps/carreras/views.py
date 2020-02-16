@@ -19,7 +19,7 @@ class CarreraConArgumento(APIView):
             serializer = CarreraSerializer(carrera)
             return Response(dict(carrera=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_carrera = get_object_or_404(

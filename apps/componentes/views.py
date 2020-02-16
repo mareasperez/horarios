@@ -19,7 +19,7 @@ class ComponenteConArgumento(APIView):
             serializer = ComponenteSerializer(componente)
             return Response(dict(componente=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_componente = get_object_or_404(
@@ -74,8 +74,8 @@ class ComponenteMixed(APIView):
         elif clave == 'componente_pde':
             componente = Componente.objects.filter(componente_pde=value)
         else:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         if not componente:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         serializer = ComponenteSerializer(componente, many=True, allow_null=True)
         return Response(dict(componente=serializer.data))

@@ -18,7 +18,7 @@ class FacultadListView(APIView):
             serializer = FacultadSerializer(facultades)
             return Response(dict(facultad=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_facultad = get_object_or_404(
@@ -46,7 +46,7 @@ class Facultadone(APIView):
             serializer = FacultadSerializer(facultades, many=True)
             return Response(dict(facultad=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def post(self, request):
         facultad = request.data.get('facultad')

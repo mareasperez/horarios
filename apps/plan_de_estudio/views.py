@@ -19,7 +19,7 @@ class PlanDeEstudioConArgumento(APIView):
             serializer = PlanDeEstudioSerializer(planDeEstudio)
             return Response(dict(planDeEstudio=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_planDeEstudio = get_object_or_404(

@@ -19,7 +19,7 @@ class GrupoConArgumento(APIView):
             serializer = GrupoSerializer(grupo)
             return Response(dict(grupo=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_grupo = get_object_or_404(
@@ -82,8 +82,8 @@ class GrupoMixed(APIView):
         elif clave == 'grupo_carrera':
             grupo = Grupo.objects.filter(grupo_componente__componente_pde__pde_carrera=value)
         else:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         if not grupo:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         serializer = GrupoSerializer(grupo, many=True, allow_null=True)
         return Response(dict(grupo=serializer.data))

@@ -19,7 +19,7 @@ class DocenteHorasConArgumento(APIView):
             serializer = DocenteHorasSerializer(docenteHoras)
             return Response(dict(docenteHoras=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_docenteHoras = get_object_or_404(

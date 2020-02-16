@@ -19,7 +19,7 @@ class RecintoConArgumento(APIView):
             serializer = RecintoSerializer(recinto)
             return Response(dict(recinto=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_recinto = get_object_or_404(
@@ -68,8 +68,8 @@ class RecintoMixed(APIView):
         elif clave == 'recinto_ubicacion':
             recinto = Recinto.objects.filter(recinto_ubicacion=value)
         else:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         if not recinto:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         serializer = RecintoSerializer(recinto, many=True, allow_null=True)
         return Response(dict(recinto=serializer.data))

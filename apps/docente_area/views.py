@@ -19,7 +19,7 @@ class DocenteAreaConArgumento(APIView):
             serializer = DocenteAreaSerializer(docenteArea)
             return Response(dict(docenteArea=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_docenteArea = get_object_or_404(
@@ -70,9 +70,9 @@ class DocenteAreaMixed(APIView):
                 serializer = DocenteAreaSerializer(docenteAreas, many=True)
                 return Response(dict(docenteArea=serializer.data))
             else:
-                return Response(dict(Detail="not found"))
+                return Response(dict(detail="not found"))
         else:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, clave, value):
         if clave == "docente_id":
@@ -92,5 +92,5 @@ class DocenteAreaMixed(APIView):
                         msg = dict(
                             success=f" las Areas del docente '{docenteArea_saved.da_docente}' updated successfully")
         else:
-            msg = dict(Detail="clave invalida")
+            msg = dict(detail="clave invalida")
         return Response(msg)
