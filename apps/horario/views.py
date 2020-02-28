@@ -64,8 +64,8 @@ class HorarioMixed(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, clave, value):
-        if re.search('[a-zA-Z]',value):
-            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
+        # if re.search('[a-zA-Z]',value):
+        #     return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         # allowed_query = ['horario_hora','horario_aula']
         # if clave in allowed_query:
         #     kwargs = {
