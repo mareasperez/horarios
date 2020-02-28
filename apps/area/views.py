@@ -18,7 +18,7 @@ class AreaListView(APIView):
             serializer = AreaSerializer(areaes)
             return Response(dict(area=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_area = get_object_or_404(
@@ -46,7 +46,7 @@ class Areaone(APIView):
             serializer = AreaSerializer(areaes, many=True)
             return Response(dict(area=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def post(self, request):
         area = request.data.get('area')

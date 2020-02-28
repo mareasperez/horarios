@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -19,7 +21,7 @@ class RecintoConArgumento(APIView):
             serializer = RecintoSerializer(recinto)
             return Response(dict(recinto=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_recinto = get_object_or_404(
@@ -61,6 +63,8 @@ class RecintoMixed(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, clave, value):
+        if re.search('[a-zA-Z]', value):
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         if clave == 'recinto_nombre':
             recinto = Recinto.objects.filter(recinto_nombre=value)
         elif clave == 'recinto_facultad':
@@ -68,8 +72,8 @@ class RecintoMixed(APIView):
         elif clave == 'recinto_ubicacion':
             recinto = Recinto.objects.filter(recinto_ubicacion=value)
         else:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         if not recinto:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         serializer = RecintoSerializer(recinto, many=True, allow_null=True)
         return Response(dict(recinto=serializer.data))

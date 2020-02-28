@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -19,7 +21,7 @@ class DocenteConArgumento(APIView):
             serializer = DocenteSerializer(docente)
             return Response(dict(docente=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_docente = get_object_or_404(
@@ -60,6 +62,8 @@ class DocentesMixed(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, clave, value):
+        if re.search('[a-zA-Z]', value):
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         if clave == 'docente_nombre':
             docente = Docente.objects.filter(docente_nombre=value)
         elif clave == 'docente_tipo_contrato':

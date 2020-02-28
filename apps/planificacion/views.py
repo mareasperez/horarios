@@ -19,7 +19,7 @@ class PlanificacionConArgumento(APIView):
             serializer = PlanificacionSerializer(planificacion)
             return Response(dict(planificacion=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_planificacion = get_object_or_404(

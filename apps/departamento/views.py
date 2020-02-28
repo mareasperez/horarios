@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -19,7 +21,7 @@ class DepartamentoConArgumento(APIView):
             serializer = DepartamentoSerializer(departamento)
             return Response(dict(departamento=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_departamento = get_object_or_404(
@@ -62,13 +64,15 @@ class DepartamentoMixed(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, clave, value):
+        if re.search('[a-zA-Z]', value):
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         if clave == 'departamento_facultad':
             departamento = Departamento.objects.filter(departamento_facultad=value)
         elif clave == 'departamento_nombre':
             departamento = Departamento.objects.filter(departamentonombre=value)
         else:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         if not departamento:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         serializer = DepartamentoSerializer(departamento, many=True, allow_null=True)
         return Response(dict(departamento=serializer.data))

@@ -129,6 +129,7 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+<<<<<<< HEAD
 # DATABASES = {
 #      'default': {
 #          'ENGINE': 'django.db.backends.postgresql',
@@ -139,12 +140,24 @@ CHANNEL_LAYERS = {
 #          'PORT': '5432',
 #      }
 #  }
+=======
+>>>>>>> 8ead765d1c5b52b75374efd2dbf46fee896bde48
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'horariosdb',
+        'USER': 'usuario',
+        'PASSWORD': 'noquiero',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'mydatabase',
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 

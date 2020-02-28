@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -20,7 +22,7 @@ class AulaConArgumento(APIView):
             serializer = AulaSerializer(aula)
             return Response(dict(aula=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_aula = get_object_or_404(
@@ -79,6 +81,8 @@ class AulaMixed(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, clave, value):
+        if re.search('[a-zA-Z]', value):
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         if clave == 'aula_nombre':
             aula = Aula.objects.filter(aula_nombre=value)
         elif clave == 'aula_recinto':
@@ -88,8 +92,8 @@ class AulaMixed(APIView):
         elif clave == 'aula_capacidad':
             aula = Aula.objects.filter(aula_capacidad=value)
         else:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         if not aula:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         serializer = AulaSerializer(aula, many=True, allow_null=True)
         return Response(dict(aula=serializer.data))

@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -37,7 +39,7 @@ class HorarioByID(APIView):
             serializer = HorarioSerializer(horario)
             return Response(dict(horario=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_horario = get_object_or_404(
@@ -62,6 +64,16 @@ class HorarioMixed(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, clave, value):
+        # if re.search('[a-zA-Z]',value):
+        #     return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
+        # allowed_query = ['horario_hora','horario_aula']
+        # if clave in allowed_query:
+        #     kwargs = {
+        #         f'{clave}': value
+        #     }
+        #     horario = Horario.objects.filter(**kwargs).order_by('horario_hora', 'horario_id')
+        # else:
+        #     return Response(dict(detail='Error en atributo'))
         if clave == 'horario_aula':
             horario = Horario.objects.filter(horario_aula=value).order_by('horario_hora', 'horario_id')
         elif clave == 'horario_docente':
@@ -79,9 +91,9 @@ class HorarioMixed(APIView):
         elif clave == 'horario_planid':
             horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=value).order_by('horario_hora')
         else:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         if not horario:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         serializer = HorarioSerializer(horario, many=True, allow_null=True)
         return Response(dict(horario=serializer.data))
 
@@ -91,6 +103,10 @@ class HorarioByPlanAndAula(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, clave, value, plan):
+        if re.search('[a-zA-Z]', str(value)):
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
+        elif re.search('[a-zA-Z]', str(plan)):
+            return Response(dict(detail=f'Error en valor: {plan} al buscar {clave.split("_")[0]}'))
         if plan and clave and value:
             if clave == 'aula':
                 horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=plan,
@@ -102,9 +118,9 @@ class HorarioByPlanAndAula(APIView):
                 horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=plan,
                                                  horario_grupo__grupo_componente__componente_ciclo=value).order_by(
                     'horario_hora')
+            else:
+                return Response(dict(detail="not found"))
         else:
-            return Response(dict(Detail="not found"))
-        if not horario:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         serializer = HorarioSerializer(horario, many=True, allow_null=True)
         return Response(dict(horario=serializer.data))

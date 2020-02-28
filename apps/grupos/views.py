@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -19,7 +21,7 @@ class GrupoConArgumento(APIView):
             serializer = GrupoSerializer(grupo)
             return Response(dict(grupo=serializer.data))
         except:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
 
     def put(self, request, pk):
         saved_grupo = get_object_or_404(
@@ -63,6 +65,8 @@ class GrupoMixed(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, clave, value):
+        if re.search('[a-zA-Z]', value):
+            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
         if clave == 'grupo_numero':
             grupo = Grupo.objects.filter(grupo_numero=value)
         elif clave == 'grupo_max_capacidad':
@@ -82,8 +86,8 @@ class GrupoMixed(APIView):
         elif clave == 'grupo_carrera':
             grupo = Grupo.objects.filter(grupo_componente__componente_pde__pde_carrera=value)
         else:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         if not grupo:
-            return Response(dict(Detail="not found"))
+            return Response(dict(detail="not found"))
         serializer = GrupoSerializer(grupo, many=True, allow_null=True)
         return Response(dict(grupo=serializer.data))
