@@ -42,7 +42,7 @@ THIRD_PARTY_APPS = [
     'channels',
     'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'reset_migrations',
 ]
 DJANGO_APPS = [
