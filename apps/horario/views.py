@@ -91,8 +91,6 @@ class HorarioMixed(APIView):
             horario = Horario.objects.filter(horario_hora=value).order_by('horario_hora')
         elif clave == 'horario_planid':
             horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=value).order_by('horario_hora')
-        elif clave == 'hora_lleno':
-            horario = Horario.objects.filter(horario_hora=value).filter(~Q(horario_grupo__isnull=True))
         else:
             return Response(dict(detail="not found"))
         if not horario:
@@ -101,7 +99,7 @@ class HorarioMixed(APIView):
         return Response(dict(horario=serializer.data))
 
 
-class HorarioByPlanAndAula(APIView):
+class HorarioByPlan(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
@@ -127,3 +125,20 @@ class HorarioByPlanAndAula(APIView):
             return Response(dict(detail="not found"))
         serializer = HorarioSerializer(horario, many=True, allow_null=True)
         return Response(dict(horario=serializer.data))
+
+
+class HorariosbyDiahora(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        busqueda = request.data.get('horario')
+        if not busqueda:
+            return Response(dict(detail="Sin datos de busqueda"))
+        horario = Horario.objects.filter(horario_hora=busqueda['horario_hora'],
+                                         horario_dia=busqueda['horario_dia']).filter(~Q(horario_grupo__isnull=True))
+        if not horario:
+            return Response(dict(detail="not found"))
+        else:
+            serializer = HorarioSerializer(horario, many=True, allow_null=True)
+            return Response(dict(horario=serializer.data))
