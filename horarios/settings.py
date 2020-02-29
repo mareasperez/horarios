@@ -129,7 +129,6 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-<<<<<<< HEAD
 # DATABASES = {
 #      'default': {
 #          'ENGINE': 'django.db.backends.postgresql',
@@ -140,8 +139,6 @@ CHANNEL_LAYERS = {
 #          'PORT': '5432',
 #      }
 #  }
-=======
->>>>>>> 8ead765d1c5b52b75374efd2dbf46fee896bde48
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
