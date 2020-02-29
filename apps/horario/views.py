@@ -1,5 +1,6 @@
 import re
 
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -90,6 +91,8 @@ class HorarioMixed(APIView):
             horario = Horario.objects.filter(horario_hora=value).order_by('horario_hora')
         elif clave == 'horario_planid':
             horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=value).order_by('horario_hora')
+        elif clave == 'hora_lleno':
+            horario = Horario.objects.filter(horario_hora=value).filter(~Q(horario_grupo__isnull=True))
         else:
             return Response(dict(detail="not found"))
         if not horario:
