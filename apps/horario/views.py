@@ -127,16 +127,20 @@ class HorarioByPlan(APIView):
         return Response(dict(horario=serializer.data))
 
 
-class HorariosbyDiahora(APIView):
+class HorarioschoqueDocente(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        busqueda = request.data.get('horario')
+        busqueda = request.data.get('busqueda')
         if not busqueda:
             return Response(dict(detail="Sin datos de busqueda"))
-        horario = Horario.objects.filter(horario_hora=busqueda['horario_hora'],
-                                         horario_dia=busqueda['horario_dia']).filter(~Q(horario_grupo__isnull=True))
+
+        horario = Horario.objects.filter(horario_grupo__grupo_planificacion=busqueda['horario_planificacion'],
+                                         horario_hora=busqueda['horario_hora'],
+                                         horario_dia=busqueda['horario_dia'],
+                                         horario_grupo__grupo_docente=busqueda['horario_docente']).filter(
+            ~Q(horario_grupo__isnull=True))
         if not horario:
             return Response(dict(detail="not found"))
         else:
