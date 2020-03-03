@@ -142,3 +142,24 @@ class HorariosbyDiahora(APIView):
         else:
             serializer = HorarioSerializer(horario, many=True, allow_null=True)
             return Response(dict(horario=serializer.data))
+
+
+class HorariobyComponente(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        busqueda = request.data.get('busqueda')
+        print(busqueda)
+        if not busqueda:
+            return Response(dict(detail="Sin datos de busqueda"))
+        horario = Horario.objects.filter(horario_hora=busqueda['horario_hora'],
+                                         horario_dia=busqueda['horario_dia'],
+                                         horario_grupo__grupo_componente_id=busqueda['horario_componente'],
+                                         horario_grupo__grupo_planificacion_id=busqueda[
+                                             'horario_planificacion']).filter(~Q(horario_grupo__isnull=True))
+        if not horario:
+            return Response(dict(detail="not found"))
+        else:
+            serializer = HorarioSerializer(horario, many=True, allow_null=True)
+            return Response(dict(horario=serializer.data))
