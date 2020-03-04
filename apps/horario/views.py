@@ -156,7 +156,7 @@ class Choques(APIView):
                 horario_hora=busqueda['horario_hora'],
                 horario_dia=busqueda['horario_dia'],
                 horario_grupo__grupo_planificacion_id=busqueda['horario_planificacion'],
-                horario_grupo__grupo_ciclo=busqueda['horario_ciclo'])
+                horario_grupo__grupo_componente__componente_ciclo=busqueda['horario_ciclo'])
         if horario == None:
             return Response(dict(detail="not found"))
         else:
