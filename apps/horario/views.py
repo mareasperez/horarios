@@ -19,15 +19,17 @@ class HorarioAll(APIView):
     def get(self, request):
         horario = Horario.objects.all()
         serializer = HorarioSerializer(horario, many=True)
-        return Response({"horarios": serializer.data})
+        return Response(dict(horarios=serializer.data))
 
     def post(self, request):
         horario = request.data.get('horario')
         serializer = HorarioSerializer(data=horario)
         if serializer.is_valid(raise_exception=True):
             horario_saved = serializer.save()
-        return Response(dict(
-            success=f"Horario aula {horario_saved.horario_aula} hora {horario_saved.horario_hora} created successfully"))
+            return Response(dict(
+                success=f"Horario aula {horario_saved.horario_aula} hora {horario_saved.horario_hora} created successfully"))
+        else:
+            return Response(dict(detail="error"))
 
 
 class HorarioByID(APIView):
@@ -92,7 +94,7 @@ class HorarioMixed(APIView):
         elif clave == 'horario_planid':
             horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=value).order_by('horario_hora')
         else:
-            return Response(dict(detail="not found"))
+            return Response(dict(detail="Tipo de busqueda no encontrado"))
         if not horario:
             return Response(dict(detail="not found"))
         serializer = HorarioSerializer(horario, many=True, allow_null=True)
