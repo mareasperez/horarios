@@ -35,7 +35,7 @@ class Horario(models.Model):
     horario_dia = models.CharField(max_length=50, choices=Day_choices)
     horario_hora = models.IntegerField(default=7, choices=Hour_choices)
     horario_aula = models.ForeignKey(Aula, on_delete=models.CASCADE)
-    horario_grupo = models.ForeignKey(Grupo, on_delete=models.CASCADE, null=True)
+    horario_grupo = models.ForeignKey(Grupo, on_delete=models.SET_NULL, null=True)
     horario_vacio = models.BooleanField(default=True)
 
     class Meta:
