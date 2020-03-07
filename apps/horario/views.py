@@ -138,34 +138,37 @@ class Choques(APIView):
         horario = None
         if not busqueda:
             return Response(dict(detail="Sin datos de busqueda"))
-        if busqueda['choque'] in ['Docente', 'Componente', 'Ciclo']:
-            if busqueda['choque'] == 'Docente':
-                horario = Horario.objects.filter(
-                    ~Q(horario_grupo__isnull=True)).filter(
-                    horario_grupo__grupo_planificacion=busqueda['horario_planificacion'],
-                    horario_hora=busqueda['horario_hora'],
-                    horario_dia=busqueda['horario_dia'],
-                    horario_grupo__grupo_docente=busqueda['horario_docente'])
-            if busqueda['choque'] == 'Componente':
-                horario = Horario.objects.filter(
-                    ~Q(horario_grupo__isnull=True)).filter(
-                    horario_hora=busqueda['horario_hora'],
-                    horario_dia=busqueda['horario_dia'],
-                    horario_grupo__grupo_planificacion=busqueda['horario_planificacion'],
-                    horario_grupo__grupo_componente=busqueda['horario_componente'])
-            if busqueda['choque'] == 'Ciclo':
-                horario = Horario.objects.filter(
-                    ~Q(horario_grupo__isnull=True)).filter(
-                    horario_hora=busqueda['horario_hora'],
-                    horario_dia=busqueda['horario_dia'],
-                    horario_grupo__grupo_planificacion=busqueda['horario_planificacion'],
-                    horario_grupo__grupo_componente__componente_ciclo=busqueda['horario_ciclo'],
-                    horario_grupo__grupo_componente__componente_pde=busqueda['horario_pde'])
+        horario = Horario.objects.filter(
+            ~Q(horario_grupo__isnull=True)).filter(
+            horario_grupo__grupo_planificacion=busqueda['horario_planificacion'],
+            horario_hora=busqueda['horario_hora'],
+            horario_dia=busqueda['horario_dia'],
+            horario_grupo__grupo_docente=busqueda['horario_docente'])
+        if horario is not None:
+            serializer = HorarioSerializer(horario, many=True, allow_null=True)
+            return Response(dict(horario=serializer.data))
+        horario = Horario.objects.filter(
+            ~Q(horario_grupo__isnull=True)).filter(
+            horario_hora=busqueda['horario_hora'],
+            horario_dia=busqueda['horario_dia'],
+            horario_grupo__grupo_planificacion=busqueda['horario_planificacion'],
+            horario_grupo__grupo_componente=busqueda['horario_componente'])
+        if horario is not None:
+            serializer = HorarioSerializer(horario, many=True, allow_null=True)
+            return Response(dict(horario=serializer.data))
+        horario = Horario.objects.filter(
+            ~Q(horario_grupo__isnull=True)).filter(
+            horario_hora=busqueda['horario_hora'],
+            horario_dia=busqueda['horario_dia'],
+            horario_grupo__grupo_planificacion=busqueda['horario_planificacion'],
+            horario_grupo__grupo_componente__componente_ciclo=busqueda['horario_ciclo'],
+            horario_grupo__grupo_componente__componente_pde=busqueda['horario_pde'])
 
-            if horario == None:
-                return Response(dict(detail="not found"))
-            else:
-                serializer = HorarioSerializer(horario, many=True, allow_null=True)
-                return Response(dict(horario=serializer.data))
+        if horario == None:
+            return Response(dict(detail="not found"))
         else:
-            return Response(dict(detail="tipo de choque no encontrado"))
+            serializer = HorarioSerializer(horario, many=True, allow_null=True)
+            return Response(dict(horario=serializer.data))
+
+    # else:
+    # return Response(dict(detail="tipo de choque no encontrado"))
