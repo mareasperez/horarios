@@ -32,7 +32,7 @@ class Grupo(models.Model):
     grupo_asignado = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = (("grupo_numero", "grupo_planificacion", "grupo_docente", "grupo_tipo", "grupo_componente"),)
+        unique_together = (("grupo_numero", "grupo_planificacion", "grupo_tipo", "grupo_componente"),)
 
     def __str__(self):
         return (f'{self.grupo_componente} {self.grupo_planificacion}')
