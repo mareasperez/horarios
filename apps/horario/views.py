@@ -18,11 +18,14 @@ class HorarioAll(APIView):
 
     def get(self, request):
         horario = Horario.objects.all()
+        if horario.count() == 0:
+            return Response(dict(detail="not found"))
         serializer = HorarioSerializer(horario, many=True)
         return Response(dict(horarios=serializer.data))
 
     def post(self, request):
         horario = request.data.get('horario')
+        print(horario)
         serializer = HorarioSerializer(data=horario)
         if serializer.is_valid(raise_exception=True):
             horario_saved = serializer.save()
@@ -59,7 +62,8 @@ class HorarioByID(APIView):
         horario = get_object_or_404(Horario.objects.all(), horario_id=pk)
         horario.delete()
         return Response(dict(message=f"Horario with id `{pk}` has been deleted."), status=204)
-        # return Response({"message": "Horario with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
+        # return Response({"message": "Horario with id `{}` has been deleted.".format(pk)}, status=204, status=204)
+        # solo muestra status 204
 
 
 class HorarioMixed(APIView):

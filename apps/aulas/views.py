@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from apps.horario.serializers import HorarioSerializer
 from .models import Aula
 # Propios imports
 from .serializers import AulaSerializer
@@ -45,8 +44,6 @@ class AulaConArgumento(APIView):
 class AulaSinArg(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-    dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes']
-    horas = [7, 9, 11, 13, 15, 17]
 
     def get(self, request):
         aula = Aula.objects.all()
@@ -54,26 +51,13 @@ class AulaSinArg(APIView):
         return Response(dict(aula=serializer.data))
 
     def post(self, request):
-        a = 0
         aula = request.data.get('aula')
         serializer = AulaSerializer(data=aula)
         if serializer.is_valid(raise_exception=True):
             aula_saved = serializer.save()
             if aula_saved:
-                while a < 5:
-                    b = 0
-                    while b < 6:
-                        Chora = dict(horario_id=None, horario_dia=self.dias[a], horario_hora=self.horas[b],
-                                     horario_aula=aula_saved.aula_id, horario_grupo=None, horario_vacio=True)
-                        horarioSerial = HorarioSerializer(data=Chora)
-                        if horarioSerial.is_valid(raise_exception=True):
-                            horarioSerial = horarioSerial.save()
-                        print("horario creado", horarioSerial)
-                        b += 1
-                    a += 1
-                    print(Chora)
-
-        return Response(dict(success=f'Aula: {aula_saved.aula_nombre} creada satisfactoriamente'))
+                return Response(dict(success=f'Aula: {aula_saved.aula_nombre} creada satisfactoriamente'))
+        return Response(dict(detail="fail"))
 
 
 class AulaMixed(APIView):
