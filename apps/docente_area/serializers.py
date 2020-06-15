@@ -1,14 +1,12 @@
 from rest_framework import serializers
 
-from apps.area.models import Area
-from apps.docentes.models import Docente
 from .models import DocenteArea
 
 
 class DocenteAreaSerializer(serializers.ModelSerializer):
     class Meta:
         model = DocenteArea
-        fields =  ('da_id', 'da_area', 'da_docente', 'created_at', 'updated_at')
+        fields = ('da_id', 'da_area', 'da_docente', 'created_at', 'updated_at')
     # da_id = serializers.IntegerField(allow_null=True)
     # da_area = serializers.PrimaryKeyRelatedField(queryset=Area.objects.all())
     # da_docente = serializers.PrimaryKeyRelatedField(queryset=Docente.objects.all())

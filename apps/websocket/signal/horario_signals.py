@@ -9,45 +9,32 @@ from apps.horario.models import Horario
 
 # {type:"horario", event:"crud"(solo una letra), data:[ horarioModel, horarioModel... ]}
 
-@receiver(post_save,sender=Horario)
-def announce_new_horario(sender,instance,created,**kwargs):
+@receiver(post_save, sender=Horario)
+def announce_new_horario(sender, instance, created, **kwargs):
     if created:
         print('se llamo al create')
-        channel_layer= get_channel_layer()
+        channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            "cambios",{
-                "type":"cambios",
-                "model": "horario",
-                "event":"c",
-                "data":model_to_dict(instance)
-                        }
+            "cambios", dict(type="cambios", model="horario", event="c", data=model_to_dict(instance))
         )
-@receiver(post_save,sender=Horario)
-def announce_update_horario(sender,instance,created,**kwargs):
-        if not created:
-            print('se llamo al update')
-            dict_obj = model_to_dict(instance)
-            channel_layer= get_channel_layer()
-            async_to_sync(channel_layer.group_send)(
-                "cambios",{
-                    "type":"cambios",
-                    "model": "horario",
-                    "event":"u",
-                    "data":model_to_dict(instance)
-                            }
-            )
-@receiver(post_delete,sender=Horario)
-def announce_del_horario(sender,instance,**kwargs):
-        print('se llamo al delete')
+
+
+@receiver(post_save, sender=Horario)
+def announce_update_horario(sender, instance, created, **kwargs):
+    if not created:
+        print('se llamo al update')
         dict_obj = model_to_dict(instance)
-        channel_layer= get_channel_layer()
+        channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            "cambios",{
-                "type":"cambios",
-                "model": "horario",
-                "event":"d",
-                "data":model_to_dict(instance)
-                        }
+            "cambios", dict(type="cambios", model="horario", event="u", data=model_to_dict(instance))
         )
 
 
+@receiver(post_delete, sender=Horario)
+def announce_del_horario(sender, instance, **kwargs):
+    print('se llamo al delete')
+    dict_obj = model_to_dict(instance)
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        "cambios", dict(type="cambios", model="horario", event="d", data=model_to_dict(instance))
+    )

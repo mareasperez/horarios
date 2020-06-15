@@ -6,7 +6,8 @@ from .models import Planificacion
 class PlanificacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Planificacion
-        fields = ('planificacion_id', 'planificacion_anyo_lectivo', 'planificacion_semestre','created_at','updated_at')
+        fields = (
+        'planificacion_id', 'planificacion_anyo_lectivo', 'planificacion_semestre', 'created_at', 'updated_at')
 
     # planificacion_id = serializers.IntegerField(allow_null=True)
     # planificacion_anyo_lectivo = serializers.IntegerField()

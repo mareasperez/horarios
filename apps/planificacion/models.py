@@ -11,6 +11,7 @@ SEMESTRES = [
 
 
 class Planificacion(models.Model):
+    objects: models.Manager()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     planificacion_id = models.AutoField(primary_key=True)
@@ -20,8 +21,8 @@ class Planificacion(models.Model):
     class Meta:
         verbose_name = "Planificacion"
         verbose_name_plural = "Planificaciones"
-        ordering = ["-planificacion_anyo_lectivo","-planificacion_semestre"]  # <=====
-        unique_together = (("planificacion_anyo_lectivo","planificacion_semestre"))
+        ordering = ["-planificacion_anyo_lectivo", "-planificacion_semestre"]  # <=====
+        unique_together = (("planificacion_anyo_lectivo", "planificacion_semestre"))
 
     def __str__(self):
         return "%s semestre %s" % (self.planificacion_anyo_lectivo, self.planificacion_semestre)

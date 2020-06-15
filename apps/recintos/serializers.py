@@ -1,13 +1,12 @@
 from rest_framework import serializers
 
-from apps.facultades.models import Facultad
 from .models import Recinto
+
 
 class RecintoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recinto
-        fields = ('recinto_nombre','recinto_ubicacion','recinto_facultad', 'recinto_id','created_at','updated_at')
-
+        fields = ('recinto_nombre', 'recinto_ubicacion', 'recinto_facultad', 'recinto_id', 'created_at', 'updated_at')
 
 # class RecintoSerializer(serializers.ModelSerializer):
 #     recinto_nombre = serializers.CharField(max_length=50)

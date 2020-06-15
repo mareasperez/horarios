@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -25,7 +24,7 @@ SECRET_KEY = 'ftr-y0576^@me8k6hki_-ri6q8*p5$za0jku7txry0g)2pun2$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.10.9","localhost","127.0.0.1"]
+ALLOWED_HOSTS = ["192.168.10.9", "localhost", "127.0.0.1"]
 
 CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ORIGIN_WHITELIST = [
@@ -43,7 +42,7 @@ THIRD_PARTY_APPS = [
     'channels',
     'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'reset_migrations',
 ]
 DJANGO_APPS = [
@@ -73,13 +72,9 @@ LOCAL_APPS = [
     'apps.mymid',
 ]
 
-INSTALLED_APPS =DJANGO_APPS+LOCAL_APPS+THIRD_PARTY_APPS
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
-    #my mid
-    #'apps.mymid.middleware.RequestLogMiddleware',
-    #'apps.mymid.authmid.TokenAuthMiddleware',
-    #cors mid
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 
@@ -113,33 +108,53 @@ TEMPLATES = [
 WSGI_APPLICATION = 'horarios.wsgi.application'
 # Channels
 ASGI_APPLICATION = 'horarios.routing.application'
+
+# Usar Redis como backend de los canales
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('localhost', 6379)],
+#         },
+#     },
+# }
+
+# Usar canales en memoria para evitar la dependencia a redis
+# gasta mas memoria en el servidor local
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('localhost', 6379)],
-        },
-    },
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
 }
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'horariosdb',
-#         'USER': 'usuario',
-#         'PASSWORD': 'noquiero',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+#      'default': {
+#          'ENGINE': 'django.db.backends.postgresql',
+#          'NAME': 'horariosdb',
+#          'USER': 'usuario',
+#          'PASSWORD': 'noquiero',
+#          'HOST': 'localhost',
+#          'PORT': '5432',
+#      }
+#  }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'horariosdb',
+        'USER': 'usuario',
+        'PASSWORD': 'noquiero',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'mydatabase',
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -203,16 +218,15 @@ JWT_AUTH = {
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-Es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Managua'
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

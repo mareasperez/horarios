@@ -1,14 +1,14 @@
 from rest_framework import serializers
 
-from apps.aulas.models import Aula
-from apps.grupos.models import Grupo
 from .models import Horario
 
 
 class HorarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Horario
-        fields = ('horario_id','horario_dia','horario_dia','horario_hora','horario_aula','horario_grupo','horario_vacio','created_at','updated_at')
+        fields = (
+        'horario_id', 'horario_dia', 'horario_dia', 'horario_hora', 'horario_aula', 'horario_grupo', 'horario_vacio',
+        'created_at', 'updated_at')
     # horario_id = serializers.IntegerField(allow_null=True)
     # horario_dia = serializers.CharField()
     # horario_hora = serializers.IntegerField()
