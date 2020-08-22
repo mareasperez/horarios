@@ -21,7 +21,7 @@ En mi Caso yo utilizare [*MiniConda*](https://hcosta.github.io/instalardjango.co
 ## 2- Servidor PostgreSql
 En este requisito es necesario tener un usuario y una base de datos sobre la cual se pueda trabajar con django si no tienes una puedes seguir el siguiente ejemplo para tener una base de datos local:
 
-[Ubuntu](https://medium.com/crehana/creaci%C3%B3n-de-usuario-en-postgresql-10-4-y-ubuntu-18-04-9e80fe077f7e) 
+[Ubuntu](https://computingforgeeks.com/how-to-install-pgadmin-4-on-ubuntu/) 
 
 [Windows](https://parzibyte.me/blog/2019/04/05/instalar-postgresql-11-windows/)
 
