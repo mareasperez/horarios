@@ -57,9 +57,27 @@ una vez teniendo el entorno activado se procede a instalar los requisitos.
 
 ##### Dentro de la carpeta del proyecto ejecutamos:
 
+
 ```sh
 (Test)$ pip install -r Requirements.txt
 ```
+
+######nota:  si la compilacion de *psycopg2* puede instalar el [binario de PyPI]
+```pip install psycopg2-binary```
+<br>
+<br>
+Tambien puede instalar las [librerias de desarrollo de PostgreSql](https://stackoverflow.com/questions/5629368/installing-psycopg2-into-virtualenv-when-postgresql-is-not-installed-on-developm)
+<br>
+**Opcion 1**
+```
+apt-get install libpq-dev
+``` 
+**Opcion 2**
+<br>
+```
+pip install libpq-dev==9.4.3
+```
+
 
 #### Redis-server
 Tambien sera necesario instalar el servidor de redis para ello:
