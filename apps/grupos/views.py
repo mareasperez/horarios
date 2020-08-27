@@ -1,5 +1,6 @@
 import re
 
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -57,7 +58,7 @@ class GrupoSinArg(APIView):
         if serializer.is_valid(raise_exception=True):
             grupo_saved = serializer.save()
         return Response(
-            dict(success="Grupo {grupo_saved.grupo_numero} de {grupo_saved.grupo_componente} created successfully"))
+            dict(success=f"Grupo {grupo_saved.grupo_numero} de {grupo_saved.grupo_componente} created successfully"))
 
 
 class GrupoMixed(APIView):
@@ -91,3 +92,21 @@ class GrupoMixed(APIView):
             return Response(dict(detail="not found"))
         serializer = GrupoSerializer(grupo, many=True, allow_null=True)
         return Response(dict(grupo=serializer.data))
+
+
+class Grupo_Carrera_Plan_Ciclo(APIView):
+     authentication_classes = (JSONWebTokenAuthentication,)
+     permission_classes = (IsAuthenticated,)
+     def post(self, request):
+         busqueda = request.data["busqueda"]
+         print(busqueda)
+         if not busqueda:
+             return Response(dict(detail="Sin datos de busqueda"))
+         print (busqueda['carrera'],busqueda['planificacion'],busqueda['ciclo'])
+         grupo = Grupo.objects.filter(grupo_componente__componente_pde__pde_carrera=busqueda['carrera'],
+                                      grupo_planificacion=busqueda['planificacion'],
+                                      grupo_componente__componente_ciclo=busqueda['ciclo'])
+         if not grupo:
+             return Response(dict(detail="not found"))
+         serializer = GrupoSerializer(grupo, many=True, allow_null=True)
+         return Response(dict(grupo=serializer.data))
