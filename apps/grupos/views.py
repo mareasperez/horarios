@@ -109,4 +109,4 @@ class Grupo_Carrera_Plan_Ciclo(APIView):
          if not grupo:
              return Response(dict(detail="not found"))
          serializer = GrupoSerializer(grupo, many=True, allow_null=True)
-         return Response(dict(grupo=serializer.data))
+         return Response(dict(grupos=serializer.data))
