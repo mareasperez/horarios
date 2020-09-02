@@ -45,7 +45,7 @@ class DocenteSinArg(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        docente = Docente.objects.all()
+        docente = Docente.objects.all().order_by('docente_nombre')
         serializer = DocenteSerializer(docente, many=True)
         return Response({"docente": serializer.data})
 
