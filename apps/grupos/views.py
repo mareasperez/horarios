@@ -67,7 +67,10 @@ class GrupoMixed(APIView):
 
     def get(self, request, clave, value):
         if re.search('[a-zA-Z]', value):
-            return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
+            if(value not in['Null','True','False']):
+                return Response(dict(detail=f'Error en valor: {value} al buscar {clave.split("_")[0]}'))
+            else:
+                value = eval(value)
         if clave == 'grupo_numero':
             grupo = Grupo.objects.filter(grupo_numero=value)
         elif clave == 'grupo_max_capacidad':
@@ -86,6 +89,8 @@ class GrupoMixed(APIView):
             grupo = Grupo.objects.filter(grupo_planificacion=value)
         elif clave == 'grupo_carrera':
             grupo = Grupo.objects.filter(grupo_componente__componente_pde__pde_carrera=value)
+        elif clave == 'grupo_planta':
+            grupo = Grupo.objects.filter(grupo_planta=value)
         else:
             return Response(dict(detail="not found"))
         if not grupo:

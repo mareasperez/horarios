@@ -1,4 +1,6 @@
 from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
+from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -53,3 +55,20 @@ class DocenteHorasSinArg(APIView):
         if serializer.is_valid(raise_exception=True):
             docenteHoras_saved = serializer.save()
         return Response(dict(success=f"DocenteHoras: {docenteHoras_saved.dh_docente} creada satisfactoriamente"))
+
+class DocenteHorasMixed(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    def get(self, request, clave, value):
+        print("llego al mix")
+        if clave == 'dh_planificacion':
+            docenteHoras = DocenteHoras.objects.filter(dh_planificacion=value)
+        elif clave == 'docente_tipo_contrato':
+            docenteHoras = DocenteHoras.objects.filter(docente_tipo_contrato=value)
+        else:
+            return Response(dict(detail="not found"))
+        if not docenteHoras:
+            return Response(dict(detail="not found"))
+        serializer = DocenteHorasSerializer(docenteHoras, many=True)
+        return Response(dict(docenteHoras=serializer.data))
+
