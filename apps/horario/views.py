@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from apps.grupos.models import Grupo
 
 from .models import Horario
 # Propios imports
@@ -28,6 +29,7 @@ class HorarioAll(APIView):
         print(horario)
         serializer = HorarioSerializer(data=horario)
         if serializer.is_valid(raise_exception=True):
+            asignarGrupo(horario['horario_grupo'])
             horario_saved = serializer.save()
             return Response(dict(
                 success=f"Horario aula {horario_saved.horario_aula} hora {horario_saved.horario_hora} created successfully"))
@@ -48,18 +50,27 @@ class HorarioByID(APIView):
             return Response(dict(detail="not found"))
 
     def put(self, request, pk):
-        saved_horario = get_object_or_404(
+        saved_horario: Horario = get_object_or_404(
             Horario.objects.all(), horario_id=pk)
-        horario = request.data.get('horario')
-        serializer = HorarioSerializer(
-            instance=saved_horario, data=horario, partial=True)
-        if serializer.is_valid(raise_exception=True):
-            horario_saved = serializer.save()
-        return Response(dict(
-            success=f"Horario aula {horario_saved.horario_aula} hora {horario_saved.horario_hora} updated successfully"))
+        horario: Horario = request.data.get('horario')
+        print(horario)
+        if horario['horario_grupo'] is not None:
+            if horario['horario_grupo'] != saved_horario.horario_grupo_id:
+                desasignarGrupo(int(saved_horario.horario_grupo_id))
+                asignarGrupo(horario['horario_grupo'])
+            serializer = HorarioSerializer(
+                instance=saved_horario, data=horario, partial=True)
+            if serializer.is_valid(raise_exception=True):
+                horario_saved = serializer.save()
+                return Response(dict(
+                    success=f"Horario aula {horario_saved.horario_aula} hora {horario_saved.horario_hora} updated successfully"))
+            return Response(dict(detail='error en guardado'))
+        else:
+            return Response(dict(detail='error en busqueda de grupo'))
 
     def delete(self, request, pk):
         horario = get_object_or_404(Horario.objects.all(), horario_id=pk)
+        desasignarGrupo(horario.horario_grupo_id)
         horario.delete()
         return Response(dict(message=f"Horario with id `{pk}` has been deleted."), status=204)
         # return Response({"message": "Horario with id `{}` has been deleted.".format(pk)}, status=204, status=204)
@@ -139,7 +150,7 @@ class Choques(APIView):
 
     def post(self, request):
         busqueda = request.data.get('busqueda')
-        #print(busqueda)
+        # print(busqueda)
         horario = None
         if not busqueda:
             return Response(dict(detail="Sin datos de busqueda"))
@@ -165,7 +176,7 @@ class Choques(APIView):
                 horario_grupo__grupo_componente=busqueda['horario_componente'])
             if horario.count() > 1:
                 serializer = HorarioSerializer(horario, many=True, allow_null=True)
-             #   print(serializer.data)
+                #   print(serializer.data)
                 return Response(dict(horario=serializer.data, tipo='c'))
             horario = Horario.objects.filter(
                 ~Q(horario_grupo__isnull=True)).filter(
@@ -183,3 +194,17 @@ class Choques(APIView):
 
         else:
             return Response(dict(detail="tipo de choque no encontrado"))
+
+
+def desasignarGrupo(id: int):
+    grupo = Grupo.objects.get(grupo_id=id)
+    grupo.grupo_asignado = False
+    grupo.save()
+    print('se desasigno el grupo correctamente: ', grupo)
+
+
+def asignarGrupo(id: int):
+    grupo = Grupo.objects.get(grupo_id=id)
+    grupo.grupo_asignado = True
+    grupo.save()
+    print('se asigno el grupo correctamente: ', grupo)
