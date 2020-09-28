@@ -83,3 +83,24 @@ class ComponenteMixed(APIView):
             return Response(dict(detail="not found"))
         serializer = ComponenteSerializer(componente, many=True, allow_null=True)
         return Response(dict(componente=serializer.data))
+
+
+class Busqueda(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    def post(self, request):
+        busqueda = None
+        try:
+            busqueda = request.data["busqueda"]
+        except:
+            return Response(dict(detail="Error en datos de busqueda"))
+        print(busqueda)
+        if not busqueda:
+            return Response(dict(detail="Sin datos de busqueda"))
+        componentes = Componente.objects.filter(componente_pde=busqueda['pde'],
+                                     componente_ciclo=busqueda['ciclo'])
+        if not componentes:
+            return Response(dict(detail="not found"))
+        serializer = ComponenteSerializer(componentes, many=True)
+        return Response(dict(componente=serializer.data))
+
