@@ -107,7 +107,7 @@ class Grupo_Carrera_Plan_Ciclo(APIView):
          print(busqueda)
          if not busqueda:
              return Response(dict(detail="Sin datos de busqueda"))
-         print (busqueda['carrera'],busqueda['planificacion'],busqueda['ciclo'])
+        #  print (busqueda['carrera'],busqueda['planificacion'],busqueda['ciclo'])
          grupo = Grupo.objects.filter(grupo_componente__componente_pde__pde_carrera=busqueda['carrera'],
                                       grupo_planificacion=busqueda['planificacion'],
                                       grupo_componente__componente_ciclo=busqueda['ciclo'])
@@ -115,3 +115,22 @@ class Grupo_Carrera_Plan_Ciclo(APIView):
              return Response(dict(detail="not found"))
          serializer = GrupoSerializer(grupo, many=True, allow_null=True)
          return Response(dict(grupos=serializer.data))
+
+class Grupo_By_Componente_Plan(APIView):
+    authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    def post(self, request):
+        busqueda = None
+        try:
+            busqueda = request.data["busqueda"]
+        except:
+            return Response(dict(detail="Error en datos de busqueda"))
+        print(busqueda)
+        if not busqueda:
+            return Response(dict(detail="Sin datos de busqueda"))
+        grupos = Grupo.objects.filter(grupo_componente=busqueda['componente'], grupo_planificacion=busqueda['planificacion'])
+        if not grupos:
+            return Response(dict(detail="not found"))
+        serializer = GrupoSerializer(grupos, many=True)
+        return Response(dict(grupos=serializer.data))
+
