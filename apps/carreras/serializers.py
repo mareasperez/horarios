@@ -6,7 +6,7 @@ from .models import Carrera
 class CarreraSerializer(serializers.ModelSerializer):
     class Meta:
         model = Carrera
-        fields = ('carrera_nombre', 'carrera_id', 'carrera_departamento', 'created_at', 'updated_at')
+        fields = ('carrera_nombre', 'carrera_id', 'carrera_departamento','carrera_tipo', 'created_at', 'updated_at')
 
 # carrera_nombre = serializers.CharField(max_length=50)
 # carrera_id = serializers.IntegerField(allow_null=True)
