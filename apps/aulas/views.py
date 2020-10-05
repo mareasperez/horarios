@@ -21,7 +21,7 @@ class AulaConArgumento(APIView):
             serializer = AulaSerializer(aula)
             return Response(dict(aula=serializer.data))
         except:
-            return Response(dict(detail="not found"))
+            return Response(dict(aula=[], detail="not found"))
 
     def put(self, request, pk):
         saved_aula = get_object_or_404(
@@ -76,8 +76,8 @@ class AulaMixed(APIView):
         elif clave == 'aula_capacidad':
             aula = Aula.objects.filter(aula_capacidad=value)
         else:
-            return Response(dict(detail="not found"))
+            return Response(dict(aula=[], detail="not found"))
         if not aula:
-            return Response(dict(detail="not found"))
+            return Response(dict(aula=[], detail="not found"))
         serializer = AulaSerializer(aula, many=True, allow_null=True)
         return Response(dict(aula=serializer.data))

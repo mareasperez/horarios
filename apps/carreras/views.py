@@ -31,7 +31,8 @@ class CarreraConArgumento(APIView):
             instance=saved_carrera, data=carrera, partial=True)
         if serializer.is_valid(raise_exception=True):
             carrera_saved = serializer.save()
-        return Response(dict(success=f"Carrera '{carrera_saved.carrera_nombre}' updated successfully"))
+            return Response(dict(success=f"Carrera '{carrera_saved.carrera_nombre}' updated successfully"))
+        return Response(dict(carrera=[], detail="error"))
 
     def delete(self, request, pk):
         carrera = get_object_or_404(Carrera.objects.all(), carrera_id=pk)
@@ -45,16 +46,20 @@ class CarreraSinArg(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        carrera = Carrera.objects.all()
-        serializer = CarreraSerializer(carrera, many=True)
-        return Response(dict(carrera=serializer.data))
+        try:
+            carrera = Carrera.objects.all()
+            serializer = CarreraSerializer(carrera, many=True)
+            return Response(dict(carrera=serializer.data))
+        except:
+            return Response(dict(carrera=[], detail="not found"))
 
     def post(self, request):
         carrera = request.data.get('carrera')
         serializer = CarreraSerializer(data=carrera)
         if serializer.is_valid(raise_exception=True):
             carrera_saved = serializer.save()
-        return Response(dict(success=f"Carrera: '{carrera_saved.carrera_nombre}' creada satisfactoriamente"))
+            return Response(dict(success=f"Carrera: '{carrera_saved.carrera_nombre}' creada satisfactoriamente"))
+        return Response(dict(carrera=[], detail="error"))
 
 
 class CarreraMixed(APIView):
@@ -69,8 +74,8 @@ class CarreraMixed(APIView):
         elif clave == 'carrera_departamento':
             carrera = Carrera.objects.filter(carrera_departamento=value)
         else:
-            return Response({"Detail": "not found"})
+            return Response(dict(carrera=[], detail="not found"))
         if not carrera:
-            return Response({"Detail": "not found"})
+            return Response(dict(carrera=[], detail="error"))
         serializer = CarreraSerializer(carrera, many=True, allow_null=True)
         return Response(dict(carrera=serializer.data))

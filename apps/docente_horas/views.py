@@ -1,6 +1,4 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets
-from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -21,7 +19,7 @@ class DocenteHorasConArgumento(APIView):
             serializer = DocenteHorasSerializer(docenteHoras)
             return Response(dict(docenteHoras=serializer.data))
         except:
-            return Response(dict(detail="not found"))
+            return Response(dict(docenteHoras=[],detail="not found"))
 
     def put(self, request, pk):
         saved_docenteHoras = get_object_or_404(
@@ -31,7 +29,8 @@ class DocenteHorasConArgumento(APIView):
             instance=saved_docenteHoras, data=docenteHoras, partial=True)
         if serializer.is_valid(raise_exception=True):
             docenteHoras_saved = serializer.save()
-        return Response(dict(success=f"DocenteHoras {docenteHoras_saved.dh_docente}  updated successfully"))
+            return Response(dict(success=f"DocenteHoras {docenteHoras_saved.dh_docente}  updated successfully"))
+        return Response(dict(docenteHoras=[], detail="not found"))
 
     def delete(self, request, pk):
         docenteHoras = get_object_or_404(DocenteHoras.objects.all(), dh_id=pk)
@@ -45,20 +44,26 @@ class DocenteHorasSinArg(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        docenteHoras = DocenteHoras.objects.all()
-        serializer = DocenteHorasSerializer(docenteHoras, many=True)
-        return Response(dict(docenteHoras=serializer.data))
+        try:
+            docenteHoras = DocenteHoras.objects.all()
+            serializer = DocenteHorasSerializer(docenteHoras, many=True)
+            return Response(dict(docenteHoras=serializer.data))
+        except:
+            return Response(dict(docenteHoras=[],detail="not found"))
 
     def post(self, request):
         docenteHoras = request.data.get('docenteHoras')
         serializer = DocenteHorasSerializer(data=docenteHoras)
         if serializer.is_valid(raise_exception=True):
             docenteHoras_saved = serializer.save()
-        return Response(dict(success=f"DocenteHoras: {docenteHoras_saved.dh_docente} creada satisfactoriamente"))
+            return Response(dict(success=f"DocenteHoras: {docenteHoras_saved.dh_docente} creada satisfactoriamente"))
+        return Response(dict(docenteHoras=[], detail="not found"))
+
 
 class DocenteHorasMixed(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+
     def get(self, request, clave, value):
         print("llego al mix")
         if clave == 'dh_planificacion':
@@ -66,9 +71,8 @@ class DocenteHorasMixed(APIView):
         elif clave == 'docente_tipo_contrato':
             docenteHoras = DocenteHoras.objects.filter(docente_tipo_contrato=value)
         else:
-            return Response(dict(detail="not found"))
+            return Response(dict(docenteHoras=[],detail="Error"))
         if not docenteHoras:
-            return Response(dict(detail="not found"))
+            return Response(dict(docenteHoras=[],detail="not found"))
         serializer = DocenteHorasSerializer(docenteHoras, many=True)
         return Response(dict(docenteHoras=serializer.data))
-

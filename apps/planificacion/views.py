@@ -19,7 +19,7 @@ class PlanificacionConArgumento(APIView):
             serializer = PlanificacionSerializer(planificacion)
             return Response(dict(planificacion=serializer.data))
         except:
-            return Response(dict(detail="not found"))
+            return Response(dict(planificacion=[],detail="not found"))
 
     def put(self, request, pk):
         saved_planificacion = get_object_or_404(
@@ -29,8 +29,9 @@ class PlanificacionConArgumento(APIView):
             instance=saved_planificacion, data=planificacion, partial=True)
         if serializer.is_valid(raise_exception=True):
             planificacion_saved = serializer.save()
-        return Response(dict(
+            return Response(dict(
             success=f"Planificacion: {planificacion_saved.planificacion_anyo_lectivo} semestre {planificacion_saved.planificacion_semestre} creada satisfactoriamente"))
+        return Response(dict(detail="not found"))
 
     def delete(self, request, pk):
         planificacion = get_object_or_404(Planificacion.objects.all(), planificacion_id=pk)
@@ -44,14 +45,19 @@ class PlanificacionSinArg(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        planificacion = Planificacion.objects.all()
-        serializer = PlanificacionSerializer(planificacion, many=True)
-        return Response(dict(planificacion=serializer.data))
+        try:
+            planificacion = Planificacion.objects.all()
+            serializer = PlanificacionSerializer(planificacion, many=True)
+            return Response(dict(planificacion=serializer.data))
+        except:
+            return Response(dict(planificacion=[],detail="not found"))
+
 
     def post(self, request):
         planificacion = request.data.get('planificacion')
         serializer = PlanificacionSerializer(data=planificacion)
         if serializer.is_valid(raise_exception=True):
             planificacion_saved = serializer.save()
-        return Response(dict(
+            return Response(dict(
             success=f"Planificacion: {planificacion_saved.planificacion_anyo_lectivo} semestre {planificacion_saved.planificacion_semestre} creada satisfactoriamente"))
+        return Response(dict(detail="not found"))
