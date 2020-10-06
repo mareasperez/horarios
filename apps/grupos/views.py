@@ -47,10 +47,12 @@ class GrupoSinArg(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        grupo = Grupo.objects.all()
-        serializer = GrupoSerializer(grupo, many=True)
-        return Response({"grupos": serializer.data})
-
+        try:
+            grupo = Grupo.objects.all()
+            serializer = GrupoSerializer(grupo, many=True)
+            return Response(dict(grupos=serializer.data))
+        except:
+            return Response(dict(detail="not found",grupos=[]))
     def post(self, request):
         grupo = request.data.get('grupo')
         print('grupo: ', grupo)
@@ -92,9 +94,9 @@ class GrupoMixed(APIView):
         elif clave == 'grupo_planta':
             grupo = Grupo.objects.filter(grupo_planta=value)
         else:
-            return Response(dict(detail="not found"))
+            return Response(dict(grupo=[],detail="not found"))
         if not grupo:
-            return Response(dict(detail="not found"))
+            return Response(dict(grupo=[],detail="not found"))
         serializer = GrupoSerializer(grupo, many=True, allow_null=True)
         return Response(dict(grupo=serializer.data))
 
@@ -112,7 +114,7 @@ class Grupo_Carrera_Plan_Ciclo(APIView):
                                       grupo_planificacion=busqueda['planificacion'],
                                       grupo_componente__componente_ciclo=busqueda['ciclo'])
          if not grupo:
-             return Response(dict(detail="not found"))
+             return Response(dict(grupos=[],detail="not found"))
          serializer = GrupoSerializer(grupo, many=True, allow_null=True)
          return Response(dict(grupos=serializer.data))
 
@@ -127,10 +129,10 @@ class Grupo_By_Componente_Plan(APIView):
             return Response(dict(detail="Error en datos de busqueda"))
         print(busqueda)
         if not busqueda:
-            return Response(dict(detail="Sin datos de busqueda"))
+            return Response(dict(grupos=[],detail="Sin datos de busqueda"))
         grupos = Grupo.objects.filter(grupo_componente=busqueda['componente'], grupo_planificacion=busqueda['planificacion'])
         if not grupos:
-            return Response(dict(detail="not found"))
+            return Response(dict(grupos=[],detail="not found"))
         serializer = GrupoSerializer(grupos, many=True)
         return Response(dict(grupos=serializer.data))
 

@@ -18,7 +18,7 @@ class FacultadListView(APIView):
             serializer = FacultadSerializer(facultades)
             return Response(dict(facultad=serializer.data))
         except:
-            return Response(dict(detail="not found"))
+            return Response(dict(facultad=[],detail="not found"))
 
     def put(self, request, pk):
         saved_facultad = get_object_or_404(
@@ -28,7 +28,8 @@ class FacultadListView(APIView):
             instance=saved_facultad, data=facultad, partial=True)
         if serializer.is_valid(raise_exception=True):
             facultad_saved = serializer.save()
-        return Response(dict(success=f"Facultad '{facultad_saved.facultad_nombre}' updated successfully"))
+            return Response(dict(success=f"Facultad '{facultad_saved.facultad_nombre}' updated successfully"))
+        return Response(dict(facultad=[], detail="not found"))
 
     def delete(self, request, pk):
         facultad = get_object_or_404(Facultad.objects.all(), facultad_id=pk)
@@ -46,11 +47,13 @@ class Facultadone(APIView):
             serializer = FacultadSerializer(facultades, many=True)
             return Response(dict(facultad=serializer.data))
         except:
-            return Response(dict(detail="not found"))
+            return Response(dict(facultad=[],detail="not found"))
 
     def post(self, request):
         facultad = request.data.get('facultad')
         serializer = FacultadSerializer(data=facultad)
         if serializer.is_valid(raise_exception=True):
             facultad_saved = serializer.save()
-        return Response(dict(success=f"Facultad: '{facultad_saved.facultad_nombre}' creada satisfactoriamente"))
+            return Response(dict(success=f"Facultad: '{facultad_saved.facultad_nombre}' creada satisfactoriamente"))
+        return Response(dict(facultad=[], detail="not found"))
+

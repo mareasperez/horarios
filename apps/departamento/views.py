@@ -21,7 +21,7 @@ class DepartamentoConArgumento(APIView):
             serializer = DepartamentoSerializer(departamento)
             return Response(dict(departamento=serializer.data))
         except:
-            return Response(dict(detail="not found"))
+            return Response(dict(departamento=[], detail="not found"))
 
     def put(self, request, pk):
         saved_departamento = get_object_or_404(
@@ -31,8 +31,9 @@ class DepartamentoConArgumento(APIView):
             instance=saved_departamento, data=departamento, partial=True)
         if serializer.is_valid(raise_exception=True):
             departamento_saved = serializer.save()
-        return Response(
-            dict(success=f"Departamento '{departamento_saved.departamento_nombre}' updated successfully"))
+            return Response(
+                dict(success=f"Departamento '{departamento_saved.departamento_nombre}' updated successfully"))
+        return Response(dict(departamento=[], detail="error"))
 
     def delete(self, request, pk):
         departamento = get_object_or_404(Departamento.objects.all(), departamento_id=pk)
@@ -46,17 +47,21 @@ class DepartamentoSinArg(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        departamento = Departamento.objects.all()
-        serializer = DepartamentoSerializer(departamento, many=True)
-        return Response(dict(departamento=serializer.data))
+        try:
+            departamento = Departamento.objects.all()
+            serializer = DepartamentoSerializer(departamento, many=True)
+            return Response(dict(departamento=serializer.data))
+        except:
+            return Response(dict(departamento=[], detail="not found"))
 
     def post(self, request):
         departamento = request.data.get('departamento')
         serializer = DepartamentoSerializer(data=departamento)
         if serializer.is_valid(raise_exception=True):
             departamento_saved = serializer.save()
-        return Response(
-            dict(success=f"Departamento: '{departamento_saved.departamento_nombre}' creada satisfactoriamente"))
+            return Response(
+                dict(success=f"Departamento: '{departamento_saved.departamento_nombre}' creada satisfactoriamente"))
+        return Response(dict(departamento=[], detail="error"))
 
 
 class DepartamentoMixed(APIView):
@@ -71,8 +76,8 @@ class DepartamentoMixed(APIView):
         elif clave == 'departamento_nombre':
             departamento = Departamento.objects.filter(departamentonombre=value)
         else:
-            return Response(dict(detail="not found"))
+            return Response(dict(departamento=[], detail="Error"))
         if not departamento:
-            return Response(dict(detail="not found"))
+            return Response(dict(departamento=[], detail="not found"))
         serializer = DepartamentoSerializer(departamento, many=True, allow_null=True)
         return Response(dict(departamento=serializer.data))

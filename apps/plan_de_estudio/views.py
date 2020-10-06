@@ -19,7 +19,7 @@ class PlanDeEstudioConArgumento(APIView):
             serializer = PlanDeEstudioSerializer(planDeEstudio)
             return Response(dict(planDeEstudio=serializer.data))
         except:
-            return Response(dict(detail="not found"))
+            return Response(dict(planDeEstudio=[],detail="not found"))
 
     def put(self, request, pk):
         saved_planDeEstudio = get_object_or_404(
@@ -29,7 +29,8 @@ class PlanDeEstudioConArgumento(APIView):
             instance=saved_planDeEstudio, data=planDeEstudio, partial=True)
         if serializer.is_valid(raise_exception=True):
             planDeEstudio_saved = serializer.save()
-        return Response(dict(success=f"PlanDeEstudio '{planDeEstudio_saved.pde_id}' updated successfully"))
+            return Response(dict(success=f"PlanDeEstudio '{planDeEstudio_saved.pde_id}' updated successfully"))
+        return Response(dict(detail="not found"))
 
     def delete(self, request, pk):
         planDeEstudio = get_object_or_404(PlanDeEstudio.objects.all(), pde_id=pk)
@@ -43,13 +44,17 @@ class PlanDeEstudioSinArg(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        planDeEstudio = PlanDeEstudio.objects.all()
-        serializer = PlanDeEstudioSerializer(planDeEstudio, many=True)
-        return Response(dict(planDeEstudio=serializer.data))
+        try:
+            planDeEstudio = PlanDeEstudio.objects.all()
+            serializer = PlanDeEstudioSerializer(planDeEstudio, many=True)
+            return Response(dict(planDeEstudio=serializer.data))
+        except:
+            return Response(dict(planDeEstudio=[],detail="not found"))
 
     def post(self, request):
         planDeEstudio = request.data.get('planDeEstudio')
         serializer = PlanDeEstudioSerializer(data=planDeEstudio)
         if serializer.is_valid(raise_exception=True):
             planDeEstudio_saved = serializer.save()
-        return Response(dict(success=f"PlanDeEstudio: '{planDeEstudio_saved.pde_id}' creada satisfactoriamente"))
+            return Response(dict(success=f"PlanDeEstudio: '{planDeEstudio_saved.pde_id}' creada satisfactoriamente"))
+        return Response(dict(detail="not found"))

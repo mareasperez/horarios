@@ -21,7 +21,7 @@ class DocenteAreaConArgumento(APIView):
             serializer = DocenteAreaSerializer(docenteArea)
             return Response(dict(docenteArea=serializer.data))
         except:
-            return Response(dict(detail="not found"))
+            return Response(dict(docenteArea=[], detail="not found"))
 
     def put(self, request, pk):
         saved_docenteArea = get_object_or_404(
@@ -31,7 +31,8 @@ class DocenteAreaConArgumento(APIView):
             instance=saved_docenteArea, data=docenteArea, partial=True)
         if serializer.is_valid(raise_exception=True):
             docenteArea_saved = serializer.save()
-        return Response(dict(success=f"DocenteArea '{docenteArea_saved.da_docente}' updated successfully"))
+            return Response(dict(success=f"DocenteArea '{docenteArea_saved.da_docente}' updated successfully"))
+        return Response(dict(docenteArea=[], detail="error"))
 
     def delete(self, request, pk):
         docenteArea = get_object_or_404(DocenteArea.objects.all(), da_id=pk)
@@ -44,9 +45,12 @@ class DocenteAreaSinArg(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        docenteArea = DocenteArea.objects.all()
-        serializer = DocenteAreaSerializer(docenteArea, many=True)
-        return Response(dict(docenteArea=serializer.data))
+        try:
+            docenteArea = DocenteArea.objects.all()
+            serializer = DocenteAreaSerializer(docenteArea, many=True)
+            return Response(dict(docenteArea=serializer.data))
+        except:
+            return Response(dict(docenteArea=[], detail="error"))
 
     def post(self, request, ):
         data = request.data.get('docenteArea')
@@ -74,9 +78,9 @@ class DocenteAreaMixed(APIView):
                 serializer = DocenteAreaSerializer(docenteAreas, many=True)
                 return Response(dict(docenteArea=serializer.data))
             else:
-                return Response(dict(detail="not found"))
+                return Response(dict(docenteArea=[], detail="Error"))
         else:
-            return Response(dict(detail="not found"))
+            return Response(dict(docenteArea=[], detail="not found"))
 
     def put(self, request, clave, value):
         if re.search('[a-zA-Z]', value):
@@ -98,5 +102,5 @@ class DocenteAreaMixed(APIView):
                         msg = dict(
                             success=f" las Areas del docente '{docenteArea_saved.da_docente}' updated successfully")
         else:
-            msg = dict(detail="clave invalida")
+            msg = dict(docenteArea=[], detail="clave invalida")
         return Response(msg)

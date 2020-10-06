@@ -21,7 +21,7 @@ class DocenteConArgumento(APIView):
             serializer = DocenteSerializer(docente)
             return Response(dict(docente=serializer.data))
         except:
-            return Response(dict(detail="not found"))
+            return Response(dict(docente=[],detail="not found"))
 
     def put(self, request, pk):
         saved_docente = get_object_or_404(
@@ -31,7 +31,8 @@ class DocenteConArgumento(APIView):
             instance=saved_docente, data=docente, partial=True)
         if serializer.is_valid(raise_exception=True):
             docente_saved = serializer.save()
-        return Response(dict(success=f"Docente '{docente_saved.docente_nombre}' updated successfully"))
+            return Response(dict(success=f"Docente '{docente_saved.docente_nombre}' updated successfully"))
+        return Response(dict(docente=[], detail="not found"))
 
     def delete(self, request, pk):
         docente = get_object_or_404(Docente.objects.all(), docente_id=pk)
@@ -45,16 +46,21 @@ class DocenteSinArg(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        docente = Docente.objects.all().order_by('docente_nombre')
-        serializer = DocenteSerializer(docente, many=True)
-        return Response({"docente": serializer.data})
+        try:
+            docente = Docente.objects.all().order_by('docente_nombre')
+            serializer = DocenteSerializer(docente, many=True)
+            return Response({"docente": serializer.data})
+        except:
+            return Response(dict(docente=[], detail="not found"))
 
     def post(self, request):
         docente = request.data.get('docente')
         serializer = DocenteSerializer(data=docente)
         if serializer.is_valid(raise_exception=True):
             docente_saved = serializer.save()
-        return Response({"id": f"{docente_saved.docente_id}"})
+            return Response({"id": f"{docente_saved.docente_id}"})
+        return Response(dict(docente=[], detail="not found"))
+
 
 
 class DocentesMixed(APIView):
@@ -73,8 +79,8 @@ class DocentesMixed(APIView):
         elif clave == 'docente_departamento':
             docente = Docente.objects.filter(docente_departamento=value)
         else:
-            return Response({"Detail": "not found"})
+            return Response(dict(docente=[],detail="Error"))
         if not docente:
-            return Response({"Detail": "not found"})
+            return Response(dict(docente=[],detail="not found"))
         serializer = DocenteSerializer(docente, many=True, allow_null=True)
         return Response(dict(docente=serializer.data))

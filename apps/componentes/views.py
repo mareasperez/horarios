@@ -21,7 +21,7 @@ class ComponenteConArgumento(APIView):
             serializer = ComponenteSerializer(componente)
             return Response(dict(componente=serializer.data))
         except:
-            return Response(dict(detail="not found"))
+            return Response(dict(componente=[], detail="not found"))
 
     def put(self, request, pk):
         saved_componente = get_object_or_404(
@@ -31,7 +31,8 @@ class ComponenteConArgumento(APIView):
             instance=saved_componente, data=componente, partial=True)
         if serializer.is_valid(raise_exception=True):
             componente_saved = serializer.save()
-        return Response(dict(success=f"Componente '{componente_saved.componente_nombre}' updated successfully"))
+            return Response(dict(success=f"Componente '{componente_saved.componente_nombre}' updated successfully"))
+        return Response(dict(componente=[], detail="error"))
 
     def delete(self, request, pk):
         componente = get_object_or_404(Componente.objects.all(), componente_id=pk)
@@ -54,8 +55,9 @@ class ComponenteSinArg(APIView):
         serializer = ComponenteSerializer(data=componente)
         if serializer.is_valid(raise_exception=True):
             componente_saved = serializer.save()
-        return Response(
-            dict(success=f"Componente: '{componente_saved.componente_nombre}' creada satisfactoriamente"))
+            return Response(
+                dict(success=f"Componente: '{componente_saved.componente_nombre}' creada satisfactoriamente"))
+        return Response(dict(componente=[], detail="error"))
 
 
 class ComponenteMixed(APIView):
@@ -78,9 +80,9 @@ class ComponenteMixed(APIView):
         elif clave == 'componente_pde':
             componente = Componente.objects.filter(componente_pde=value)
         else:
-            return Response(dict(detail="not found"))
+            return Response(dict(componente=[], detail="not found"))
         if not componente:
-            return Response(dict(detail="not found"))
+            return Response(dict(componente=[], detail="not found"))
         serializer = ComponenteSerializer(componente, many=True, allow_null=True)
         return Response(dict(componente=serializer.data))
 
@@ -88,6 +90,7 @@ class ComponenteMixed(APIView):
 class Busqueda(APIView):
     authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+
     def post(self, request):
         busqueda = None
         try:
@@ -98,9 +101,8 @@ class Busqueda(APIView):
         if not busqueda:
             return Response(dict(detail="Sin datos de busqueda"))
         componentes = Componente.objects.filter(componente_pde=busqueda['pde'],
-                                     componente_ciclo=busqueda['ciclo'])
+                                                componente_ciclo=busqueda['ciclo'])
         if not componentes:
-            return Response(dict(detail="not found"))
+            return Response(dict(componente=[], detail="not found"))
         serializer = ComponenteSerializer(componentes, many=True)
         return Response(dict(componente=serializer.data))
-
