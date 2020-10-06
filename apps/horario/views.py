@@ -20,7 +20,7 @@ class HorarioAll(APIView):
     def get(self, request):
         horario = Horario.objects.all()
         if horario.count() == 0:
-            return Response(dict(detail="not found"))
+            return Response(dict(horarios=[],detail="not found"))
         serializer = HorarioSerializer(horario, many=True)
         return Response(dict(horarios=serializer.data))
 
@@ -47,7 +47,7 @@ class HorarioByID(APIView):
             serializer = HorarioSerializer(horario)
             return Response(dict(horario=serializer.data))
         except:
-            return Response(dict(detail="not found"))
+            return Response(dict(horario=[],detail="not found"))
 
     def put(self, request, pk):
         saved_horario: Horario = get_object_or_404(
@@ -109,9 +109,9 @@ class HorarioMixed(APIView):
         elif clave == 'horario_planid':
             horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=value).order_by('horario_hora')
         else:
-            return Response(dict(detail="Tipo de busqueda no encontrado"))
+            return Response(dict(horario=[],detail="Tipo de busqueda no encontrado"))
         if not horario:
-            return Response(dict(detail="not found"))
+            return Response(dict(horario=[],detail="not found"))
         serializer = HorarioSerializer(horario, many=True, allow_null=True)
         return Response(dict(horario=serializer.data))
 
@@ -137,9 +137,9 @@ class HorarioByPlan(APIView):
                                                  horario_grupo__grupo_componente__componente_ciclo=value).order_by(
                     'horario_hora')
             else:
-                return Response(dict(detail="not found"))
+                return Response(dict(horario=[],detail="not found"))
         else:
-            return Response(dict(detail="not found"))
+            return Response(dict(horario=[],detail="not found"))
         serializer = HorarioSerializer(horario, many=True, allow_null=True)
         return Response(dict(horario=serializer.data))
 
@@ -187,7 +187,7 @@ class Choques(APIView):
                 horario_grupo__grupo_componente__componente_pde=busqueda['horario_pde'])
 
             if horario.count() <= 1:
-                return Response(dict(detail="not found"))
+                return Response(dict(horario=[],detail="not found"))
             else:
                 serializer = HorarioSerializer(horario, many=True, allow_null=True)
                 return Response(dict(horario=serializer.data, tipo='a'))
