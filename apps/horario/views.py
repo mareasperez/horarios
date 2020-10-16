@@ -20,7 +20,7 @@ class HorarioAll(APIView):
     def get(self, request):
         horario = Horario.objects.all()
         if horario.count() == 0:
-            return Response(dict(horarios=[],detail="not found"))
+            return Response(dict(horarios=[], detail="not found"))
         serializer = HorarioSerializer(horario, many=True)
         return Response(dict(horarios=serializer.data))
 
@@ -47,26 +47,27 @@ class HorarioByID(APIView):
             serializer = HorarioSerializer(horario)
             return Response(dict(horario=serializer.data))
         except:
-            return Response(dict(horario=[],detail="not found"))
+            return Response(dict(horario=[], detail="not found"))
 
     def put(self, request, pk):
         saved_horario: Horario = get_object_or_404(
             Horario.objects.all(), horario_id=pk)
         horario: Horario = request.data.get('horario')
         print(horario)
-        if horario['horario_grupo'] is not None:
-            if horario['horario_grupo'] != saved_horario.horario_grupo_id:
-                desasignarGrupo(int(saved_horario.horario_grupo_id))
-                asignarGrupo(horario['horario_grupo'])
-            serializer = HorarioSerializer(
-                instance=saved_horario, data=horario, partial=True)
-            if serializer.is_valid(raise_exception=True):
-                horario_saved = serializer.save()
-                return Response(dict(
-                    success=f"Horario aula {horario_saved.horario_aula} hora {horario_saved.horario_hora} updated successfully"))
-            return Response(dict(detail='error en guardado'))
-        else:
-            return Response(dict(detail='error en busqueda de grupo'))
+        if 'horario_grupo' in horario:
+            if horario['horario_grupo'] is not None:
+                if horario['horario_grupo'] != saved_horario.horario_grupo_id:
+                    desasignarGrupo(int(saved_horario.horario_grupo_id))
+                    asignarGrupo(horario['horario_grupo'])
+            else:
+                return Response(dict(detail='error en busqueda de grupo'))
+        serializer = HorarioSerializer(
+            instance=saved_horario, data=horario, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            horario_saved = serializer.save()
+            return Response(dict(
+                success=f"Horario aula {horario_saved.horario_aula} hora {horario_saved.horario_hora} updated successfully"))
+        return Response(dict(detail='error en guardado'))
 
     def delete(self, request, pk):
         horario = get_object_or_404(Horario.objects.all(), horario_id=pk)
@@ -109,9 +110,9 @@ class HorarioMixed(APIView):
         elif clave == 'horario_planid':
             horario = Horario.objects.filter(horario_grupo__grupo_planificacion_id=value).order_by('horario_hora')
         else:
-            return Response(dict(horario=[],detail="Tipo de busqueda no encontrado"))
+            return Response(dict(horario=[], detail="Tipo de busqueda no encontrado"))
         if not horario:
-            return Response(dict(horario=[],detail="not found"))
+            return Response(dict(horario=[], detail="not found"))
         serializer = HorarioSerializer(horario, many=True, allow_null=True)
         return Response(dict(horario=serializer.data))
 
@@ -137,9 +138,9 @@ class HorarioByPlan(APIView):
                                                  horario_grupo__grupo_componente__componente_ciclo=value).order_by(
                     'horario_hora')
             else:
-                return Response(dict(horario=[],detail="not found"))
+                return Response(dict(horario=[], detail="not found"))
         else:
-            return Response(dict(horario=[],detail="not found"))
+            return Response(dict(horario=[], detail="not found"))
         serializer = HorarioSerializer(horario, many=True, allow_null=True)
         return Response(dict(horario=serializer.data))
 
@@ -187,7 +188,7 @@ class Choques(APIView):
                 horario_grupo__grupo_componente__componente_pde=busqueda['horario_pde'])
 
             if horario.count() <= 1:
-                return Response(dict(horario=[],detail="not found"))
+                return Response(dict(horario=[], detail="not found"))
             else:
                 serializer = HorarioSerializer(horario, many=True, allow_null=True)
                 return Response(dict(horario=serializer.data, tipo='a'))
