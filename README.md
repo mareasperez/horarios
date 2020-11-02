@@ -62,8 +62,11 @@ una vez teniendo el entorno activado se procede a instalar los requisitos.
 (Test)$ pip install -r Requirements.txt
 ```
 
-######nota:  si la compilacion de *psycopg2* puede instalar el [binario de PyPI]
+#####nota:  si la compilacion de *psycopg2* falla, puede instalar el [binario de PyPI]
 ```pip install psycopg2-binary```
+<br> 
+<br> 
+Este error puede ser causado si nos flata algun paquete requerido para la compilacion desde el codigo de *psycop*.
 <br>
 <br>
 Tambien puede instalar las [librerias de desarrollo de PostgreSql](https://stackoverflow.com/questions/5629368/installing-psycopg2-into-virtualenv-when-postgresql-is-not-installed-on-developm)
