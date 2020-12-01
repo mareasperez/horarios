@@ -1,7 +1,7 @@
 import re
 
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -11,9 +11,14 @@ from .models import Recinto
 from .serializers import RecintoSerializer
 
 
-class RecintoConArgumento(APIView):
+class Class_query():
+    def get_queryset(self):
+        return Recinto.objects.all()
+
+
+class RecintoConArgumento(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
         try:
@@ -40,9 +45,9 @@ class RecintoConArgumento(APIView):
         # return Response({"message": "Recinto with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class RecintoSinArg(APIView):
+class RecintoSinArg(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
         try:
@@ -50,8 +55,7 @@ class RecintoSinArg(APIView):
             serializer = RecintoSerializer(recinto, many=True)
             return Response(dict(recinto=serializer.data))
         except:
-            return Response(dict(recinto=[],detail="not found"))
-
+            return Response(dict(recinto=[], detail="not found"))
 
     def post(self, request):
         recinto = request.data.get('recinto')
@@ -62,9 +66,9 @@ class RecintoSinArg(APIView):
             return Response(dict(success=f"Recinto: '{recinto_saved.recinto_nombre}' creada satisfactoriamente"))
 
 
-class RecintoMixed(APIView):
+class RecintoMixed(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):
         if re.search('[a-zA-Z]', value):
@@ -78,6 +82,6 @@ class RecintoMixed(APIView):
         else:
             return Response(dict(recinto=[], detail="Error"))
         if not recinto:
-            return Response(dict(recinto=[],detail="not found"))
+            return Response(dict(recinto=[], detail="not found"))
         serializer = RecintoSerializer(recinto, many=True, allow_null=True)
         return Response(dict(recinto=serializer.data))

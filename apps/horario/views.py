@@ -2,7 +2,7 @@ import re
 
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -13,9 +13,14 @@ from .models import Horario
 from .serializers import HorarioSerializer
 
 
-class HorarioAll(APIView):
+class Class_query():
+    def get_queryset(self):
+        return Horario.objects.all()
+
+
+class HorarioAll(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
         horario = Horario.objects.all()
@@ -37,9 +42,9 @@ class HorarioAll(APIView):
             return Response(dict(detail="error"))
 
 
-class HorarioByID(APIView):
+class HorarioByID(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
         try:
@@ -78,9 +83,9 @@ class HorarioByID(APIView):
         # solo muestra status 204
 
 
-class HorarioMixed(APIView):
+class HorarioMixed(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):
         # if re.search('[a-zA-Z]',value):
@@ -117,9 +122,9 @@ class HorarioMixed(APIView):
         return Response(dict(horario=serializer.data))
 
 
-class HorarioByPlan(APIView):
+class HorarioByPlan(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value, plan):
         if re.search('[a-zA-Z]', str(value)):
@@ -145,9 +150,9 @@ class HorarioByPlan(APIView):
         return Response(dict(horario=serializer.data))
 
 
-class Choques(APIView):
+class Choques(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def post(self, request):
         busqueda = request.data.get('busqueda')

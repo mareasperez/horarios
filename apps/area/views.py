@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -8,9 +8,14 @@ from .models import Area
 from .serializers import AreaSerializer
 
 
-class AreaListView(APIView):
+class Class_query():
+    def get_queryset(self):
+        return Area.objects.all()
+
+
+class AreaListView(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
         try:
@@ -36,9 +41,9 @@ class AreaListView(APIView):
         return Response(dict(message=f"Area with id `{pk}` has been deleted."), status=204)
 
 
-class Areaone(APIView):
+class Areaone(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
         try:

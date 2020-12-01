@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -9,9 +9,14 @@ from .models import PlanDeEstudio
 from .serializers import PlanDeEstudioSerializer
 
 
-class PlanDeEstudioConArgumento(APIView):
+class Class_query():
+    def get_queryset(self):
+        return PlanDeEstudio.objects.all()
+
+
+class PlanDeEstudioConArgumento(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
         try:
@@ -19,7 +24,7 @@ class PlanDeEstudioConArgumento(APIView):
             serializer = PlanDeEstudioSerializer(planDeEstudio)
             return Response(dict(planDeEstudio=serializer.data))
         except:
-            return Response(dict(planDeEstudio=[],detail="not found"))
+            return Response(dict(planDeEstudio=[], detail="not found"))
 
     def put(self, request, pk):
         saved_planDeEstudio = get_object_or_404(
@@ -39,9 +44,9 @@ class PlanDeEstudioConArgumento(APIView):
         # return Response({"message": "PlanDeEstudio with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class PlanDeEstudioSinArg(APIView):
+class PlanDeEstudioSinArg(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
         try:
@@ -49,7 +54,7 @@ class PlanDeEstudioSinArg(APIView):
             serializer = PlanDeEstudioSerializer(planDeEstudio, many=True)
             return Response(dict(planDeEstudio=serializer.data))
         except:
-            return Response(dict(planDeEstudio=[],detail="not found"))
+            return Response(dict(planDeEstudio=[], detail="not found"))
 
     def post(self, request):
         planDeEstudio = request.data.get('planDeEstudio')

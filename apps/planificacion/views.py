@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -9,9 +9,14 @@ from .models import Planificacion
 from .serializers import PlanificacionSerializer
 
 
-class PlanificacionConArgumento(APIView):
+class Class_query():
+    def get_queryset(self):
+        return Planificacion.objects.all()
+
+
+class PlanificacionConArgumento(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
         try:
@@ -19,7 +24,7 @@ class PlanificacionConArgumento(APIView):
             serializer = PlanificacionSerializer(planificacion)
             return Response(dict(planificacion=serializer.data))
         except:
-            return Response(dict(planificacion=[],detail="not found"))
+            return Response(dict(planificacion=[], detail="not found"))
 
     def put(self, request, pk):
         saved_planificacion = get_object_or_404(
@@ -30,7 +35,7 @@ class PlanificacionConArgumento(APIView):
         if serializer.is_valid(raise_exception=True):
             planificacion_saved = serializer.save()
             return Response(dict(
-            success=f"Planificacion: {planificacion_saved.planificacion_anyo_lectivo} semestre {planificacion_saved.planificacion_semestre} creada satisfactoriamente"))
+                success=f"Planificacion: {planificacion_saved.planificacion_anyo_lectivo} semestre {planificacion_saved.planificacion_semestre} creada satisfactoriamente"))
         return Response(dict(detail="not found"))
 
     def delete(self, request, pk):
@@ -40,9 +45,9 @@ class PlanificacionConArgumento(APIView):
         # return Response({"message": "Planificacion with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class PlanificacionSinArg(APIView):
+class PlanificacionSinArg(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
         try:
@@ -50,8 +55,7 @@ class PlanificacionSinArg(APIView):
             serializer = PlanificacionSerializer(planificacion, many=True)
             return Response(dict(planificacion=serializer.data))
         except:
-            return Response(dict(planificacion=[],detail="not found"))
-
+            return Response(dict(planificacion=[], detail="not found"))
 
     def post(self, request):
         planificacion = request.data.get('planificacion')
@@ -59,5 +63,5 @@ class PlanificacionSinArg(APIView):
         if serializer.is_valid(raise_exception=True):
             planificacion_saved = serializer.save()
             return Response(dict(
-            success=f"Planificacion: {planificacion_saved.planificacion_anyo_lectivo} semestre {planificacion_saved.planificacion_semestre} creada satisfactoriamente"))
+                success=f"Planificacion: {planificacion_saved.planificacion_anyo_lectivo} semestre {planificacion_saved.planificacion_semestre} creada satisfactoriamente"))
         return Response(dict(detail="not found"))

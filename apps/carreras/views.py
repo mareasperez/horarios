@@ -1,7 +1,7 @@
 import re
 
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -11,9 +11,14 @@ from .models import Carrera
 from .serializers import CarreraSerializer
 
 
-class CarreraConArgumento(APIView):
+class Class_query():
+    def get_queryset(self):
+        return Carrera.objects.all()
+
+
+class CarreraConArgumento(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
         try:
@@ -41,9 +46,9 @@ class CarreraConArgumento(APIView):
         # return Response({"message": "Carrera with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class CarreraSinArg(APIView):
+class CarreraSinArg(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
         try:
@@ -62,9 +67,9 @@ class CarreraSinArg(APIView):
         return Response(dict(carrera=[], detail="error"))
 
 
-class CarreraMixed(APIView):
+class CarreraMixed(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):
         if re.search('[a-zA-Z]', value):
