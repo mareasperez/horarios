@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -9,9 +9,14 @@ from .models import DocenteHoras
 from .serializers import DocenteHorasSerializer
 
 
-class DocenteHorasConArgumento(APIView):
+class Class_query():
+    def get_queryset(self):
+        return DocenteHoras.objects.all()
+
+
+class DocenteHorasConArgumento(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
         try:
@@ -19,7 +24,7 @@ class DocenteHorasConArgumento(APIView):
             serializer = DocenteHorasSerializer(docenteHoras)
             return Response(dict(docenteHoras=serializer.data))
         except:
-            return Response(dict(docenteHoras=[],detail="not found"))
+            return Response(dict(docenteHoras=[], detail="not found"))
 
     def put(self, request, pk):
         saved_docenteHoras = get_object_or_404(
@@ -39,9 +44,9 @@ class DocenteHorasConArgumento(APIView):
         # return Response({"message": "DocenteHoras with id `{}` has been deleted."%(pk)}, status=204, status=204) solo muestra status 204
 
 
-class DocenteHorasSinArg(APIView):
+class DocenteHorasSinArg(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
         try:
@@ -49,7 +54,7 @@ class DocenteHorasSinArg(APIView):
             serializer = DocenteHorasSerializer(docenteHoras, many=True)
             return Response(dict(docenteHoras=serializer.data))
         except:
-            return Response(dict(docenteHoras=[],detail="not found"))
+            return Response(dict(docenteHoras=[], detail="not found"))
 
     def post(self, request):
         docenteHoras = request.data.get('docenteHoras')
@@ -60,9 +65,9 @@ class DocenteHorasSinArg(APIView):
         return Response(dict(docenteHoras=[], detail="not found"))
 
 
-class DocenteHorasMixed(APIView):
+class DocenteHorasMixed(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):
         print("llego al mix")
@@ -71,8 +76,8 @@ class DocenteHorasMixed(APIView):
         elif clave == 'docente_tipo_contrato':
             docenteHoras = DocenteHoras.objects.filter(docente_tipo_contrato=value)
         else:
-            return Response(dict(docenteHoras=[],detail="Error"))
+            return Response(dict(docenteHoras=[], detail="Error"))
         if not docenteHoras:
-            return Response(dict(docenteHoras=[],detail="not found"))
+            return Response(dict(docenteHoras=[], detail="not found"))
         serializer = DocenteHorasSerializer(docenteHoras, many=True)
         return Response(dict(docenteHoras=serializer.data))

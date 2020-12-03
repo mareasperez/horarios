@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -8,9 +8,14 @@ from apps.facultades.models import Facultad
 from .serializers import FacultadSerializer
 
 
-class FacultadListView(APIView):
+class Class_query():
+    def get_queryset(self):
+        return Facultad.objects.all()
+
+
+class FacultadListView(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
         try:
@@ -18,7 +23,7 @@ class FacultadListView(APIView):
             serializer = FacultadSerializer(facultades)
             return Response(dict(facultad=serializer.data))
         except:
-            return Response(dict(facultad=[],detail="not found"))
+            return Response(dict(facultad=[], detail="not found"))
 
     def put(self, request, pk):
         saved_facultad = get_object_or_404(
@@ -37,9 +42,9 @@ class FacultadListView(APIView):
         return Response(dict(message=f"Facultad with id `{pk}` has been deleted."))
 
 
-class Facultadone(APIView):
+class Facultadone(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
         try:
@@ -47,7 +52,7 @@ class Facultadone(APIView):
             serializer = FacultadSerializer(facultades, many=True)
             return Response(dict(facultad=serializer.data))
         except:
-            return Response(dict(facultad=[],detail="not found"))
+            return Response(dict(facultad=[], detail="not found"))
 
     def post(self, request):
         facultad = request.data.get('facultad')
@@ -56,4 +61,3 @@ class Facultadone(APIView):
             facultad_saved = serializer.save()
             return Response(dict(success=f"Facultad: '{facultad_saved.facultad_nombre}' creada satisfactoriamente"))
         return Response(dict(facultad=[], detail="not found"))
-

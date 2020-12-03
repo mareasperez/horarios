@@ -1,7 +1,7 @@
 import re
 
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -9,11 +9,14 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from .models import DocenteArea
 # Propios imports
 from .serializers import DocenteAreaSerializer
+class Class_query():
+    def get_queryset(self):
+        return DocenteArea.objects.all()
 
 
-class DocenteAreaConArgumento(APIView):
+class DocenteAreaConArgumento(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
         try:
@@ -40,9 +43,9 @@ class DocenteAreaConArgumento(APIView):
         return Response(dict(message=f"DocenteArea with id `{pk}` has been deleted."), status=204)
 
 
-class DocenteAreaSinArg(APIView):
+class DocenteAreaSinArg(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
         try:
@@ -65,9 +68,9 @@ class DocenteAreaSinArg(APIView):
             dict(success=f"DocenteArea: '{docenteArea_saved.da_docente}' creada satisfactoriamente"))
 
 
-class DocenteAreaMixed(APIView):
+class DocenteAreaMixed(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):
         if re.search('[a-zA-Z]', value):

@@ -1,7 +1,7 @@
 import re
 
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -11,9 +11,14 @@ from .models import Docente
 from .serializer import DocenteSerializer
 
 
-class DocenteConArgumento(APIView):
+class Class_query():
+    def get_queryset(self):
+        return Docente.objects.all()
+
+
+class DocenteConArgumento(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
         try:
@@ -21,7 +26,7 @@ class DocenteConArgumento(APIView):
             serializer = DocenteSerializer(docente)
             return Response(dict(docente=serializer.data))
         except:
-            return Response(dict(docente=[],detail="not found"))
+            return Response(dict(docente=[], detail="not found"))
 
     def put(self, request, pk):
         saved_docente = get_object_or_404(
@@ -41,9 +46,9 @@ class DocenteConArgumento(APIView):
         # return Response({"message": "Docente with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class DocenteSinArg(APIView):
+class DocenteSinArg(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
         try:
@@ -62,10 +67,9 @@ class DocenteSinArg(APIView):
         return Response(dict(docente=[], detail="not found"))
 
 
-
-class DocentesMixed(APIView):
+class DocentesMixed(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):
         if re.search('[a-zA-Z]', value):
@@ -79,8 +83,8 @@ class DocentesMixed(APIView):
         elif clave == 'docente_departamento':
             docente = Docente.objects.filter(docente_departamento=value)
         else:
-            return Response(dict(docente=[],detail="Error"))
+            return Response(dict(docente=[], detail="Error"))
         if not docente:
-            return Response(dict(docente=[],detail="not found"))
+            return Response(dict(docente=[], detail="not found"))
         serializer = DocenteSerializer(docente, many=True, allow_null=True)
         return Response(dict(docente=serializer.data))

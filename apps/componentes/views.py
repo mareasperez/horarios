@@ -1,7 +1,7 @@
 import re
 
 from django.shortcuts import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -11,9 +11,14 @@ from .models import Componente
 from .serializers import ComponenteSerializer
 
 
-class ComponenteConArgumento(APIView):
+class Class_query():
+    def get_queryset(self):
+        return Componente.objects.all()
+
+
+class ComponenteConArgumento(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
         try:
@@ -41,9 +46,9 @@ class ComponenteConArgumento(APIView):
         # return Response({"message": "Componente with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class ComponenteSinArg(APIView):
+class ComponenteSinArg(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
         componente = Componente.objects.all()
@@ -60,9 +65,9 @@ class ComponenteSinArg(APIView):
         return Response(dict(componente=[], detail="error"))
 
 
-class ComponenteMixed(APIView):
+class ComponenteMixed(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):
         if re.search('[a-zA-Z]', value):
@@ -87,9 +92,9 @@ class ComponenteMixed(APIView):
         return Response(dict(componente=serializer.data))
 
 
-class Busqueda(APIView):
+class Busqueda(APIView, Class_query):
     authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (DjangoModelPermissions,)
 
     def post(self, request):
         busqueda = None

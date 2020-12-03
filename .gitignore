@@ -4,5 +4,4 @@
 *.pyc
 log/
 __pycache__/*
-/mydatabase
-mydatabase
+.db
