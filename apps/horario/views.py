@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from apps.grupos.models import Grupo
+from apps.componentes.models import Componente
 
 from .models import Horario
 # Propios imports
@@ -210,7 +211,21 @@ def desasignarGrupo(id: int):
 
 
 def asignarGrupo(id: int):
+    horas = None
     grupo = Grupo.objects.get(grupo_id=id)
-    grupo.grupo_asignado = True
-    grupo.save()
-    print('se asigno el grupo correctamente: ', grupo)
+    print(grupo)
+    comp = Componente.objects.get(componente_id=grupo.grupo_componente_id)
+    if grupo.grupo_tipo == 'GP':
+        print('las horas deben ser ',horas)
+        horas = comp.componente_chp
+    if grupo.grupo_tipo == 'GT':
+        horas = comp.componente_cht
+        print('las horas deben ser ',horas)
+    horarios = Horario.objects.filter(horario_grupo__grupo_tipo=grupo.grupo_tipo, horario_grupo__grupo_componente=comp.componente_id)
+    print(horarios)
+    if horas == horarios.count():
+        grupo.grupo_asignado = True
+        grupo.save()
+        print('se asigno el grupo correctamente: ', grupo)
+    else:
+        print('el grupo aun no esta completamente asigando')
