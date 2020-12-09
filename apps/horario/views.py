@@ -35,8 +35,8 @@ class HorarioAll(APIView, Class_query):
         print(horario)
         serializer = HorarioSerializer(data=horario)
         if serializer.is_valid(raise_exception=True):
-            asignarGrupo(horario['horario_grupo'])
             horario_saved = serializer.save()
+            asignarGrupo(horario['horario_grupo'])
             return Response(dict(
                 success=f"Horario aula {horario_saved.horario_aula} hora {horario_saved.horario_hora} created successfully"))
         else:
@@ -213,16 +213,16 @@ def desasignarGrupo(id: int):
 def asignarGrupo(id: int):
     horas = None
     grupo = Grupo.objects.get(grupo_id=id)
-    print(grupo)
+    # print(grupo)
     comp = Componente.objects.get(componente_id=grupo.grupo_componente_id)
     if grupo.grupo_tipo == 'GP':
-        print('las horas deben ser ',horas)
+        # print('las horas deben ser ',horas)
         horas = comp.componente_chp
     if grupo.grupo_tipo == 'GT':
         horas = comp.componente_cht
-        print('las horas deben ser ',horas)
+        # print('las horas deben ser ',horas)
     horarios = Horario.objects.filter(horario_grupo__grupo_tipo=grupo.grupo_tipo, horario_grupo__grupo_componente=comp.componente_id)
-    print(horarios)
+    # print(horarios)
     if horas == horarios.count():
         grupo.grupo_asignado = True
         grupo.save()
