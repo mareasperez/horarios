@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class PlanDeEstudioConfig(AppConfig):
-    name = 'plan_de_estudio'
+    name = 'apps.plan_de_estudio'

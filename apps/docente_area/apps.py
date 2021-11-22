@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class DocenteAreaConfig(AppConfig):
-    name = 'docente_area'
+    name = 'apps.docente_area'

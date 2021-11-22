@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class AreaConfig(AppConfig):
-    name = 'area'
-    verbose_name = 'Areas'
+    name = 'apps.area'
+    verbose_name = 'apps.Areas'

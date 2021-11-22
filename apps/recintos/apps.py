@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class RecintosConfig(AppConfig):
-    name = 'recintos'
+    name = 'apps.recintos'
