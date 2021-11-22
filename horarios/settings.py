@@ -177,9 +177,9 @@ from datetime import timedelta
 #         'rest_framework_simplejwt.authentication.JWTAuthentication',
 #     )
 # }
-# SIMPLE_JWT = {
-#     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=600),
-#     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=600),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 #     'ROTATE_REFRESH_TOKENS': False,
 #     'BLACKLIST_AFTER_ROTATION': True,
 #
@@ -196,10 +196,10 @@ from datetime import timedelta
 #
 #     'JTI_CLAIM': 'jti',
 # # no se pa que puta sirve pero la doc esta
-#     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-#     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=600),
-#     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-# }
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=600),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_AUTHENTICATION_CLASSES": (
