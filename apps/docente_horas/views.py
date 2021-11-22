@@ -2,20 +2,20 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import DocenteHoras
 # Propios imports
 from .serializers import DocenteHorasSerializer
 
 
-class Class_query():
+class ClassQuery():
     def get_queryset(self):
         return DocenteHoras.objects.all()
 
 
-class DocenteHorasConArgumento(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class DocenteHorasConArgumento(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
@@ -44,8 +44,8 @@ class DocenteHorasConArgumento(APIView, Class_query):
         # return Response({"message": "DocenteHoras with id `{}` has been deleted."%(pk)}, status=204, status=204) solo muestra status 204
 
 
-class DocenteHorasSinArg(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class DocenteHorasSinArg(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
@@ -65,8 +65,8 @@ class DocenteHorasSinArg(APIView, Class_query):
         return Response(dict(docenteHoras=[], detail="not found"))
 
 
-class DocenteHorasMixed(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class DocenteHorasMixed(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):

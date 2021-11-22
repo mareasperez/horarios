@@ -4,20 +4,20 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Carrera
 # Propios imports
 from .serializers import CarreraSerializer
 
 
-class Class_query():
+class ClassQuery():
     def get_queryset(self):
         return Carrera.objects.all()
 
 
-class CarreraConArgumento(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class CarreraConArgumento(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
@@ -46,8 +46,8 @@ class CarreraConArgumento(APIView, Class_query):
         # return Response({"message": "Carrera with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class CarreraSinArg(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class CarreraSinArg(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
@@ -67,8 +67,8 @@ class CarreraSinArg(APIView, Class_query):
         return Response(dict(carrera=[], detail="error"))
 
 
-class CarreraMixed(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class CarreraMixed(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):

@@ -5,20 +5,20 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Grupo
 # Propios imports
 from .serializers import GrupoSerializer
 
 
-class Class_query():
+class ClassQuery():
     def get_queryset(self):
         return Grupo.objects.all()
 
 
-class GrupoConArgumento(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class GrupoConArgumento(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
@@ -47,8 +47,8 @@ class GrupoConArgumento(APIView, Class_query):
         # return Response({"message": "Grupo with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class GrupoSinArg(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class GrupoSinArg(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
@@ -69,8 +69,8 @@ class GrupoSinArg(APIView, Class_query):
             dict(success=f"Grupo {grupo_saved.grupo_numero} de {grupo_saved.grupo_componente} created successfully"))
 
 
-class GrupoMixed(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class GrupoMixed(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):
@@ -107,8 +107,8 @@ class GrupoMixed(APIView, Class_query):
         return Response(dict(grupo=serializer.data))
 
 
-class Grupo_Carrera_Plan_Ciclo(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class Grupo_Carrera_Plan_Ciclo(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def post(self, request):
@@ -126,8 +126,8 @@ class Grupo_Carrera_Plan_Ciclo(APIView, Class_query):
         return Response(dict(grupos=serializer.data))
 
 
-class Grupo_By_Componente_Plan(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class Grupo_By_Componente_Plan(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def post(self, request):

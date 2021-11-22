@@ -1,8 +1,9 @@
-from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
 
 
-class Consumer(AsyncJsonWebsocketConsumer):
+class Consumer(AsyncWebsocketConsumer):
     async def connect(self):
+        print ('connect :v ')
         if self.scope['user'].id:
             await self.accept()
             await self.channel_layer.group_add("cambios", self.channel_name)

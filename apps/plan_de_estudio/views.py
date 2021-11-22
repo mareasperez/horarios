@@ -2,20 +2,20 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import PlanDeEstudio
 # Propios imports
 from .serializers import PlanDeEstudioSerializer
 
 
-class Class_query():
+class ClassQuery():
     def get_queryset(self):
         return PlanDeEstudio.objects.all()
 
 
-class PlanDeEstudioConArgumento(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class PlanDeEstudioConArgumento(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
@@ -44,8 +44,8 @@ class PlanDeEstudioConArgumento(APIView, Class_query):
         # return Response({"message": "PlanDeEstudio with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class PlanDeEstudioSinArg(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class PlanDeEstudioSinArg(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):

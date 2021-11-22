@@ -4,20 +4,20 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 # Propios imports
 from .models import Componente
 from .serializers import ComponenteSerializer
 
 
-class Class_query():
+class ClassQuery():
     def get_queryset(self):
         return Componente.objects.all()
 
 
-class ComponenteConArgumento(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class ComponenteConArgumento(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
@@ -46,8 +46,8 @@ class ComponenteConArgumento(APIView, Class_query):
         # return Response({"message": "Componente with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class ComponenteSinArg(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class ComponenteSinArg(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
@@ -65,8 +65,8 @@ class ComponenteSinArg(APIView, Class_query):
         return Response(dict(componente=[], detail="error"))
 
 
-class ComponenteMixed(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class ComponenteMixed(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):
@@ -92,8 +92,8 @@ class ComponenteMixed(APIView, Class_query):
         return Response(dict(componente=serializer.data))
 
 
-class Busqueda(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class Busqueda(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def post(self, request):

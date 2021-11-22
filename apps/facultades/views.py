@@ -2,19 +2,19 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from apps.facultades.models import Facultad
 from .serializers import FacultadSerializer
 
 
-class Class_query():
+class ClassQuery():
     def get_queryset(self):
         return Facultad.objects.all()
 
 
-class FacultadListView(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class FacultadListView(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
@@ -42,8 +42,8 @@ class FacultadListView(APIView, Class_query):
         return Response(dict(message=f"Facultad with id `{pk}` has been deleted."))
 
 
-class Facultadone(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class Facultadone(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):

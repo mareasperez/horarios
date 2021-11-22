@@ -2,20 +2,20 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Planificacion
 # Propios imports
 from .serializers import PlanificacionSerializer
 
 
-class Class_query():
+class ClassQuery():
     def get_queryset(self):
         return Planificacion.objects.all()
 
 
-class PlanificacionConArgumento(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class PlanificacionConArgumento(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
@@ -45,8 +45,8 @@ class PlanificacionConArgumento(APIView, Class_query):
         # return Response({"message": "Planificacion with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class PlanificacionSinArg(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class PlanificacionSinArg(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):

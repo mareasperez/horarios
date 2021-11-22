@@ -4,20 +4,20 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import Aula
 # Propios imports
 from .serializers import AulaSerializer
 
 
-class Class_query():
+class ClassQuery():
     def get_queryset(self):
         return Aula.objects.all()
 
 
-class AulaConArgumento(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class AulaConArgumento(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
@@ -46,8 +46,8 @@ class AulaConArgumento(APIView, Class_query):
         # return Response({"message": "Aula with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class AulaSinArg(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class AulaSinArg(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
@@ -65,8 +65,8 @@ class AulaSinArg(APIView, Class_query):
         return Response(dict(detail="fail"))
 
 
-class AulaMixed(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class AulaMixed(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):

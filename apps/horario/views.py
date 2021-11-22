@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from apps.grupos.models import Grupo
 from apps.componentes.models import Componente
 
@@ -14,13 +14,13 @@ from .models import Horario
 from .serializers import HorarioSerializer
 
 
-class Class_query():
+class ClassQuery():
     def get_queryset(self):
         return Horario.objects.all()
 
 
-class HorarioAll(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class HorarioAll(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
@@ -43,8 +43,8 @@ class HorarioAll(APIView, Class_query):
             return Response(dict(detail="error"))
 
 
-class HorarioByID(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class HorarioByID(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
@@ -84,8 +84,8 @@ class HorarioByID(APIView, Class_query):
         # solo muestra status 204
 
 
-class HorarioMixed(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class HorarioMixed(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):
@@ -123,8 +123,8 @@ class HorarioMixed(APIView, Class_query):
         return Response(dict(horario=serializer.data))
 
 
-class HorarioByPlan(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class HorarioByPlan(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value, plan):
@@ -151,8 +151,8 @@ class HorarioByPlan(APIView, Class_query):
         return Response(dict(horario=serializer.data))
 
 
-class Choques(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class Choques(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def post(self, request):

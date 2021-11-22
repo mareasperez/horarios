@@ -1,52 +1,70 @@
-from urllib.parse import parse_qs
+"""General web socket middlewares
+"""
 
-from channels.auth import AuthMiddlewareStack
+from channels.db import database_sync_to_async
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+from rest_framework_simplejwt.tokens import UntypedToken
+# from rest_framework_simplejwt.state import User
+from channels.middleware import BaseMiddleware
+from channels.auth import AuthMiddlewareStack
 from django.db import close_old_connections
-# from rest_framework_simplejwt.tokens import Token
-from rest_framework.authtoken.models import Token
-from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
+from urllib.parse import parse_qs
+from jwt import decode as jwt_decode
+from django.conf import settings
+@database_sync_to_async
+def get_user(validated_token):
+    try:
+        user = get_user_model().objects.get(id=validated_token["user_id"])
+        # return get_user_model().objects.get(id=toke_id)
+        print(f"{user}")
+        return user
+   
+    except Exception as e:
+        print(f"{e}")
+        return AnonymousUser()
 
 
-class WSTokenAuthMiddleware:
-    """
-    Token [Querystring/Header] authorization middleware for Django Channels 2
-    """
 
+class JwtAuthMiddleware(BaseMiddleware):
     def __init__(self, inner):
         self.inner = inner
 
-    def __call__(self, scope):
-        query_string = parse_qs(scope['query_string'])  # Used for querystring token url auth
-        headers = dict(scope['headers'])  # Used for headers token url auth
-        # print('las cossas que llegan son: ', query_string)
-        if b'token' in query_string:
-            try:
-                print('entro al inf/try1')
-                token_key = query_string[b'token'][0].decode()
-                print('values', token_key)
-                data = {'token': token_key}
-                valid_data = VerifyJSONWebTokenSerializer().validate(data)
-                user = valid_data['user']
-                scope['user'] = user
-                close_old_connections()
-            except:
-                scope['user'] = AnonymousUser()
-        elif b'authorization' in headers:
-            try:
-                print('entro al inf/try2')
-                token_name, token_key = headers[b'authorization'].decode().split()
-                print(token_name, token_key)
-                if token_name == 'Token':
-                    token = Token.objects.get(key=token_key)
-                    scope['user'] = token.user
-                    close_old_connections()
-            except:
-                scope['user'] = AnonymousUser()
+    async def __call__(self, scope, receive, send):
+       # Close old database connections to prevent usage of timed out connections
+        close_old_connections()
+
+        # Get the token
+        token = parse_qs(scope["query_string"].decode("utf8"))["token"][0]
+
+        # Try to authenticate the user
+        try:
+            # This will automatically validate the token and raise an error if token is invalid
+            UntypedToken(token)
+        except (InvalidToken, TokenError) as e:
+            # Token is invalid
+            print(e)
+            return None
         else:
-            pass  # Session auth or anonymus
+            #  Then token is valid, decode it
+            decoded_data = jwt_decode(token, settings.SECRET_KEY, algorithms=["HS256"])
+            print(decoded_data)
+            # Will return a dictionary like -
+            # {
+            #     "token_type": "access",
+            #     "exp": 1568770772,
+            #     "jti": "5c15e80d65b04c20ad34d77b6703251b",
+            #     "user_id": 6
+            # }
 
-        return self.inner(scope)
+            # Get the user using ID
+            scope["user"] = await get_user(validated_token=decoded_data)
+        try:
+            return await super().__call__(scope, receive, send)
+        except Exception as e:
+            print(e)
+            return None
 
-
-UniversalAuthMiddlewareStack = lambda inner: WSTokenAuthMiddleware(AuthMiddlewareStack(inner))
+def JwtAuthMiddlewareStack(inner):
+    return JwtAuthMiddleware(AuthMiddlewareStack(inner))

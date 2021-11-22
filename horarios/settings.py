@@ -107,7 +107,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "horarios.wsgi.application"
 # Channels
-ASGI_APPLICATION = "horarios.routing.application"
+ASGI_APPLICATION = "horarios.asgi.application"
 
 # Usar Redis como backend de los canales
 CHANNEL_LAYERS = {
@@ -203,7 +203,7 @@ from datetime import timedelta
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_jwt.authentication.JSONWebTokenAuthentication",
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.BasicAuthentication",
     ),

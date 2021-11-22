@@ -4,20 +4,20 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+#from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 # Propios imports
 from .models import Departamento
 from .serializers import DepartamentoSerializer
 
 
-class Class_query():
+class ClassQuery():
     def get_queryset(self):
         return Departamento.objects.all()
 
 
-class DepartamentoConArgumento(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class DepartamentoConArgumento(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, pk):
@@ -47,8 +47,8 @@ class DepartamentoConArgumento(APIView, Class_query):
         # return Response({"message": "Departamento with id `{}` has been deleted.".format(pk)}, status=204, status=204) solo muestra status 204
 
 
-class DepartamentoSinArg(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class DepartamentoSinArg(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request):
@@ -69,8 +69,8 @@ class DepartamentoSinArg(APIView, Class_query):
         return Response(dict(departamento=[], detail="error"))
 
 
-class DepartamentoMixed(APIView, Class_query):
-    authentication_classes = (JSONWebTokenAuthentication,)
+class DepartamentoMixed(APIView, ClassQuery):
+    #authentication_classes = (JSONWebTokenAuthentication,)
     permission_classes = (DjangoModelPermissions,)
 
     def get(self, request, clave, value):
