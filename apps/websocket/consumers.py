@@ -16,5 +16,6 @@ class Consumer(AsyncWebsocketConsumer):
 
     ## envio de los mensajes
     async def cambios(self, event):
-        await self.send_json(event)
+        print(f"cambios: {event}")
+        await self.send(event)
         print(f"Got message {event} at {self.channel_name}")
