@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from dotenv import load_dotenv
-
+import dj_database_url
 if os.path.exists(".env"):
     load_dotenv()
     print("loading environment for: " + str(os.environ.get("ENVIRONMENT")))
@@ -142,14 +142,10 @@ CHANNEL_LAYERS = {
 #  }
 DATABASES = {
     # environment variable
-    "default": {
-        "ENGINE": os.environ.get("ENGINE", "django.db.backends.postgresql"),
-        "NAME": os.environ.get("NAME", "horariosdb"),
-        "USER": os.environ.get("DB_USER", "usuario"),
-        "PASSWORD": os.environ.get("PASSWORD", "password"),
-        "HOST": os.environ.get("HOST", "localhost"),
-        "PORT": os.environ.get("PORT", "5432"),
-    }
+    "default": dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'), conn_max_age=600
+    )
+    
 }
 # DATABASES = {
 #     'default': {
