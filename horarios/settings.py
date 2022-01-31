@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 from dotenv import load_dotenv
 import dj_database_url
-
+import django_heroku 
 if os.path.exists(".env"):
     load_dotenv()
     print("loading environment for: " + str(os.environ.get("ENVIRONMENT")))
@@ -32,6 +32,7 @@ SECRET_KEY = "ftr-y0576^@me8k6hki_-ri6q8*p5$za0jku7txry0g)2pun2$"
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = True if os.environ.get("ENVIRONMENT") == "DEV" else False
+print ("DEBUG: " + str(DEBUG))
 ALLOWED_HOSTS = ["*"]
 CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ORIGIN_WHITELIST = [
@@ -91,6 +92,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = "horarios.urls"
@@ -238,3 +240,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 print(STATIC_ROOT)
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/public/"
+django_heroku.settings(locals())
