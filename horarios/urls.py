@@ -5,6 +5,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView
 )
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,9 +30,7 @@ urlpatterns += [
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/auth/verify/', TokenVerifyView.as_view(), name='token_verify')
 ]
-# urlpatterns += [
-#     path('api/auth/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-#     path('api/ws/auth/', LoginView.as_view(), name='wstoken_obtain_pair'),
-#     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-#     path('api/auth/verify/', TokenVerifyView.as_view(), name='token_verify'),
-# ]
+# add django apps static files to the urlpatterns with allow index
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)    
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 from dotenv import load_dotenv
 import dj_database_url
+
 if os.path.exists(".env"):
     load_dotenv()
     print("loading environment for: " + str(os.environ.get("ENVIRONMENT")))
@@ -143,9 +144,8 @@ CHANNEL_LAYERS = {
 DATABASES = {
     # environment variable
     "default": dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'), conn_max_age=600
+        default=os.environ.get("DATABASE_URL"), conn_max_age=600
     )
-    
 }
 # DATABASES = {
 #     'default': {
@@ -229,8 +229,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+# STATIC_URL = "/static/"
+# # STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# MEDIA_URL = '/public/'
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+print(STATIC_ROOT)
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = '/public/'
+MEDIA_URL = "/public/"
