@@ -31,8 +31,7 @@ SECRET_KEY = "ftr-y0576^@me8k6hki_-ri6q8*p5$za0jku7txry0g)2pun2$"
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = True if os.environ.get("ENVIRONMENT") == "DEV" else False
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"] if DEBUG else ["*"]
-
+ALLOWED_HOSTS = ["*"]
 CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ORIGIN_WHITELIST = [
 #     "http://localhost:4200",
